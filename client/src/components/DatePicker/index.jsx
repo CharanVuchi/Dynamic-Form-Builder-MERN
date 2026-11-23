@@ -1,6 +1,6 @@
 import { DatePicker } from "antd";
 
-const DatePicker = ({
+const DatePickerComponent = ({
   label,
   name,
   value,
@@ -37,4 +37,4 @@ const DatePicker = ({
   );
 };
 
-export default DatePicker;
+export default DatePickerComponent;
