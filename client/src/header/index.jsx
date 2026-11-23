@@ -8,6 +8,7 @@ const pageNames = {
   submissions: "Submissions",
   users: "Users",
   settings: "Settings",
+  create: "Form Builder",
 };
 
 const Header = () => {
