@@ -1,0 +1,95 @@
+{
+    "cards": [
+        {
+            "id": 1,
+            "title": "Total Forms",
+            "value": 128,
+            "description": "Total forms created",
+            "icon": "file"
+        },
+        {
+            "id": 2,
+            "title": "Total Submissions",
+            "value": 1248,
+            "description": "Total responses received",
+            "icon": "inbox"
+        },
+        {
+            "id": 3,
+            "title": "Active Forms",
+            "value": 96,
+            "description": "Currently published forms",
+            "icon": "active"
+        },
+        {
+            "id": 4,
+            "title": "Total Users",
+            "value": 350,
+            "description": "Registered users",
+            "icon": "users"
+        }
+    ],
+    "submissionAnalytics": {
+        "labels": [
+            "Nov 17",
+            "Nov 18",
+            "Nov 19",
+            "Nov 20",
+            "Nov 21",
+            "Nov 22",
+            "Nov 23"
+        ],
+        "values": [
+            42,
+            70,
+            58,
+            118,
+            90,
+            145,
+            132
+        ]
+    },
+    "recentForms": [
+        {
+            "id": 1,
+            "name": "Employee Onboarding",
+            "submissions": 210
+        },
+        {
+            "id": 2,
+            "name": "Event Feedback",
+            "submissions": 0
+        },
+        {
+            "id": 3,
+            "name": "Support Request",
+            "submissions": 96
+        }
+    ],
+    "recentSubmissions": [
+        {
+            "id": 1,
+            "name": "Ravi Kumar",
+            "submissionId": "SUB-3201",
+            "email": "ravi@gmail.com",
+            "mobile": "9876543210",
+            "submittedAt": "Nov 23, 2026 10:24 AM"
+        },
+        {
+            "id": 2,
+            "name": "Priya Sharma",
+            "submissionId": "SUB-3202",
+            "email": "priya@gmail.com",
+            "mobile": "9876677655",
+            "submittedAt": "Nov 23, 2026 09:12 AM"
+        },
+        {
+            "id": 3,
+            "name": "Aditya Verma",
+            "submissionId": "SUB-3203",
+            "email": "aditya@gmail.com",
+            "mobile": "9123456789",
+            "submittedAt": "Nov 22, 2026 05:40 PM"
+        }
+    ]
+}

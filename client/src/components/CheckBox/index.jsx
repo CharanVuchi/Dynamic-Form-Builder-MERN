@@ -1,6 +1,6 @@
 import { Checkbox } from "antd";
 
-const Checkbox = ({ label, name, checked = false, onChange, disabled = false, required = false, className = "", ...rest }) => {
+const CheckboxComponent = ({ label, name, checked = false, onChange, disabled = false, required = false, className = "", ...rest }) => {
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
       <Checkbox name={name} checked={checked} disabled={disabled} onChange={(e) => onChange?.(e.target.checked)} {...rest}>
@@ -13,4 +13,4 @@ const Checkbox = ({ label, name, checked = false, onChange, disabled = false, re
   );
 };
 
-export default Checkbox;
+export default CheckboxComponent;
