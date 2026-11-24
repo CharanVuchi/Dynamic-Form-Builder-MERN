@@ -4,6 +4,7 @@ import formRoutes from "./form.js";
 import publicFormRoutes from "./publicForm.js";
 import submissionsRoutes from "./submissions.js";
 import publicSubmissionsRoutes from "./publicSubmissions.js";
+import dashboardRoutes from "./dashboard.js";
 
 const router = Router();
 
@@ -30,5 +31,8 @@ router.use("/submissions", submissionsRoutes);
 
 // Public Submissions APIs
 router.use("/public/submissions", publicSubmissionsRoutes);
+
+// Dashboard APIs
+router.use("/dashboard", dashboardRoutes);
 
 export default router;
