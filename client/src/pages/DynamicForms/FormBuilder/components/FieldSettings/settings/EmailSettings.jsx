@@ -1,19 +1,19 @@
-import { Input } from "antd";
+import { TextInput } from "src/components";
 
 const EmailSettings = ({ field, onUpdate }) => {
   return (
     <div>
       <label className="block text-sm font-medium text-[#344054] mb-2">Allowed Domain</label>
 
-      <Input
+      <TextInput
         value={field.validation?.allowedDomain || ""}
         placeholder="example.com"
         className="h-11 rounded-lg"
-        onChange={(event) =>
+        onChange={(value) =>
           onUpdate({
             validation: {
               ...field.validation,
-              allowedDomain: event.target.value,
+              allowedDomain: value,
             },
           })
         }
