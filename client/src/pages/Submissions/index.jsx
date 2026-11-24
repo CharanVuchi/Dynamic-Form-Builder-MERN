@@ -5,6 +5,7 @@ import { FiClock, FiEye, FiFileText, FiInbox, FiTrash2 } from "react-icons/fi";
 
 import { Button, Popup, Table } from "src/components";
 import { useToast } from "src/hooks/useToast";
+import { GetFormsAction } from "src/redux/actions/forms";
 import { DeleteSubmissionAction, GetSubmissionsAction } from "src/redux/actions/submissions";
 
 const STATUS_STYLES = {
@@ -18,7 +19,8 @@ const Submissions = () => {
 
   const dispatch = useDispatch();
 
-  const { submissions, reduxLoading: loading } = useSelector((state) => state.submissions);
+  const { submissions, pagination: paginationInfo, stats: submissionStats, reduxLoading: loading } = useSelector((state) => state.submissions);
+  const forms = useSelector((state) => state.forms.forms);
   const [search, setSearch] = useState("");
   const [formFilter, setFormFilter] = useState(undefined);
   const [statusFilter, setStatusFilter] = useState(undefined);
@@ -26,48 +28,32 @@ const Submissions = () => {
   const [pagination, setPagination] = useState({ current: 1, pageSize: 8 });
 
   useEffect(() => {
-    dispatch(GetSubmissionsAction());
-  }, [dispatch]);
+    dispatch(
+      GetSubmissionsAction({
+        page: pagination.current,
+        limit: pagination.pageSize,
+        search,
+        formId: formFilter,
+        status: statusFilter,
+      }),
+    );
+  }, [dispatch, pagination, search, formFilter, statusFilter]);
 
   const formOptions = useMemo(() => {
-    const uniqueForms = new Map();
+    return forms.map((form) => ({ label: form.name, value: form.formId }));
+  }, [forms]);
 
-    submissions.forEach((submission) => {
-      if (!uniqueForms.has(submission.formId)) {
-        uniqueForms.set(submission.formId, { label: submission.formName, value: submission.formId });
-      }
-    });
-
-    return [...uniqueForms.values()];
-  }, [submissions]);
-
-  const filteredSubmissions = useMemo(() => {
-    const query = search.trim().toLowerCase();
-
-    return submissions.filter((submission) => {
-      const matchesSearch =
-        !query ||
-        [submission.submissionId, submission.formName, submission.submittedBy, submission.email, submission.mobile]
-          .filter(Boolean)
-          .some((value) => String(value).toLowerCase().includes(query));
-
-      const matchesForm = !formFilter || submission.formId === formFilter;
-      const matchesStatus = !statusFilter || submission.status === statusFilter;
-
-      return matchesSearch && matchesForm && matchesStatus;
-    });
-  }, [submissions, search, formFilter, statusFilter]);
+  useEffect(() => {
+    dispatch(GetFormsAction({ page: 1, limit: 100 }));
+  }, [dispatch]);
 
   const stats = useMemo(() => {
-    const newCount = submissions.filter((submission) => submission.status === "New").length;
-    const formsWithRecords = new Set(submissions.map((submission) => submission.formId)).size;
-
     return [
-      { label: "Total Submissions", value: submissions.length, icon: FiInbox },
-      { label: "New Records", value: newCount, icon: FiClock },
-      { label: "Forms with Records", value: formsWithRecords, icon: FiFileText },
+      { label: "Total Submissions", value: submissionStats.totalCount, icon: FiInbox },
+      { label: "New Records", value: submissionStats.newCount, icon: FiClock },
+      { label: "Forms with Records", value: submissionStats.formsWithRecords, icon: FiFileText },
     ];
-  }, [submissions]);
+  }, [submissionStats]);
 
   const handleSearch = (value) => {
     setSearch(value);
@@ -81,8 +67,11 @@ const Submissions = () => {
     setPagination((previous) => ({ ...previous, current: 1 }));
   };
 
-  const handlePageChange = (page) => {
-    setPagination((previous) => ({ ...previous, current: page }));
+  const handlePageChange = (page, pageSize) => {
+    setPagination((previous) => ({
+      current: pageSize !== previous.pageSize ? 1 : page,
+      pageSize,
+    }));
   };
 
   const handleDelete = (record) => {
@@ -102,6 +91,19 @@ const Submissions = () => {
 
             if (viewRecord?.id === record.id) {
               setViewRecord(null);
+            }
+            if (submissions.length === 1 && pagination.current > 1) {
+              setPagination((previous) => ({ ...previous, current: previous.current - 1 }));
+            } else {
+              dispatch(
+                GetSubmissionsAction({
+                  page: pagination.current,
+                  limit: pagination.pageSize,
+                  search,
+                  formId: formFilter,
+                  status: statusFilter,
+                }),
+              );
             }
           } else {
             toast.error(result?.error?.desc || "Unable to delete the submission.");
@@ -193,9 +195,6 @@ const Submissions = () => {
     },
   ];
 
-  const startIndex = (pagination.current - 1) * pagination.pageSize;
-  const currentSubmissions = filteredSubmissions.slice(startIndex, startIndex + pagination.pageSize);
-
   return (
     <div className="flex flex-col gap-6">
       {/* Page Heading */}
@@ -255,12 +254,12 @@ const Submissions = () => {
           filterValues={{ formId: formFilter, status: statusFilter }}
           onFilterChange={handleFilterChange}
           columns={columns}
-          dataSource={currentSubmissions}
+          dataSource={submissions}
           rowKey="id"
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,
-            total: filteredSubmissions.length,
+            total: paginationInfo.total,
             showSizeChanger: false,
           }}
           onPageChange={handlePageChange}

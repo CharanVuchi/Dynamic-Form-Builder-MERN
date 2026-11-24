@@ -285,7 +285,7 @@ export const descriptions = {
 
 export const metaDesription = (info) => {
   return {
-    additional: null,
+    additional: info?.additional || null,
     environment: process.env.NODE_ENV,
     pagination: info?.pagination || null,
     timestamp: new Date(),

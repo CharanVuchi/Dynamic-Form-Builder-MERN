@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CreateFormAction, GetFormAction, GetFormsAction, GetPublicFormAction, UpdateFormAction } from "../actions/forms";
+import { CreateFormAction, DeleteFormAction, GetFormAction, GetFormsAction, GetPublicFormAction, UpdateFormAction } from "../actions/forms";
 
 const initial_state = {
   forms: [],
   form: null,
   publicForm: null,
+  pagination: { total: 0, page: 1, limit: 10, totalPages: 0 },
   reduxLoading: false,
   reduxError: null,
 };
@@ -22,6 +23,7 @@ const forms_slice = createSlice({
       .addCase(GetFormsAction.fulfilled, (state, { payload }) => {
         state.reduxLoading = false;
         state.forms = payload?.data || [];
+        state.pagination = payload?.meta?.pagination || initial_state.pagination;
       })
       .addCase(GetFormsAction.rejected, (state, { payload }) => {
         state.reduxLoading = false;
@@ -46,6 +48,23 @@ const forms_slice = createSlice({
       .addCase(UpdateFormAction.fulfilled, (state, { payload }) => {
         state.reduxLoading = false;
         state.form = payload?.data || state.form;
+      })
+      .addCase(DeleteFormAction.pending, (state) => {
+        state.reduxLoading = true;
+        state.reduxError = null;
+      })
+      .addCase(DeleteFormAction.fulfilled, (state, { payload }) => {
+        state.reduxLoading = false;
+        const deletedId = payload?.data?.id;
+        if (deletedId) {
+          state.forms = state.forms.filter((form) => String(form.id || form._id) !== String(deletedId));
+          state.pagination.total = Math.max(0, state.pagination.total - 1);
+          state.pagination.totalPages = Math.ceil(state.pagination.total / state.pagination.limit);
+        }
+      })
+      .addCase(DeleteFormAction.rejected, (state, { payload }) => {
+        state.reduxLoading = false;
+        state.reduxError = payload?.error || null;
       })
       .addCase(GetPublicFormAction.pending, (state) => {
         state.reduxLoading = true;

@@ -9,6 +9,7 @@ const protectedRoutes = [
   { path: "/dashboard", element: <Dashboard /> },
   { path: "/dynamic-forms", element: <DynamicForms /> },
   { path: "/dynamic-forms/create", element: <FormBuilder /> },
+  { path: "/dynamic-forms/:id/edit", element: <FormBuilder /> },
   { path: "/submissions", element: <Submissions /> },
 ];
 

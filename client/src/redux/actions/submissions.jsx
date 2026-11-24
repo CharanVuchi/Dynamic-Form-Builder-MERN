@@ -10,10 +10,10 @@ const getHeaders = () => ({
   },
 });
 
-export const GetSubmissionsAction = createAsyncThunk("submissions/get_list", async (_, { rejectWithValue, dispatch }) => {
+export const GetSubmissionsAction = createAsyncThunk("submissions/get_list", async (params = {}, { rejectWithValue, dispatch }) => {
   try {
     dispatch(is_loading_true());
-    const result = await axios.get(`${apiUri()}/submissions`, getHeaders());
+    const result = await axios.get(`${apiUri()}/submissions`, { ...getHeaders(), params });
     dispatch(is_loading_false());
     return result?.data;
   } catch (err) {

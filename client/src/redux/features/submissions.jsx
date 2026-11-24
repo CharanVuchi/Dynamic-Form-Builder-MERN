@@ -3,6 +3,8 @@ import { CreateSubmissionAction, DeleteSubmissionAction, GetSubmissionsAction } 
 
 const initial_state = {
   submissions: [],
+  pagination: { total: 0, page: 1, limit: 8, totalPages: 0 },
+  stats: { totalCount: 0, newCount: 0, formsWithRecords: 0 },
   reduxLoading: false,
   reduxError: null,
 };
@@ -20,6 +22,8 @@ const submissions_slice = createSlice({
       .addCase(GetSubmissionsAction.fulfilled, (state, { payload }) => {
         state.reduxLoading = false;
         state.submissions = payload?.data || [];
+        state.pagination = payload?.meta?.pagination || initial_state.pagination;
+        state.stats = payload?.meta?.additional?.stats || initial_state.stats;
       })
       .addCase(GetSubmissionsAction.rejected, (state, { payload }) => {
         state.reduxLoading = false;
