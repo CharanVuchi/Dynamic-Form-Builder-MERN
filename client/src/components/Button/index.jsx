@@ -1,9 +1,9 @@
 import React from "react";
 
 const BUTTON_VARIANTS = {
-  primary: "bg-[#161F42] text-white border border-[#161F42] hover:bg-[#404D81] hover:border-[#404D81]",
+  primary: "bg-[#161F42] text-white border border-[#161F42] hover:bg-[#404D81] ",
 
-  secondary: "bg-[#9CD3BB] text-[#161F42] border border-[#9CD3BB] hover:bg-[#BDE2D1] hover:border-[#BDE2D1]",
+  secondary: "bg-[#9CD3BB] text-[#161F42] border border-[#9CD3BB] hover:bg-[#BDE2D1] ",
 
   outline: "bg-transparent text-[#161F42] border border-[#161F42] hover:bg-[#E7ECFF4D]",
 };
@@ -27,6 +27,7 @@ const Button = ({ variant = "primary", textContent, children, onClick, type = "b
         transition-all duration-200 ease-in-out
         focus:outline-none focus:ring-2 focus:ring-[#161F42]/20 focus:ring-offset-2
         disabled:opacity-50 disabled:cursor-not-allowed
+        cursor-pointer
         ${BUTTON_VARIANTS[variant] || BUTTON_VARIANTS.primary}
         ${className}
       `}

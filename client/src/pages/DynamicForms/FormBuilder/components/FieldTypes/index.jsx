@@ -18,7 +18,7 @@ const FieldTypes = ({ onAddField, selectedType }) => {
       </div>
 
       {/* Field Types */}
-      <div className="flex flex-col gap-3">
+      <div className="grid grid-cols-2 gap-3">
         {FIELD_TYPES.map((field) => {
           const Icon = field.icon;
 

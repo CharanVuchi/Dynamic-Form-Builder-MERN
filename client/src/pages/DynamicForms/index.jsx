@@ -151,7 +151,7 @@ const DynamicForms = () => {
       {/* Page Heading */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-[28px] font-bold text-[#161F42]">Forms</h1>
+          <h1 className="text-[24px] font-bold text-[#161F42]">Forms</h1>
 
           <p className="text-base text-[#718096]">Create, manage and publish your forms.</p>
         </div>

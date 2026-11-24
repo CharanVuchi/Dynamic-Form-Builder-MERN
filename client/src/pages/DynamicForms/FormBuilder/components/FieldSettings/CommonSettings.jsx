@@ -1,4 +1,4 @@
-import { Input, Select, Switch } from "antd";
+import { Input, Select, Switch, ConfigProvider } from "antd";
 
 const FIELD_TYPE_OPTIONS = [
   { label: "Text", value: "text" },
@@ -72,7 +72,17 @@ const CommonSettings = ({ field, onUpdate }) => {
           <p className="text-xs text-[#8190AA] mt-1">Users must complete this field</p>
         </div>
 
-        <Switch checked={Boolean(field.required)} onChange={(checked) => handleChange("required", checked)} />
+        <ConfigProvider
+          theme={{
+            components: {
+              Switch: {
+                colorPrimary: "#161F42",
+                colorPrimaryHover: "#161F42",
+              },
+            },
+          }}>
+          <Switch checked={Boolean(field.required)} onChange={(checked) => handleChange("required", checked)} />
+        </ConfigProvider>
       </div>
     </div>
   );

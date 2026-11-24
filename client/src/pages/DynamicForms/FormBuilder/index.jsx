@@ -7,7 +7,6 @@ const Create = () => {
   const [status, setStatus] = useState("Draft");
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
-  const [selectedType, setSelectedType] = useState(null);
 
   const { fields, selectedField, selectedFieldId, addField, selectField, deleteField, duplicateField, reorderFields, updateField } = useFormBuilder();
 
@@ -46,12 +45,6 @@ const Create = () => {
     }
   };
 
-  // Add Field
-  const handleAddField = (type) => {
-    setSelectedType(type);
-    console.log("Selected field type:", type);
-  };
-
   return (
     <>
       <BreadCrumbs />
@@ -61,10 +54,10 @@ const Create = () => {
         <BuilderHeader status={status} onPreview={handlePreview} onSaveDraft={handleSaveDraft} onPublish={handlePublish} saving={saving} publishing={publishing} />
 
         <div className="grid grid-cols-12 gap-5">
-          <div className="col-span-3">
+          <div className="col-span-4">
             <FieldTypes onAddField={addField} selectedType={selectedField?.type} />
           </div>
-          <div className="col-span-6">
+          <div className="col-span-4">
             <FormCanvas
               fields={fields}
               selectedFieldId={selectedFieldId}
@@ -75,7 +68,7 @@ const Create = () => {
             />
           </div>
 
-          <div className="col-span-3">
+          <div className="col-span-4">
             <FieldSettings field={selectedField} onUpdate={updateField} />
           </div>
         </div>
