@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { App, Tag, Tooltip } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import { FiClock, FiEye, FiFileText, FiInbox, FiTrash2 } from "react-icons/fi";
 
 import { Button, Popup, Table } from "src/components";
 import { useToast } from "src/hooks/useToast";
-import { getSubmissions } from "src/services/formService";
+import { DeleteSubmissionAction, GetSubmissionsAction } from "src/redux/actions/submissions";
 
 const STATUS_STYLES = {
   New: "!bg-[#E8F8EF] !text-[#16834B]",
@@ -15,8 +16,9 @@ const Submissions = () => {
   const { modal } = App.useApp();
   const toast = useToast();
 
-  const [submissions, setSubmissions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  const { submissions, reduxLoading: loading } = useSelector((state) => state.submissions);
   const [search, setSearch] = useState("");
   const [formFilter, setFormFilter] = useState(undefined);
   const [statusFilter, setStatusFilter] = useState(undefined);
@@ -24,23 +26,8 @@ const Submissions = () => {
   const [pagination, setPagination] = useState({ current: 1, pageSize: 8 });
 
   useEffect(() => {
-    let cancelled = false;
-
-    getSubmissions()
-      .then((data) => {
-        if (!cancelled) {
-          setSubmissions(data);
-          setLoading(false);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    dispatch(GetSubmissionsAction());
+  }, [dispatch]);
 
   const formOptions = useMemo(() => {
     const uniqueForms = new Map();
@@ -106,14 +93,23 @@ const Submissions = () => {
       cancelText: "Cancel",
       okButtonProps: { danger: true },
       centered: true,
-      onOk: () => {
-        setSubmissions((previous) => previous.filter((submission) => submission.id !== record.id));
+      onOk: async () => {
+        try {
+          const result = await dispatch(DeleteSubmissionAction(record.id)).unwrap();
 
-        if (viewRecord?.id === record.id) {
-          setViewRecord(null);
+          if (result?.code === 200) {
+            toast.success(result?.success?.desc || `Submission ${record.submissionId} deleted successfully.`);
+
+            if (viewRecord?.id === record.id) {
+              setViewRecord(null);
+            }
+          } else {
+            toast.error(result?.error?.desc || "Unable to delete the submission.");
+          }
+        } catch (error) {
+          const serverError = error?.error || error;
+          toast.error(serverError?.desc || serverError?.message || "Unable to delete the submission.");
         }
-
-        toast.success(`Submission ${record.submissionId} deleted`);
       },
     });
   };
@@ -160,8 +156,8 @@ const Submissions = () => {
     },
     {
       title: "Submitted At",
-      dataIndex: "submittedAt",
-      key: "submittedAt",
+      dataIndex: "createdAt",
+      key: "createdAt",
       width: "16%",
     },
     // {
@@ -318,7 +314,7 @@ const Submissions = () => {
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[#8190AA]">Submitted At</p>
 
-                <p className="text-sm text-[#253858] mt-1">{viewRecord.submittedAt}</p>
+                <p className="text-sm text-[#253858] mt-1">{viewRecord.createdAt}</p>
               </div>
 
               <div>

@@ -1,13 +1,21 @@
+import { useEffect } from "react";
 import { Card } from "antd";
-import dashboardData from "./data.json";
+import { useDispatch, useSelector } from "react-redux";
 
+import { Dashboard_Get_Action } from "src/redux/actions/dashboard";
 import DashboardCards from "./components/DashboardCards";
 import DashboardChart from "./components/DashboardChart";
 import RecentForms from "./components/RecentForms";
 import RecentSubmissions from "./components/RecentSubmissions";
 
 const Dashboard = () => {
-  const { cards, submissionAnalytics, recentForms, recentSubmissions } = dashboardData;
+  const dispatch = useDispatch();
+
+  const { cards, submissionAnalytics, recentForms, recentSubmissions } = useSelector((state) => state.dashboard);
+
+  useEffect(() => {
+    dispatch(Dashboard_Get_Action());
+  }, [dispatch]);
 
   const handleViewSubmission = (record) => {
     console.log("View submission:", record);

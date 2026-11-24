@@ -45,3 +45,27 @@ export const CreateFormAction = createAsyncThunk("forms/create", async (payload,
     return rejectWithValue(err.response?.data);
   }
 });
+
+export const UpdateFormAction = createAsyncThunk("forms/update", async (payload, { rejectWithValue, dispatch }) => {
+  try {
+    dispatch(is_loading_true());
+    const result = await axios.put(`${apiUri()}/forms/${payload.id}`, payload, getHeaders());
+    dispatch(is_loading_false());
+    return result?.data;
+  } catch (err) {
+    dispatch(is_loading_false());
+    return rejectWithValue(err.response?.data);
+  }
+});
+
+export const GetPublicFormAction = createAsyncThunk("forms/get_public", async (formId, { rejectWithValue, dispatch }) => {
+  try {
+    dispatch(is_loading_true());
+    const result = await axios.get(`${apiUri()}/public/forms/${formId}`);
+    dispatch(is_loading_false());
+    return result?.data;
+  } catch (err) {
+    dispatch(is_loading_false());
+    return rejectWithValue(err.response?.data);
+  }
+});

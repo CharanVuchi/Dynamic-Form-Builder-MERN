@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CreateSubmissionAction, GetSubmissionsAction } from "../actions/submissions";
+import { CreateSubmissionAction, DeleteSubmissionAction, GetSubmissionsAction } from "../actions/submissions";
 
 const initial_state = {
   submissions: [],
@@ -34,6 +34,10 @@ const submissions_slice = createSlice({
         const newSubmission = payload?.data;
 
         state.submissions = newSubmission ? [newSubmission, ...(state.submissions || [])] : state.submissions;
+      })
+      .addCase(DeleteSubmissionAction.fulfilled, (state, { payload }) => {
+        state.reduxLoading = false;
+        state.submissions = (state.submissions || []).filter((submission) => submission.id !== payload?.data?.id);
       });
   },
 });

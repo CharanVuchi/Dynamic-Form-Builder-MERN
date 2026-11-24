@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CreateFormAction, GetFormAction, GetFormsAction } from "../actions/forms";
+import { CreateFormAction, GetFormAction, GetFormsAction, GetPublicFormAction, UpdateFormAction } from "../actions/forms";
 
 const initial_state = {
   forms: [],
   form: null,
+  publicForm: null,
   reduxLoading: false,
   reduxError: null,
 };
@@ -41,6 +42,24 @@ const forms_slice = createSlice({
       .addCase(CreateFormAction.fulfilled, (state, { payload }) => {
         state.reduxLoading = false;
         state.form = payload?.data || state.form;
+      })
+      .addCase(UpdateFormAction.fulfilled, (state, { payload }) => {
+        state.reduxLoading = false;
+        state.form = payload?.data || state.form;
+      })
+      .addCase(GetPublicFormAction.pending, (state) => {
+        state.reduxLoading = true;
+        state.reduxError = null;
+        state.publicForm = null;
+      })
+      .addCase(GetPublicFormAction.fulfilled, (state, { payload }) => {
+        state.reduxLoading = false;
+        state.publicForm = payload?.data || null;
+      })
+      .addCase(GetPublicFormAction.rejected, (state, { payload }) => {
+        state.reduxLoading = false;
+        state.publicForm = null;
+        state.reduxError = payload?.error || null;
       });
   },
 });

@@ -1,14 +1,18 @@
 import { Form } from "antd";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { FiLock, FiUser, FiArrowRight, FiShield } from "react-icons/fi";
+import { FiLock } from "react-icons/fi";
 
 import { Button, TextInput } from "src/components";
+import { setToken } from "src/hooks/useAuth";
 import { useToast } from "src/hooks/useToast";
+import { LoginAction } from "src/redux/actions/auth";
 
 const Login = () => {
   const toast = useToast();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
 
@@ -40,11 +44,21 @@ const Login = () => {
     try {
       setLoading(true);
 
-      localStorage.setItem("token", "21234");
+      const result = await dispatch(LoginAction({ userName: username, password })).unwrap();
+
+      const token = result?.data?.token;
+
+      if (token) {
+        setToken(token);
+      }
 
       toast.success("Welcome back! Signed in successfully.");
 
       navigate("/dashboard", { replace: true });
+    } catch (error) {
+      const serverError = error?.error || error;
+
+      toast.error(serverError?.desc || serverError?.message || "Login failed. Check your username and password.");
     } finally {
       setLoading(false);
     }
@@ -68,6 +82,7 @@ const Login = () => {
 
             <div>
               <h2 className="text-lg font-bold tracking-tight text-[#161F42]">Form Builder</h2>
+
               <p className="text-xs text-[#8190AA]">Dynamic Form Management</p>
             </div>
           </div>

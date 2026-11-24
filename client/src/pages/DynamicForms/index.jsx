@@ -1,18 +1,25 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Tag, Tooltip } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import { FiPlus, FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { Table } from "src/components";
 
-import formsData from "./data.json";
 import RecordFormDrawer from "./components/RecordFormDrawer";
 import { useNavigate } from "react-router-dom";
+import { GetFormsAction } from "src/redux/actions/forms";
 
 const DynamicForms = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const forms = useSelector((state) => state.forms.forms);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState(undefined);
-  const [forms, setForms] = useState(formsData.forms);
   const [recordForm, setRecordForm] = useState(null);
+
+  useEffect(() => {
+    dispatch(GetFormsAction());
+  }, [dispatch]);
 
   const [pagination, setPagination] = useState({
     current: 1,
@@ -67,7 +74,7 @@ const DynamicForms = () => {
   };
 
   const handleRecordSubmitted = (submission) => {
-    setForms((previousForms) => previousForms.map((form) => (form.formId === submission.formId ? { ...form, submissions: form.submissions + 1 } : form)));
+    dispatch(GetFormsAction());
   };
 
   // Table columns

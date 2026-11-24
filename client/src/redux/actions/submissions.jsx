@@ -33,3 +33,15 @@ export const CreateSubmissionAction = createAsyncThunk("submissions/create", asy
     return rejectWithValue(err.response?.data);
   }
 });
+
+export const DeleteSubmissionAction = createAsyncThunk("submissions/delete", async (id, { rejectWithValue, dispatch }) => {
+  try {
+    dispatch(is_loading_true());
+    const result = await axios.delete(`${apiUri()}/submissions/${id}`, getHeaders());
+    dispatch(is_loading_false());
+    return result?.data;
+  } catch (err) {
+    dispatch(is_loading_false());
+    return rejectWithValue(err.response?.data);
+  }
+});

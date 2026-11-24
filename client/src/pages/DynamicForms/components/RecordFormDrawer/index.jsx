@@ -1,56 +1,47 @@
 import { useEffect, useState } from "react";
 import { Alert, Spin } from "antd";
 import { FiFileText } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Button, DynamicFormRenderer, Popup } from "../../../../components";
-import { createFormSubmission, getPublicForm } from "../../../../services/formService";
+import { GetPublicFormAction } from "../../../../redux/actions/forms";
+import { CreateSubmissionAction } from "../../../../redux/actions/submissions";
 import { useToast } from "../../../../hooks/useToast";
 
 const RecordFormDrawer = ({ form, onClose, onSubmitted }) => {
+  const dispatch = useDispatch();
   const toast = useToast();
 
-  const [formState, setFormState] = useState({ formId: null, schema: null, error: "" });
+  const publicForm = useSelector((state) => state.forms.publicForm);
+  const publicFormError = useSelector((state) => state.forms.reduxError);
   const [submitting, setSubmitting] = useState(false);
 
-  const isCurrentForm = formState.formId === form.formId;
-  const schema = isCurrentForm ? formState.schema : null;
-  const error = isCurrentForm ? formState.error : "";
-
   useEffect(() => {
-    let cancelled = false;
+    dispatch(GetPublicFormAction(form.formId));
+  }, [form.formId, dispatch]);
 
-    getPublicForm(form.formId)
-      .then((data) => {
-        if (!cancelled) setFormState({ formId: form.formId, schema: data, error: "" });
-      })
-      .catch((requestError) => {
-        if (!cancelled) {
-          setFormState({ formId: form.formId, schema: null, error: requestError.message || "Unable to load this form." });
-        }
-      });
+  const isLoading = !publicForm && !publicFormError;
 
-    return () => {
-      cancelled = true;
-    };
-  }, [form.formId]);
+  const error = publicFormError ? publicFormError.error?.desc || publicFormError.desc || "Unable to load this form." : "";
 
   const handleSubmit = async (values) => {
     try {
       setSubmitting(true);
 
-      const submission = await createFormSubmission(schema, values);
+      const result = await dispatch(CreateSubmissionAction({ formId: form.formId, values })).unwrap();
 
-      toast.success(`Record ${submission.submissionId} saved successfully`);
+      toast.success(`Record ${result?.data?.submissionId || ""} saved successfully`);
 
-      onSubmitted?.(submission);
+      onSubmitted?.(result?.data);
       onClose?.();
     } catch (submitError) {
-      toast.error(submitError.message || "Unable to save the record.");
+      const serverError = submitError?.error || submitError;
+
+      toast.error(serverError?.desc || serverError?.message || "Unable to save the record.");
     } finally {
       setSubmitting(false);
     }
   };
-
-  const isLoading = !schema && !error;
 
   return (
     <Popup
@@ -62,7 +53,7 @@ const RecordFormDrawer = ({ form, onClose, onSubmitted }) => {
       closable
       confirmClose={false}
       footer={
-        schema ? (
+        publicForm ? (
           <div className="flex items-center justify-end gap-3">
             <Button type="button" variant="outline" textContent="Cancel" onClick={onClose} />
 
@@ -80,7 +71,7 @@ const RecordFormDrawer = ({ form, onClose, onSubmitted }) => {
 
       {!isLoading && error && <Alert type="error" showIcon message="Unable to load form" description={error} />}
 
-      {schema && (
+      {publicForm && (
         <>
           <div className="flex items-center gap-3 rounded-xl bg-[#F0F4FA] p-4 mb-5">
             <div className="w-10 h-10 rounded-lg bg-white text-[#283B80] flex items-center justify-center shrink-0">
@@ -88,15 +79,15 @@ const RecordFormDrawer = ({ form, onClose, onSubmitted }) => {
             </div>
 
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-[#161F42] truncate">{schema.name}</p>
+              <p className="text-sm font-semibold text-[#161F42] truncate">{publicForm.name}</p>
 
               <p className="text-xs text-[#718096] mt-0.5">
-                {schema.formId} · {schema.fields?.length || 0} fields
+                {publicForm.formId} · {publicForm.fields?.length || 0} fields
               </p>
             </div>
           </div>
 
-          <DynamicFormRenderer form={schema} formId="add-record-form" showActions={false} onSubmit={handleSubmit} />
+          <DynamicFormRenderer form={publicForm} formId="add-record-form" showActions={false} onSubmit={handleSubmit} />
         </>
       )}
     </Popup>
