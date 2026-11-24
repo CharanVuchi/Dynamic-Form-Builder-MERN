@@ -1,9 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import { ProtectedLayout, PublicLayout } from "../layouts";
+import useAuth from "../hooks/useAuth";
 import { Login, Dashboard, DynamicForms, FormBuilder, Submissions } from "../pages";
-
-const publicRoutes = [{ path: "login", element: <Login /> }];
 
 const protectedRoutes = [
   { path: "/dashboard", element: <Dashboard /> },
@@ -12,22 +11,26 @@ const protectedRoutes = [
   { path: "/submissions", element: <Submissions /> },
 ];
 
+const publicRoutes = [{ path: "/login", element: <Login /> }];
+
 const RouteComponent = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
 
-      <Route element={<PublicLayout />}>
-        {publicRoutes?.map((route) => (
-          <Route key={route?.path} path={route?.path} element={route?.element} />
-        ))}
-      </Route>
+      {publicRoutes.map((route) => (
+        <Route key={route.path} path={route.path} element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <PublicLayout>{route.element}</PublicLayout>} />
+      ))}
 
-      <Route element={<ProtectedLayout />}>
-        {protectedRoutes?.map((route) => (
-          <Route key={route?.path} path={route?.path} element={route?.element} />
-        ))}
-      </Route>
+      <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
+
+      {isAuthenticated ? (
+        <Route element={<ProtectedLayout />}>{protectedRoutes.map((route) => <Route key={route.path} path={route.path} element={route.element} />)}</Route>
+      ) : (
+        <Route path="/dashboard" element={<Navigate to="/login" replace />} />
+      )}
     </Routes>
   );
 };

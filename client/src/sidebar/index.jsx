@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { Popconfirm } from "antd";
-import { FiGrid, FiFileText, FiInbox, FiLogOut, FiMenu } from "react-icons/fi";
+import { FiGrid, FiFileText, FiInbox, FiLogOut } from "react-icons/fi";
+import useAuth from "../hooks/useAuth";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const navigationItems = [
@@ -23,9 +24,10 @@ const navigationItems = [
 
 const Sidebar = ({ collapsed = false, onToggleSidebar }) => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logout();
     navigate("/login", { replace: true });
   };
 
@@ -69,7 +71,7 @@ const Sidebar = ({ collapsed = false, onToggleSidebar }) => {
                   backgroundColor: isActive ? "#BDE2D1" : "transparent",
                   color: isActive ? "#161F42" : "#FFFFFF",
                 })}>
-                {({ isActive }) => (
+                {() => (
                   <>
                     <Icon size={20} strokeWidth={1.8} className="shrink-0" />
 
