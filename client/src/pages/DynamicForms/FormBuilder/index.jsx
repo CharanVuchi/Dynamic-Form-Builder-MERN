@@ -4,7 +4,7 @@ import { BuilderHeader, FieldTypes, FormCanvas,FieldSettings } from "./component
 import useFormBuilder from "../../../hooks/useFormBuilder";
 
 const Create = () => {
-  const [status, setStatus] = useState("Draft");
+  const [status] = useState("Draft");
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
 

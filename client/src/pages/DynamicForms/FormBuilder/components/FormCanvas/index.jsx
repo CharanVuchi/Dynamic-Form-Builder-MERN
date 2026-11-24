@@ -1,5 +1,5 @@
 import { Card, Dropdown, Input } from "antd";
-import { FiFileText, FiPlus, FiX } from "react-icons/fi";
+import { FiFileText, FiPlus } from "react-icons/fi";
 import FormFieldItem from "./FormFieldItem";
 import EmptyCanvas from "./EmptyCanvas";
 import { FIELD_TYPES } from "../FieldTypes/config";

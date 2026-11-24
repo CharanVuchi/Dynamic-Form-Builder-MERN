@@ -1,4 +1,4 @@
-import { FiArrowDown, FiArrowUp, FiTrash2 } from "react-icons/fi";
+import { FiTrash2 } from "react-icons/fi";
 import { LuGripVertical } from "react-icons/lu";
 import { FIELD_TYPES } from "../FieldTypes/config";
 

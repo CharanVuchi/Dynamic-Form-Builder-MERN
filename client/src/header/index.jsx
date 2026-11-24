@@ -45,10 +45,10 @@ const Header = ({ sidebarCollapsed = false, onToggleSidebar }) => {
 
         {/* Admin Profile */}
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-full bg-[#9CD3BB] text-[#161F42] flex items-center justify-center font-bold text-sm">C</div>
+          <div className="w-9 h-9 rounded-full bg-[#9CD3BB] text-[#161F42] flex items-center justify-center font-bold text-sm">A</div>
 
           <div>
-            <p className="text-sm font-semibold text-[#1F1F1F] leading-tight">Charan Vuchi</p>
+            <p className="text-sm font-semibold text-[#1F1F1F] leading-tight">Admin</p>
 
             <p className="text-xs text-[#718096] leading-tight">Admin</p>
           </div>

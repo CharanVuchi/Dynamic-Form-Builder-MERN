@@ -1,15 +1,18 @@
 import { useMemo, useState } from "react";
-import { Button, Tag, Tooltip } from "antd";
-import { FiPlus, FiInbox, FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
+import { Tag, Tooltip } from "antd";
+import { FiPlus, FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { Table } from "src/components";
 
 import formsData from "./data.json";
+import RecordFormDrawer from "./components/RecordFormDrawer";
 import { useNavigate } from "react-router-dom";
 
 const DynamicForms = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState(undefined);
+  const [forms, setForms] = useState(formsData.forms);
+  const [recordForm, setRecordForm] = useState(null);
 
   const [pagination, setPagination] = useState({
     current: 1,
@@ -18,14 +21,14 @@ const DynamicForms = () => {
 
   // Search and filter
   const filteredForms = useMemo(() => {
-    return formsData.forms.filter((form) => {
+    return forms.filter((form) => {
       const matchesSearch = form.name.toLowerCase().includes(search.toLowerCase()) || form.formId.toLowerCase().includes(search.toLowerCase());
 
       const matchesStatus = !status || form.status === status;
 
       return matchesSearch && matchesStatus;
     });
-  }, [search, status]);
+  }, [forms, search, status]);
 
   // Reset page when search or filter changes
   const handleSearch = (value) => {
@@ -55,12 +58,16 @@ const DynamicForms = () => {
     console.log("Edit Form:", record);
   };
 
-  const handleSubmissions = (record) => {
-    console.log("View Submissions:", record);
-  };
-
   const handleDelete = (record) => {
     console.log("Delete Form:", record);
+  };
+
+  const handleOpenAddRecord = (record) => {
+    setRecordForm(record);
+  };
+
+  const handleRecordSubmitted = (submission) => {
+    setForms((previousForms) => previousForms.map((form) => (form.formId === submission.formId ? { ...form, submissions: form.submissions + 1 } : form)));
   };
 
   // Table columns
@@ -82,7 +89,7 @@ const DynamicForms = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width: "13%",
+      width: "12%",
       render: (status) => (
         <Tag variant="filled" className={`!rounded-full !px-3 !py-1 !font-medium ${status === "Published" ? "!bg-[#E8F8EF] !text-[#16834B]" : "!bg-[#FFF3DC] !text-[#B7791F]"}`}>
           {status}
@@ -93,13 +100,13 @@ const DynamicForms = () => {
       title: "Fields",
       dataIndex: "fields",
       key: "fields",
-      width: "9%",
+      width: "8%",
     },
     {
       title: "Submissions",
       dataIndex: "submissions",
       key: "submissions",
-      width: "14%",
+      width: "12%",
     },
     {
       title: "Updated At",
@@ -110,34 +117,43 @@ const DynamicForms = () => {
     {
       title: "Actions",
       key: "actions",
-      width: "24%",
-      render: (_, record) => (
-        <div className="flex items-center gap-5">
-          {/* <Tooltip title="Submissions">
-            <button type="button" onClick={() => handleSubmissions(record)} className="text-[#283B80] hover:text-[#161F42]">
-              <FiInbox size={16} />
-            </button>
-          </Tooltip> */}
+      width: "28%",
+      render: (_, record) => {
+        const isPublished = record.status === "Published";
 
-          <Tooltip title="View">
-            <button type="button" onClick={() => handleView(record)} className="text-[#283B80] hover:text-[#161F42]">
-              <FiEye size={16} />
-            </button>
-          </Tooltip>
+        return (
+          <div className="flex items-center gap-2.5">
+            <Tooltip title={isPublished ? "Add a record to this form" : "Publish this form to add records"}>
+              <button
+                type="button"
+                disabled={!isPublished}
+                onClick={() => handleOpenAddRecord(record)}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[#BDE2D1] bg-[#F3FBF7] px-2.5 py-1.5 text-xs font-semibold text-[#16834B] whitespace-nowrap transition-colors hover:bg-[#E8F8EF] disabled:cursor-not-allowed disabled:border-[#E5EAF2] disabled:bg-[#F8FAFC] disabled:text-[#A0AEC0]">
+                <FiPlus size={14} />
+                Add Record
+              </button>
+            </Tooltip>
 
-          <Tooltip title="Edit">
-            <button type="button" onClick={() => handleEdit(record)} className="text-[#283B80] hover:text-[#161F42]">
-              <FiEdit2 size={16} />
-            </button>
-          </Tooltip>
+            <Tooltip title="View">
+              <button type="button" onClick={() => handleView(record)} className="text-[#283B80] hover:text-[#161F42]">
+                <FiEye size={16} />
+              </button>
+            </Tooltip>
 
-          <Tooltip title="Delete">
-            <button type="button" onClick={() => handleDelete(record)} className="text-[#FF3B30] hover:text-red-700">
-              <FiTrash2 size={16} />
-            </button>
-          </Tooltip>
-        </div>
-      ),
+            <Tooltip title="Edit">
+              <button type="button" onClick={() => handleEdit(record)} className="text-[#283B80] hover:text-[#161F42]">
+                <FiEdit2 size={16} />
+              </button>
+            </Tooltip>
+
+            <Tooltip title="Delete">
+              <button type="button" onClick={() => handleDelete(record)} className="text-[#FF3B30] hover:text-red-700">
+                <FiTrash2 size={16} />
+              </button>
+            </Tooltip>
+          </div>
+        );
+      },
     },
   ];
 
@@ -192,6 +208,8 @@ const DynamicForms = () => {
           itemLabel="forms"
         />
       </div>
+
+      {recordForm && <RecordFormDrawer form={recordForm} onClose={() => setRecordForm(null)} onSubmitted={handleRecordSubmitted} />}
     </div>
   );
 };
