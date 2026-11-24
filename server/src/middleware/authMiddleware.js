@@ -1,10 +1,11 @@
 import jwt from "jsonwebtoken";
+import { apiResponse } from "../../shared/response.js";
 
 const extractAndVerifyToken = (req) => {
   try {
     const authHeader = req.headers["authorization"];
 
-    if (!authHeader || !authHeader.startsWith("Bearer")) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return { success: false, status: 401, message: "Access Token missing", user: null };
     }
 
@@ -21,7 +22,7 @@ const extractAndVerifyToken = (req) => {
         status: 200,
         message: "Token verified successfully",
         user: decoded,
-        id: decoded.id,
+        id: decoded.uid,
       };
     } catch (jwtError) {
       console.log(`JWT error: ${jwtError.message}`);

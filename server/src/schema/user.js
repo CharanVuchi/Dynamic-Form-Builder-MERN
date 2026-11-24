@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import { randomUUID } from "node:crypto";
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,6 +27,13 @@ const userSchema = new mongoose.Schema(
       select: false,
     },
 
+    uid: {
+      type: String,
+      required: true,
+      unique: true,
+      default: () => randomUUID(),
+    },
+
     role: {
       type: String,
       enum: ["admin"],
@@ -35,6 +43,16 @@ const userSchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: true,
+    },
+
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
 
     lastLoginAt: {

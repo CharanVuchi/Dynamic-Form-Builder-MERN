@@ -1,10 +1,17 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import rateLimit from "express-rate-limit";
 import connectDB from "./config/db.js";
 import Routes from "./src/routes/index.js";
+import { apiResponse } from "./shared/response.js";
 
 const app = express();
+
+app.use(helmet());
+app.use(morgan("dev"));
 
 const parseEnvArray = (value) => (value ? value.split(",").map((i) => i.trim()) : []);
 
@@ -13,6 +20,14 @@ app.use(
     origin: parseEnvArray(process.env.ORIGIN),
     methods: parseEnvArray(process.env.METHODS),
     allowedHeaders: parseEnvArray(process.env.ALLOWED_HEADERS),
+  }),
+);
+
+app.use(
+  rateLimit({
+    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000,
+    max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100,
+    handler: (req, res) => apiResponse(res, { action: 16 }),
   }),
 );
 

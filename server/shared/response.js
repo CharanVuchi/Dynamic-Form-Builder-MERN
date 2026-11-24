@@ -1,4 +1,6 @@
-import { descriptions, metaDesription } from "./message.js";
+import { descriptions, metaDesription } from "./messages.js";
+
+const isDev = process.env.NODE_ENV === "development";
 
 const apiResponse = (res, result) => {
   const meta = metaDesription(result);
@@ -17,7 +19,7 @@ const apiResponse = (res, result) => {
     success: description?.response === "PASSED" ? { ...errorWithoutResponse, desc } : null,
   };
 
-  res.status(description?.code).json(response_json);
+  res.status(description?.code || 200).json(response_json);
 };
 
 const internalServerResponse = (res, error) => {

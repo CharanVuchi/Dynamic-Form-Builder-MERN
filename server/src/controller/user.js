@@ -1,13 +1,18 @@
-import { apiResponse, internalServerResponse } from "../../shared/response";
-import { login_sevices } from "../services/user";
+import { apiResponse, internalServerResponse } from "../../shared/response.js";
+import { login_sevices, register_sevices } from "../services/user.js";
 
 export const login_controller = async (req, res) => {
   try {
-    const body = req.body;
-    const req_body = {
-      ...body,
-    };
-    const result = await user.login_sevices(req_body);
+    const result = await login_sevices(req.body);
+    return apiResponse(res, result);
+  } catch (error) {
+    return internalServerResponse(res, error);
+  }
+};
+
+export const register_controller = async (req, res) => {
+  try {
+    const result = await register_sevices(req.body);
     return apiResponse(res, result);
   } catch (error) {
     return internalServerResponse(res, error);
