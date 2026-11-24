@@ -65,11 +65,13 @@ export const getDashboardStats_dbServices = async (request) => {
           values: analyticsValues,
         },
         recentForms: recentForms.map((form) => ({
+          id: form.formId,
           formId: form.formId,
           name: form.name,
           submissions: submissionsByForm.get(form.formId) || 0,
         })),
         recentSubmissions: recentSubmissions.map((submission) => ({
+          id: submission._id,
           name: submission.submittedBy || "Anonymous",
           submissionId: submission.submissionId,
           email: submission.email,

@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import Submission from "../schema/submission.js";
 
 const submissionQuery = (id) => (mongoose.isValidObjectId(id) ? { _id: id } : { submissionId: id });
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export const createSubmission_dbServices = async (request) => {
   try {
@@ -41,15 +42,21 @@ export const createSubmission_dbServices = async (request) => {
 
 export const getSubmissions_dbServices = async (request) => {
   try {
-    const { formId, page = 1, limit = 10 } = request;
+    const { formId, search = "", status, page = 1, limit = 10 } = request;
 
     const currentPage = Math.max(1, Number(page) || 1);
     const pageLimit = Math.min(100, Math.max(1, Number(limit) || 10));
 
     const filter = {};
     if (formId) filter.formId = formId;
+    if (["New", "Reviewed"].includes(status)) filter.status = status;
 
-    const [submissions, total] = await Promise.all([
+    if (search.trim()) {
+      const searchRegex = new RegExp(escapeRegex(search.trim()), "i");
+      filter.$or = ["submissionId", "formName", "submittedBy", "email", "mobile"].map((field) => ({ [field]: searchRegex }));
+    }
+
+    const [submissions, total, totalCount, newCount, formsWithRecords] = await Promise.all([
       Submission.find(filter)
         .sort({ createdAt: -1 })
         .skip((currentPage - 1) * pageLimit)
@@ -57,6 +64,9 @@ export const getSubmissions_dbServices = async (request) => {
         .lean(),
 
       Submission.countDocuments(filter),
+      Submission.countDocuments(),
+      Submission.countDocuments({ status: "New" }),
+      Submission.distinct("formId"),
     ]);
 
     return {
@@ -78,6 +88,13 @@ export const getSubmissions_dbServices = async (request) => {
         page: currentPage,
         limit: pageLimit,
         totalPages: Math.ceil(total / pageLimit),
+      },
+      additional: {
+        stats: {
+          totalCount,
+          newCount,
+          formsWithRecords: formsWithRecords.length,
+        },
       },
     };
   } catch (error) {

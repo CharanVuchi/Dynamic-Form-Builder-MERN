@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react";
 import { App } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined, InfoCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
@@ -5,13 +6,8 @@ import { CheckCircleOutlined, CloseCircleOutlined, InfoCircleOutlined, Exclamati
 export const useToast = () => {
   const { message } = App.useApp();
 
-  const openCustomToast = (type, msg, duration = 3) => {
-    let config = {
-      borderLeft: "2px solid #1890ff",
-      textColor: "#1890ff",
-      bgColor: "#E6F7FF",
-      icon: <InfoCircleOutlined style={{ fontSize: 18, color: "#1890ff" }} />,
-    };
+  const openCustomToast = useCallback((type, msg, duration = 3) => {
+    let config;
 
     switch (type) {
       case "success":
@@ -70,12 +66,12 @@ export const useToast = () => {
       duration,
     //   className: "custom-toast-right",
     });
-  };
+  }, [message]);
 
-  return {
+  return useMemo(() => ({
     success: (msg, duration) => openCustomToast("success", msg, duration),
     error: (msg, duration) => openCustomToast("error", msg, duration),
     warning: (msg, duration) => openCustomToast("warning", msg, duration),
     info: (msg, duration) => openCustomToast("info", msg, duration),
-  };
+  }), [openCustomToast]);
 };

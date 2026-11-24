@@ -83,15 +83,15 @@ const getInitialValues = (fields = []) =>
     return values;
   }, {});
 
-const renderControl = (field) => {
+const renderControl = (field, disabled) => {
   const validation = field.validation || {};
 
   switch (field.type) {
     case "number":
-      return <InputNumber className="w-full" placeholder={field.placeholder} min={validation.min ?? undefined} max={validation.max ?? undefined} />;
+      return <InputNumber className="w-full" placeholder={field.placeholder} min={validation.min ?? undefined} max={validation.max ?? undefined} disabled={disabled} />;
 
     case "textarea":
-      return <TextArea rows={field.rows || 4} placeholder={field.placeholder} maxLength={validation.maxLength ?? undefined} showCount={Boolean(validation.maxLength)} />;
+      return <TextArea rows={field.rows || 4} placeholder={field.placeholder} maxLength={validation.maxLength ?? undefined} showCount={Boolean(validation.maxLength)} disabled={disabled} />;
 
     case "date":
       return (
@@ -99,6 +99,7 @@ const renderControl = (field) => {
           className="w-full"
           format="DD-MM-YYYY"
           placeholder={field.placeholder || "Select date"}
+          disabled={disabled}
           disabledDate={(current) => {
             if (!current) return false;
 
@@ -111,27 +112,27 @@ const renderControl = (field) => {
       );
 
     case "select":
-      return <Select placeholder={field.placeholder || "Select an option"} options={field.options || []} allowClear optionFilterProp="label" />;
+      return <Select placeholder={field.placeholder || "Select an option"} options={field.options || []} allowClear optionFilterProp="label" disabled={disabled} />;
 
     case "radio":
-      return <Radio.Group options={field.options || []} />;
+      return <Radio.Group options={field.options || []} disabled={disabled} />;
 
     case "checkbox":
-      return <Checkbox.Group options={field.options || []} />;
+      return <Checkbox.Group options={field.options || []} disabled={disabled} />;
 
     case "email":
-      return <Input type="email" placeholder={field.placeholder} />;
+      return <Input type="email" placeholder={field.placeholder} disabled={disabled} />;
 
     case "phone":
-      return <Input type="tel" maxLength={15} placeholder={field.placeholder} />;
+      return <Input type="tel" maxLength={15} placeholder={field.placeholder} disabled={disabled} />;
 
     case "text":
     default:
-      return <Input placeholder={field.placeholder} />;
+      return <Input placeholder={field.placeholder} disabled={disabled} />;
   }
 };
 
-const DynamicFormRenderer = ({ form, submitting = false, onSubmit, onCancel, submitLabel = "Submit", showActions = true, formId = "dynamic-form" }) => {
+const DynamicFormRenderer = ({ form, submitting = false, onSubmit, onCancel, submitLabel = "Submit", showActions = true, disabled = false, formId = "dynamic-form" }) => {
   const initialValues = useMemo(() => getInitialValues(form?.fields), [form]);
 
   const handleFinish = (values) => {
@@ -159,7 +160,7 @@ const DynamicFormRenderer = ({ form, submitting = false, onSubmit, onCancel, sub
               label={field.label}
               rules={buildRules(field)}
               className={isFullWidth ? "sm:col-span-2" : undefined}>
-              {renderControl(field)}
+              {renderControl(field, disabled)}
             </Form.Item>
           );
         })}

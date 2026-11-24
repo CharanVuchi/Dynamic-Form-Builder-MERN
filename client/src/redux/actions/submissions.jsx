@@ -10,10 +10,10 @@ const getHeaders = () => ({
   },
 });
 
-export const GetSubmissionsAction = createAsyncThunk("submissions/get_list", async (_, { rejectWithValue, dispatch }) => {
+export const GetSubmissionsAction = createAsyncThunk("submissions/get_list", async (params = {}, { rejectWithValue, dispatch }) => {
   try {
     dispatch(is_loading_true());
-    const result = await axios.get(`${apiUri()}/submissions`, getHeaders());
+    const result = await axios.get(`${apiUri()}/submissions`, { ...getHeaders(), params });
     dispatch(is_loading_false());
     return result?.data;
   } catch (err) {
@@ -26,6 +26,18 @@ export const CreateSubmissionAction = createAsyncThunk("submissions/create", asy
   try {
     dispatch(is_loading_true());
     const result = await axios.post(`${apiUri()}/public/submissions/forms/${payload.formId}/submissions`, payload.values || {});
+    dispatch(is_loading_false());
+    return result?.data;
+  } catch (err) {
+    dispatch(is_loading_false());
+    return rejectWithValue(err.response?.data);
+  }
+});
+
+export const DeleteSubmissionAction = createAsyncThunk("submissions/delete", async (id, { rejectWithValue, dispatch }) => {
+  try {
+    dispatch(is_loading_true());
+    const result = await axios.delete(`${apiUri()}/submissions/${id}`, getHeaders());
     dispatch(is_loading_false());
     return result?.data;
   } catch (err) {

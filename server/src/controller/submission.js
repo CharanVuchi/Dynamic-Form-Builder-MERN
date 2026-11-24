@@ -21,6 +21,8 @@ export const getSubmissions_controller = async (req, res) => {
   try {
     const result = await getSubmissions_services({
       formId: req.query.formId,
+      search: req.query.search,
+      status: req.query.status,
       page: req.query.page,
       limit: req.query.limit,
     });

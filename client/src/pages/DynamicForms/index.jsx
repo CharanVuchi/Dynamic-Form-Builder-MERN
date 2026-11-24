@@ -1,34 +1,42 @@
-import { useMemo, useState } from "react";
-import { Tag, Tooltip } from "antd";
+import { useEffect, useState } from "react";
+import { App, Tag, Tooltip } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import { FiPlus, FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { Table } from "src/components";
 
-import formsData from "./data.json";
 import RecordFormDrawer from "./components/RecordFormDrawer";
 import { useNavigate } from "react-router-dom";
+import { DeleteFormAction, GetFormAction, GetFormsAction } from "src/redux/actions/forms";
+import { useToast } from "src/hooks/useToast";
+import { formatDateTimeIST } from "src/utils/dateTime";
+import { FormPreview } from "./FormBuilder/components";
 
 const DynamicForms = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { modal } = App.useApp();
+  const toast = useToast();
+
+  const { forms, pagination: paginationInfo, reduxLoading: loading } = useSelector((state) => state.forms);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState(undefined);
-  const [forms, setForms] = useState(formsData.forms);
   const [recordForm, setRecordForm] = useState(null);
-
+  const [viewedForm, setViewedForm] = useState(null);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
   });
 
-  // Search and filter
-  const filteredForms = useMemo(() => {
-    return forms.filter((form) => {
-      const matchesSearch = form.name.toLowerCase().includes(search.toLowerCase()) || form.formId.toLowerCase().includes(search.toLowerCase());
-
-      const matchesStatus = !status || form.status === status;
-
-      return matchesSearch && matchesStatus;
-    });
-  }, [forms, search, status]);
+  useEffect(() => {
+    dispatch(
+      GetFormsAction({
+        page: pagination.current,
+        limit: pagination.pageSize,
+        search,
+        status,
+      }),
+    );
+  }, [dispatch, pagination, search, status]);
 
   // Reset page when search or filter changes
   const handleSearch = (value) => {
@@ -50,24 +58,75 @@ const DynamicForms = () => {
     setPagination((prev) => ({ ...prev, current: page }));
   };
 
-  const handleView = (record) => {
-    console.log("View Form:", record);
+  const handleView = async (record) => {
+    try {
+      const result = await dispatch(GetFormAction(record.id)).unwrap();
+
+      if (result?.code === 200 && result?.data) {
+        setViewedForm(result.data);
+      } else {
+        toast.error(result?.error?.desc || "Unable to load the form.");
+      }
+    } catch (error) {
+      const serverError = error?.error || error;
+      toast.error(serverError?.desc || serverError?.message || "Unable to load the form.");
+    }
   };
 
   const handleEdit = (record) => {
-    console.log("Edit Form:", record);
+    navigate(`/dynamic-forms/${record.id}/edit`);
   };
 
   const handleDelete = (record) => {
-    console.log("Delete Form:", record);
+    modal.confirm({
+      title: "Delete form?",
+      content: `Form "${record.name}" will be permanently removed.`,
+      okText: "Delete",
+      cancelText: "Cancel",
+      okButtonProps: { danger: true },
+      centered: true,
+      onOk: async () => {
+        try {
+          const result = await dispatch(DeleteFormAction(record.id)).unwrap();
+
+          if (result?.code === 200) {
+            toast.success(result?.success?.desc || "Form deleted successfully.");
+            if (forms.length === 1 && pagination.current > 1) {
+              setPagination((previous) => ({ ...previous, current: previous.current - 1 }));
+            } else {
+              dispatch(
+                GetFormsAction({
+                  page: pagination.current,
+                  limit: pagination.pageSize,
+                  search,
+                  status,
+                }),
+              );
+            }
+          } else {
+            toast.error(result?.error?.desc || "Unable to delete the form.");
+          }
+        } catch (error) {
+          const serverError = error?.error || error;
+          toast.error(serverError?.desc || serverError?.message || "Unable to delete the form.");
+        }
+      },
+    });
   };
 
   const handleOpenAddRecord = (record) => {
     setRecordForm(record);
   };
 
-  const handleRecordSubmitted = (submission) => {
-    setForms((previousForms) => previousForms.map((form) => (form.formId === submission.formId ? { ...form, submissions: form.submissions + 1 } : form)));
+  const handleRecordSubmitted = () => {
+    dispatch(
+      GetFormsAction({
+        page: pagination.current,
+        limit: pagination.pageSize,
+        search,
+        status,
+      }),
+    );
   };
 
   // Table columns
@@ -112,7 +171,8 @@ const DynamicForms = () => {
       title: "Updated At",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      width: "16%",
+      width: "18%",
+      render: (updatedAt) => formatDateTimeIST(updatedAt),
     },
     {
       title: "Actions",
@@ -157,11 +217,6 @@ const DynamicForms = () => {
     },
   ];
 
-  // Current page data
-  const startIndex = (pagination.current - 1) * pagination.pageSize;
-
-  const currentForms = filteredForms.slice(startIndex, startIndex + pagination.pageSize);
-
   return (
     <div className="flex flex-col gap-7">
       {/* Page Heading */}
@@ -194,14 +249,15 @@ const DynamicForms = () => {
           filterValues={{ status }}
           onFilterChange={handleFilterChange}
           columns={columns}
-          dataSource={currentForms}
+          dataSource={forms}
+          loading={loading}
           rowKey="id"
           showAdd={true}
           onAdd={handleCreateForm}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,
-            total: filteredForms.length,
+            total: paginationInfo.total,
             showSizeChanger: false,
           }}
           onPageChange={handlePageChange}
@@ -210,6 +266,8 @@ const DynamicForms = () => {
       </div>
 
       {recordForm && <RecordFormDrawer form={recordForm} onClose={() => setRecordForm(null)} onSubmitted={handleRecordSubmitted} />}
+
+      {viewedForm && <FormPreview open={true} onClose={() => setViewedForm(null)} formMeta={viewedForm} fields={viewedForm.fields || []} />}
     </div>
   );
 };
