@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FiGrid, FiFileText, FiInbox, FiChevronDown } from "react-icons/fi";
 
 const navigationItems = [
@@ -20,11 +20,17 @@ const navigationItems = [
 ];
 
 const Sidebar = ({ collapsed = false }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
   return (
     <aside
       className={`
         ${collapsed ? "w-[80px]" : "w-[260px]"}
-        h-screen bg-[#161F42] text-white flex flex-col shrink-0
+        h-screen bg-gradient-to-br from-[#161F42] via-[#26345F] to-[#9CD3BB] text-white flex flex-col shrink-0
         overflow-hidden transition-[width] duration-300 ease-in-out
       `}>
       {/* Logo */}
@@ -88,8 +94,12 @@ const Sidebar = ({ collapsed = false }) => {
 
             {!collapsed && (
               <>
-                <div className="flex-1 text-left min-w-0">
-                  <p className="text-sm font-semibold text-white truncate">Admin</p>
+                <div
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                  className="flex-1 text-left min-w-0">
+                  <p className="text-sm font-semibold text-white truncate">Logout</p>
 
                   <p className="text-xs text-[#9BAACB] truncate">Admin</p>
                 </div>

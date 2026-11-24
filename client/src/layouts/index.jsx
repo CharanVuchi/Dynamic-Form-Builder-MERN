@@ -1,22 +1,32 @@
 import { useEffect, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation,Navigate, } from "react-router-dom";
 import Sidebar from "../sidebar";
 import Header from "../header";
 
-const DEFAULT_COLLAPSED_PATHS = [
-  "/dynamic-forms/create",
-];
+const DEFAULT_COLLAPSED_PATHS = ["/dynamic-forms/create"];
 
 const ProtectedLayout = () => {
   const location = useLocation();
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [userCollapsed, setUserCollapsed] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
+
+  const isSidebarCollapsed = DEFAULT_COLLAPSED_PATHS.includes(location.pathname) ? true : userCollapsed;
 
   useEffect(() => {
-    setIsSidebarCollapsed(DEFAULT_COLLAPSED_PATHS.includes(location.pathname));
-  }, [location.pathname]);
+    const interval = setInterval(() => {
+      const token = localStorage.getItem("token");
+      setIsAuthenticated(!!token);
+    }, 1000); // Check every second
+
+    return () => clearInterval(interval);
+  }, []);
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
   const toggleSidebar = () => {
-    setIsSidebarCollapsed((prev) => !prev);
+    setUserCollapsed((prev) => !prev);
   };
 
   return (
@@ -38,4 +48,10 @@ const ProtectedLayout = () => {
   );
 };
 
+const PublicLayout = () => {
+  const isAuthenticated = !!localStorage.getItem("token");
+  return <div className="h-screen w-full overflow-hidden bg-[#F5F7FA]">{!isAuthenticated ? <Outlet /> : <Navigate to="/dashboard" replace />}</div>;
+};
+
 export default ProtectedLayout;
+export { ProtectedLayout, PublicLayout };

@@ -1,6 +1,7 @@
+import Login from "./Login";
 import Dashboard from "./Dashboard";
 import DynamicForms from "./DynamicForms";
 import FormBuilder from "./DynamicForms/FormBuilder";
 import Submissions from "./Submissions";
 
-export { Dashboard, DynamicForms, FormBuilder, Submissions };
+export { Login, Dashboard, DynamicForms, FormBuilder, Submissions };
