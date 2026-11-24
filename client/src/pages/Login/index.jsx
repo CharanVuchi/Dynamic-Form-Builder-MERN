@@ -1,16 +1,14 @@
 import { Form } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiLock } from "react-icons/fi";
+import { FiLock, FiUser, FiArrowRight, FiShield } from "react-icons/fi";
 
 import { Button, TextInput } from "src/components";
-import useAuth from "src/hooks/useAuth";
 import { useToast } from "src/hooks/useToast";
 
 const Login = () => {
   const toast = useToast();
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +40,7 @@ const Login = () => {
     try {
       setLoading(true);
 
-      login();
+      localStorage.setItem("token", "21234");
 
       toast.success("Welcome back! Signed in successfully.");
 

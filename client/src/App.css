@@ -24,7 +24,7 @@
 .hide-scrollbar {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
-  
+
 }
 
 
@@ -61,6 +61,14 @@
   margin-left: auto;
 }
 
-.ant-modal .ant-modal-content {
-  /*  padding: 40px; */
+
+
+.custom-spinner {
+  .ant-spin-fullscreen {
+    z-index: 99999999;
+  }
+
+  .ant-spin {
+    color: #4c5457;
+  }
 }
