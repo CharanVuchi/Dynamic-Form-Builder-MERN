@@ -1,85 +1,88 @@
 import mongoose from "mongoose";
-import { randomUUID } from "node:crypto";
+
+const fieldSchema = new mongoose.Schema(
+  {
+    id: {
+      type: String,
+      trim: true,
+    },
+    type: {
+      type: String,
+      required: [true, "Field type is required"],
+      trim: true,
+    },
+    label: {
+      type: String,
+      required: [true, "Field label is required"],
+      trim: true,
+    },
+    fieldKey: {
+      type: String,
+      required: [true, "Field key is required"],
+      trim: true,
+    },
+    placeholder: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    required: {
+      type: Boolean,
+      default: false,
+    },
+    options: [
+      new mongoose.Schema(
+        {
+          label: { type: String, required: true },
+          value: { type: String, required: true },
+        },
+        { _id: false },
+      ),
+    ],
+    rows: Number,
+    validation: new mongoose.Schema(
+      {
+        minLength: Number,
+        maxLength: Number,
+        minDate: Date,
+        maxDate: Date,
+      },
+      { _id: false },
+    ),
+  },
+  { _id: false },
+);
 
 const formSchema = new mongoose.Schema(
   {
     formId: {
       type: String,
+      required: [true, "Form ID is required"],
       unique: true,
-      required: true,
-      default: () => `FC-${randomUUID().slice(0, 8).toUpperCase()}`,
-      index: true,
+      trim: true,
     },
-
     name: {
       type: String,
-      required: true,
+      required: [true, "Form name is required"],
       trim: true,
-      maxlength: 120,
     },
-
     description: {
       type: String,
       trim: true,
       default: "",
-      maxlength: 500,
     },
-
-    showName: {
-      type: Boolean,
-      default: true,
-    },
-
-    showDescription: {
-      type: Boolean,
-      default: true,
-    },
-
     status: {
       type: String,
       enum: ["Draft", "Published"],
       default: "Draft",
-      index: true,
     },
-
-    fields: {
-      type: [mongoose.Schema.Types.Mixed],
-      default: [],
-    },
-
-    createdBy: {
-      type: String,
-      required: true,
-      index: true,
-    },
-
-    updatedBy: {
-      type: String,
-      default: null,
-    },
-
-    isDeleted: {
-      type: Boolean,
-      default: false,
-    },
+    fields: [fieldSchema],
   },
   {
     timestamps: true,
     versionKey: false,
   },
 );
-
-formSchema.index({
-  createdBy: 1,
-  status: 1,
-  updatedAt: -1,
-});
-
-formSchema.index({
-  formId: 1,
-  status: 1,
-  isDeleted: 1,
-});
 
 const Form = mongoose.model("Form", formSchema);
 
