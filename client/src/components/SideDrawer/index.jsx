@@ -8,9 +8,9 @@ const SideDrawer = ({ open = false, onClose, title = "Details", children, placem
       onClose={onClose}
       title={title}
       placement={placement}
-      width={width}
+      size={width}
       footer={footer}
-      destroyOnClose={destroyOnClose}
+      destroyOnHidden={destroyOnClose}
       closable={false}
       className={className}
       extra={

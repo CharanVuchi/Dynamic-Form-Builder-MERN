@@ -1,4 +1,4 @@
-import { InputNumber } from "antd";
+import { TextInput } from "src/components";
 
 const NumberSettings = ({ field, onUpdate }) => {
   const validation = field.validation || {};
@@ -17,13 +17,13 @@ const NumberSettings = ({ field, onUpdate }) => {
       <div>
         <label className="block text-sm font-medium text-[#344054] mb-2">Minimum Value</label>
 
-        <InputNumber value={validation.min ?? null} placeholder="Minimum" className="w-full h-11 flex items-center" onChange={(value) => handleChange("min", value)} />
+        <TextInput type="number" value={validation.min ?? null} placeholder="Minimum" className="w-full h-11 flex items-center" onChange={(value) => handleChange("min", value)} />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-[#344054] mb-2">Maximum Value</label>
 
-        <InputNumber value={validation.max ?? null} placeholder="Maximum" className="w-full h-11 flex items-center" onChange={(value) => handleChange("max", value)} />
+        <TextInput type="number" value={validation.max ?? null} placeholder="Maximum" className="w-full h-11 flex items-center" onChange={(value) => handleChange("max", value)} />
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
-import { Input, Select, Switch, ConfigProvider } from "antd";
+import { Switch, ConfigProvider } from "antd";
+import { SelectMenu, TextInput } from "src/components";
 
 const FIELD_TYPE_OPTIONS = [
   { label: "Text", value: "text" },
@@ -25,7 +26,7 @@ const CommonSettings = ({ field, onUpdate }) => {
       <div>
         <label className="block text-sm font-medium text-[#344054] mb-2">Field Type</label>
 
-        <Select value={field.type} options={FIELD_TYPE_OPTIONS} className="w-full h-11" onChange={(value) => handleChange("type", value)} />
+        <SelectMenu value={field.type} options={FIELD_TYPE_OPTIONS} className="w-full h-11" onChange={(value) => handleChange("type", value)} />
       </div>
 
       {/* Label */}
@@ -34,7 +35,7 @@ const CommonSettings = ({ field, onUpdate }) => {
           Label <span className="text-red-500">*</span>
         </label>
 
-        <Input value={field.label || ""} placeholder="Enter field label" className="h-11 rounded-lg" onChange={(event) => handleChange("label", event.target.value)} />
+        <TextInput value={field.label || ""} placeholder="Enter field label" className="h-11 rounded-lg" onChange={(value) => handleChange("label", value)} />
       </div>
 
       {/* Field Key */}
@@ -43,25 +44,25 @@ const CommonSettings = ({ field, onUpdate }) => {
           Field Key <span className="text-red-500">*</span>
         </label>
 
-        <Input value={field.fieldKey || ""} placeholder="Enter field key" className="h-11 rounded-lg" onChange={(event) => handleChange("fieldKey", event.target.value)} />
+        <TextInput value={field.fieldKey || ""} placeholder="Enter field key" className="h-11 rounded-lg" onChange={(value) => handleChange("fieldKey", value)} />
       </div>
 
       {/* Placeholder */}
       <div>
         <label className="block text-sm font-medium text-[#344054] mb-2">Placeholder</label>
 
-        <Input value={field.placeholder || ""} placeholder="Enter placeholder" className="h-11 rounded-lg" onChange={(event) => handleChange("placeholder", event.target.value)} />
+        <TextInput value={field.placeholder || ""} placeholder="Enter placeholder" className="h-11 rounded-lg" onChange={(value) => handleChange("placeholder", value)} />
       </div>
 
       {/* Default Value */}
       <div>
         <label className="block text-sm font-medium text-[#344054] mb-2">Default Value</label>
 
-        <Input
+        <TextInput
           value={field.defaultValue || ""}
           placeholder="Enter default value"
           className="h-11 rounded-lg"
-          onChange={(event) => handleChange("defaultValue", event.target.value)}
+          onChange={(value) => handleChange("defaultValue", value)}
         />
       </div>
 

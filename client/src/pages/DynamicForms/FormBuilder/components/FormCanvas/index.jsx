@@ -1,5 +1,6 @@
-import { Card, Dropdown, Input } from "antd";
-import { FiFileText, FiPlus, FiX } from "react-icons/fi";
+import { Card, Dropdown } from "antd";
+import { FiFileText, FiPlus } from "react-icons/fi";
+import { TextInput } from "src/components";
 import FormFieldItem from "./FormFieldItem";
 import EmptyCanvas from "./EmptyCanvas";
 import { FIELD_TYPES } from "../FieldTypes/config";
@@ -72,7 +73,7 @@ const FormCanvas = ({ fields = [], formMeta = {}, selectedFieldId, onSelectField
             </label>
           </div>
 
-          <Input value={formMeta.name || ""} placeholder="Enter form name" className="h-10 rounded-lg" onChange={(event) => onUpdateFormMeta?.({ name: event.target.value })} />
+          <TextInput value={formMeta.name || ""} placeholder="Enter form name" className="h-10 rounded-lg" onChange={(value) => onUpdateFormMeta?.({ name: value })} />
         </div>
 
         <div>
@@ -80,11 +81,11 @@ const FormCanvas = ({ fields = [], formMeta = {}, selectedFieldId, onSelectField
             <label className="block text-sm font-medium text-[#344054]">Description</label>
           </div>
 
-          <Input
+          <TextInput
             value={formMeta.description || ""}
             placeholder="Enter form description"
             className="h-10 rounded-lg"
-            onChange={(event) => onUpdateFormMeta?.({ description: event.target.value })}
+            onChange={(value) => onUpdateFormMeta?.({ description: value })}
           />
         </div>
       </div>

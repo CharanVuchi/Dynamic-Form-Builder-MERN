@@ -1,4 +1,4 @@
-import { InputNumber } from "antd";
+import { TextInput } from "src/components";
 
 const TextAreaSettings = ({ field, onUpdate }) => {
   const validation = field.validation || {};
@@ -18,7 +18,7 @@ const TextAreaSettings = ({ field, onUpdate }) => {
         <div>
           <label className="block text-sm font-medium text-[#344054] mb-2">Minimum Length</label>
 
-          <InputNumber
+          <TextInput type="number"
             min={0}
             value={validation.minLength ?? null}
             placeholder="Minimum"
@@ -30,7 +30,7 @@ const TextAreaSettings = ({ field, onUpdate }) => {
         <div>
           <label className="block text-sm font-medium text-[#344054] mb-2">Maximum Length</label>
 
-          <InputNumber
+          <TextInput type="number"
             min={1}
             value={validation.maxLength ?? null}
             placeholder="Maximum"

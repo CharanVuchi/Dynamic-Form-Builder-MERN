@@ -1,5 +1,5 @@
-import { Button, Input } from "antd";
 import { FiPlus, FiTrash2 } from "react-icons/fi";
+import { Button, TextInput } from "src/components";
 
 const toOptionValue = (label, index) => {
   const slug = label
@@ -42,11 +42,11 @@ const SelectSettings = ({ field, onUpdate }) => {
           <div key={index} className="flex items-center gap-2">
             <span className="w-4 shrink-0 text-xs text-[#8190AA]">{index + 1}.</span>
 
-            <Input
+            <TextInput
               value={option.label}
               placeholder={`Option ${index + 1}`}
               className="h-9 rounded-lg"
-              onChange={(event) => handleLabelChange(index, event.target.value)}
+              onChange={(value) => handleLabelChange(index, value)}
             />
 
             <button
@@ -60,9 +60,7 @@ const SelectSettings = ({ field, onUpdate }) => {
         ))
       )}
 
-      <Button type="dashed" icon={<FiPlus size={15} />} onClick={handleAddOption} className="h-9 rounded-lg text-xs font-medium">
-        Add Option
-      </Button>
+      <Button variant="outline" icon={<FiPlus size={15} />} textContent="Add Option" className="h-9 rounded-lg text-xs font-medium" onClick={handleAddOption} />
 
       <p className="text-xs text-[#8190AA]">{helperText}</p>
     </div>

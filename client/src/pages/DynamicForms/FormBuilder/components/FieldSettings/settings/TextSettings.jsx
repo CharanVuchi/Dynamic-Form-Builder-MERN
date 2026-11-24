@@ -1,19 +1,19 @@
-import { Input } from "antd";
+import { TextInput } from "src/components";
 
 const TextSettings = ({ field, onUpdate }) => {
   return (
     <div>
       <label className="block text-sm font-medium text-[#344054] mb-2">Regex Pattern</label>
 
-      <Input
+      <TextInput
         value={field.validation?.pattern || ""}
         placeholder="^[A-Za-z ]+$"
         className="h-11 rounded-lg"
-        onChange={(event) =>
+        onChange={(value) =>
           onUpdate({
             validation: {
               ...field.validation,
-              pattern: event.target.value,
+              pattern: value,
             },
           })
         }

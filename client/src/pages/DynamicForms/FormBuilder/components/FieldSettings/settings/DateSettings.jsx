@@ -1,4 +1,4 @@
-import { DatePicker } from "antd";
+import { DatePicker } from "src/components";
 import dayjs from "dayjs";
 
 const DateSettings = ({ field, onUpdate }) => {

@@ -1,0 +1,285 @@
+{
+  "forms": [
+    {
+      "id": 1,
+      "formId": "FC-001",
+      "name": "Customer Registration",
+      "description": "Register customer details for service requests.",
+      "status": "Published",
+      "fields": [
+        {
+          "id": "fc001-f1",
+          "type": "text",
+          "label": "Full Name",
+          "fieldKey": "fullName",
+          "placeholder": "Enter your full name",
+          "required": true
+        },
+        {
+          "id": "fc001-f2",
+          "type": "email",
+          "label": "Email",
+          "fieldKey": "email",
+          "placeholder": "Enter your email",
+          "required": true
+        },
+        {
+          "id": "fc001-f3",
+          "type": "phone",
+          "label": "Mobile Number",
+          "fieldKey": "mobile",
+          "placeholder": "Enter your mobile number",
+          "required": true
+        },
+        {
+          "id": "fc001-f4",
+          "type": "select",
+          "label": "Gender",
+          "fieldKey": "gender",
+          "placeholder": "Select gender",
+          "required": true,
+          "options": [
+            { "label": "Male", "value": "male" },
+            { "label": "Female", "value": "female" },
+            { "label": "Other", "value": "other" }
+          ]
+        },
+        {
+          "id": "fc001-f5",
+          "type": "select",
+          "label": "Department",
+          "fieldKey": "department",
+          "placeholder": "Select department",
+          "required": true,
+          "options": [
+            { "label": "Engineering", "value": "engineering" },
+            { "label": "Human Resources", "value": "human_resources" },
+            { "label": "Sales", "value": "sales" },
+            { "label": "Marketing", "value": "marketing" },
+            { "label": "Finance", "value": "finance" }
+          ]
+        },
+        {
+          "id": "fc001-f6",
+          "type": "text",
+          "label": "Designation",
+          "fieldKey": "designation",
+          "placeholder": "Enter designation",
+          "required": true
+        },
+        {
+          "id": "fc001-f7",
+          "type": "radio",
+          "label": "Role",
+          "fieldKey": "role",
+          "required": true,
+          "options": [
+            { "label": "Admin", "value": "admin" },
+            { "label": "User", "value": "user" },
+            { "label": "Manager", "value": "manager" }
+          ]
+        },
+        {
+          "id": "fc001-f8",
+          "type": "textarea",
+          "label": "Description",
+          "fieldKey": "description",
+          "placeholder": "Enter description",
+          "required": false,
+          "rows": 3,
+          "validation": { "maxLength": 500 }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "formId": "FC-002",
+      "name": "Employee Onboarding",
+      "description": "Collect new employee details for onboarding.",
+      "status": "Published",
+      "fields": [
+        {
+          "id": "fc002-f1",
+          "type": "text",
+          "label": "Full Name",
+          "fieldKey": "fullName",
+          "placeholder": "Enter employee name",
+          "required": true
+        },
+        {
+          "id": "fc002-f2",
+          "type": "email",
+          "label": "Email",
+          "fieldKey": "email",
+          "placeholder": "Enter employee email",
+          "required": true
+        },
+        {
+          "id": "fc002-f3",
+          "type": "phone",
+          "label": "Mobile Number",
+          "fieldKey": "mobile",
+          "placeholder": "Enter mobile number",
+          "required": true
+        },
+        {
+          "id": "fc002-f4",
+          "type": "select",
+          "label": "Department",
+          "fieldKey": "department",
+          "placeholder": "Select department",
+          "required": true,
+          "options": [
+            { "label": "Engineering", "value": "engineering" },
+            { "label": "Human Resources", "value": "human_resources" },
+            { "label": "Sales", "value": "sales" },
+            { "label": "Marketing", "value": "marketing" }
+          ]
+        },
+        {
+          "id": "fc002-f5",
+          "type": "text",
+          "label": "Designation",
+          "fieldKey": "designation",
+          "placeholder": "Enter designation",
+          "required": true
+        },
+        {
+          "id": "fc002-f6",
+          "type": "date",
+          "label": "Date of Joining",
+          "fieldKey": "dateOfJoining",
+          "placeholder": "Select joining date",
+          "required": true,
+          "validation": { "minDate": "2026-01-01", "maxDate": "2026-12-31" }
+        },
+        {
+          "id": "fc002-f7",
+          "type": "textarea",
+          "label": "Notes",
+          "fieldKey": "notes",
+          "placeholder": "Any additional notes",
+          "required": false,
+          "rows": 3
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "formId": "FC-003",
+      "name": "Event Feedback",
+      "description": "Collect feedback after an event.",
+      "status": "Draft",
+      "fields": [
+        {
+          "id": "fc003-f1",
+          "type": "text",
+          "label": "Attendee Name",
+          "fieldKey": "attendeeName",
+          "placeholder": "Enter your name",
+          "required": true
+        },
+        {
+          "id": "fc003-f2",
+          "type": "email",
+          "label": "Email",
+          "fieldKey": "email",
+          "placeholder": "Enter your email",
+          "required": false
+        },
+        {
+          "id": "fc003-f3",
+          "type": "select",
+          "label": "Overall Rating",
+          "fieldKey": "rating",
+          "placeholder": "Select rating",
+          "required": true,
+          "options": [
+            { "label": "Excellent", "value": "excellent" },
+            { "label": "Good", "value": "good" },
+            { "label": "Average", "value": "average" },
+            { "label": "Poor", "value": "poor" }
+          ]
+        },
+        {
+          "id": "fc003-f4",
+          "type": "textarea",
+          "label": "Feedback",
+          "fieldKey": "feedback",
+          "placeholder": "Share your feedback",
+          "required": true,
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "formId": "FC-004",
+      "name": "Support Request",
+      "description": "Raise a support request with our team.",
+      "status": "Published",
+      "fields": [
+        {
+          "id": "fc004-f1",
+          "type": "text",
+          "label": "Full Name",
+          "fieldKey": "fullName",
+          "placeholder": "Enter your name",
+          "required": true
+        },
+        {
+          "id": "fc004-f2",
+          "type": "email",
+          "label": "Email",
+          "fieldKey": "email",
+          "placeholder": "Enter your email",
+          "required": true
+        },
+        {
+          "id": "fc004-f3",
+          "type": "phone",
+          "label": "Mobile Number",
+          "fieldKey": "mobile",
+          "placeholder": "Enter mobile number",
+          "required": false
+        },
+        {
+          "id": "fc004-f4",
+          "type": "select",
+          "label": "Issue Type",
+          "fieldKey": "issueType",
+          "placeholder": "Select issue type",
+          "required": true,
+          "options": [
+            { "label": "Technical", "value": "technical" },
+            { "label": "Billing", "value": "billing" },
+            { "label": "Account", "value": "account" },
+            { "label": "Other", "value": "other" }
+          ]
+        },
+        {
+          "id": "fc004-f5",
+          "type": "radio",
+          "label": "Priority",
+          "fieldKey": "priority",
+          "required": true,
+          "options": [
+            { "label": "Low", "value": "low" },
+            { "label": "Medium", "value": "medium" },
+            { "label": "High", "value": "high" }
+          ]
+        },
+        {
+          "id": "fc004-f6",
+          "type": "textarea",
+          "label": "Describe the Issue",
+          "fieldKey": "description",
+          "placeholder": "Describe your issue",
+          "required": true,
+          "rows": 4,
+          "validation": { "minLength": 10, "maxLength": 1000 }
+        }
+      ]
+    }
+  ]
+}

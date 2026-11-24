@@ -83,15 +83,15 @@ const Sidebar = ({ collapsed = false }) => {
       {/* Bottom Profile */}
       <div className={`pb-5 shrink-0 ${collapsed ? "px-3" : "px-4"}`}>
         <div className="border-t border-[#394466] pt-4">
-          <button type="button" title={collapsed ? "Charan Vuchi" : undefined} className={`w-full flex items-center rounded-lg ${collapsed ? "justify-center" : "gap-3 px-1.5"}`}>
-            <div className="w-9 h-9 rounded-full bg-[#9CD3BB] text-[#161F42] flex items-center justify-center font-bold text-sm shrink-0">C</div>
+          <button type="button" title={collapsed ? "Admin" : undefined} className={`w-full flex items-center rounded-lg ${collapsed ? "justify-center" : "gap-3 px-1.5"}`}>
+            <div className="w-9 h-9 rounded-full bg-[#9CD3BB] text-[#161F42] flex items-center justify-center font-bold text-sm shrink-0">A</div>
 
             {!collapsed && (
               <>
                 <div className="flex-1 text-left min-w-0">
-                  <p className="text-sm font-semibold text-white truncate">Charan Vuchi</p>
+                  <p className="text-sm font-semibold text-white truncate">Admin</p>
 
-                  <p className="text-xs text-[#9BAACB] truncate">Administrator</p>
+                  <p className="text-xs text-[#9BAACB] truncate">Admin</p>
                 </div>
 
                 <FiChevronDown size={18} className="shrink-0" />

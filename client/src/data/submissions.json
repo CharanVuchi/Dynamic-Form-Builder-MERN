@@ -1,0 +1,166 @@
+{
+  "submissions": [
+    {
+      "id": 1,
+      "submissionId": "SUB-3201",
+      "formId": "FC-001",
+      "formName": "Customer Registration",
+      "submittedBy": "Ravi Kumar",
+      "email": "ravi@gmail.com",
+      "mobile": "9876543210",
+      "submittedAt": "Nov 23, 2026 10:24 AM",
+      "status": "New",
+      "answers": [
+        { "label": "Full Name", "value": "Ravi Kumar" },
+        { "label": "Email", "value": "ravi@gmail.com" },
+        { "label": "Mobile Number", "value": "9876543210" },
+        { "label": "Gender", "value": "Male" },
+        { "label": "Department", "value": "Engineering" },
+        { "label": "Designation", "value": "Software Engineer" },
+        { "label": "Role", "value": "Admin" },
+        { "label": "Description", "value": "Interested in onboarding a new team." }
+      ]
+    },
+    {
+      "id": 2,
+      "submissionId": "SUB-3202",
+      "formId": "FC-001",
+      "formName": "Customer Registration",
+      "submittedBy": "Priya Sharma",
+      "email": "priya.sharma@gmail.com",
+      "mobile": "9876677655",
+      "submittedAt": "Nov 23, 2026 09:12 AM",
+      "status": "Reviewed",
+      "answers": [
+        { "label": "Full Name", "value": "Priya Sharma" },
+        { "label": "Email", "value": "priya.sharma@gmail.com" },
+        { "label": "Mobile Number", "value": "9876677655" },
+        { "label": "Gender", "value": "Female" },
+        { "label": "Department", "value": "Human Resources" },
+        { "label": "Designation", "value": "HR Manager" },
+        { "label": "Role", "value": "Manager" },
+        { "label": "Description", "value": "Requesting a demo for the HR team." }
+      ]
+    },
+    {
+      "id": 3,
+      "submissionId": "SUB-3203",
+      "formId": "FC-002",
+      "formName": "Employee Onboarding",
+      "submittedBy": "Aditya Verma",
+      "email": "aditya.verma@gmail.com",
+      "mobile": "9123456789",
+      "submittedAt": "Nov 22, 2026 05:40 PM",
+      "status": "New",
+      "answers": [
+        { "label": "Full Name", "value": "Aditya Verma" },
+        { "label": "Email", "value": "aditya.verma@gmail.com" },
+        { "label": "Mobile Number", "value": "9123456789" },
+        { "label": "Department", "value": "Engineering" },
+        { "label": "Designation", "value": "Frontend Developer" },
+        { "label": "Date of Joining", "value": "2026-12-01" },
+        { "label": "Notes", "value": "Laptop and access badge required on day one." }
+      ]
+    },
+    {
+      "id": 4,
+      "submissionId": "SUB-3204",
+      "formId": "FC-004",
+      "formName": "Support Request",
+      "submittedBy": "Sneha Reddy",
+      "email": "sneha.reddy@gmail.com",
+      "mobile": "9988776655",
+      "submittedAt": "Nov 22, 2026 02:18 PM",
+      "status": "New",
+      "answers": [
+        { "label": "Full Name", "value": "Sneha Reddy" },
+        { "label": "Email", "value": "sneha.reddy@gmail.com" },
+        { "label": "Mobile Number", "value": "9988776655" },
+        { "label": "Issue Type", "value": "Technical" },
+        { "label": "Priority", "value": "High" },
+        { "label": "Describe the Issue", "value": "Unable to export submission reports as CSV." }
+      ]
+    },
+    {
+      "id": 5,
+      "submissionId": "SUB-3205",
+      "formId": "FC-001",
+      "formName": "Customer Registration",
+      "submittedBy": "Arjun Mehta",
+      "email": "arjun.mehta@gmail.com",
+      "mobile": "9090909090",
+      "submittedAt": "Nov 21, 2026 11:05 AM",
+      "status": "Reviewed",
+      "answers": [
+        { "label": "Full Name", "value": "Arjun Mehta" },
+        { "label": "Email", "value": "arjun.mehta@gmail.com" },
+        { "label": "Mobile Number", "value": "9090909090" },
+        { "label": "Gender", "value": "Male" },
+        { "label": "Department", "value": "Sales" },
+        { "label": "Designation", "value": "Account Executive" },
+        { "label": "Role", "value": "User" },
+        { "label": "Description", "value": "Looking for a bulk pricing plan." }
+      ]
+    },
+    {
+      "id": 6,
+      "submissionId": "SUB-3206",
+      "formId": "FC-002",
+      "formName": "Employee Onboarding",
+      "submittedBy": "Kavya Nair",
+      "email": "kavya.nair@gmail.com",
+      "mobile": "9765432109",
+      "submittedAt": "Nov 20, 2026 04:32 PM",
+      "status": "New",
+      "answers": [
+        { "label": "Full Name", "value": "Kavya Nair" },
+        { "label": "Email", "value": "kavya.nair@gmail.com" },
+        { "label": "Mobile Number", "value": "9765432109" },
+        { "label": "Department", "value": "Marketing" },
+        { "label": "Designation", "value": "Content Strategist" },
+        { "label": "Date of Joining", "value": "2026-12-15" },
+        { "label": "Notes", "value": "Remote onboarding for the first two weeks." }
+      ]
+    },
+    {
+      "id": 7,
+      "submissionId": "SUB-3207",
+      "formId": "FC-004",
+      "formName": "Support Request",
+      "submittedBy": "Vikram Singh",
+      "email": "vikram.singh@gmail.com",
+      "mobile": "9345678120",
+      "submittedAt": "Nov 19, 2026 10:47 AM",
+      "status": "Reviewed",
+      "answers": [
+        { "label": "Full Name", "value": "Vikram Singh" },
+        { "label": "Email", "value": "vikram.singh@gmail.com" },
+        { "label": "Mobile Number", "value": "9345678120" },
+        { "label": "Issue Type", "value": "Billing" },
+        { "label": "Priority", "value": "Medium" },
+        { "label": "Describe the Issue", "value": "Invoice amount does not match the plan selected." }
+      ]
+    },
+    {
+      "id": 8,
+      "submissionId": "SUB-3208",
+      "formId": "FC-001",
+      "formName": "Customer Registration",
+      "submittedBy": "Ananya Iyer",
+      "email": "ananya.iyer@gmail.com",
+      "mobile": "9812345670",
+      "submittedAt": "Nov 18, 2026 06:02 PM",
+      "status": "New",
+      "answers": [
+        { "label": "Full Name", "value": "Ananya Iyer" },
+        { "label": "Email", "value": "ananya.iyer@gmail.com" },
+        { "label": "Mobile Number", "value": "9812345670" },
+        { "label": "Gender", "value": "Female" },
+        { "label": "Department", "value": "Finance" },
+        { "label": "Designation", "value": "Financial Analyst" },
+        { "label": "Role", "value": "User" },
+        { "label": "Description", "value": "Needs access for the finance reporting dashboard." }
+      ]
+    }
+  ]
+}
