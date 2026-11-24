@@ -8,7 +8,7 @@ const Create = () => {
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
 
-  const { fields, selectedField, selectedFieldId, addField, selectField, deleteField, duplicateField, reorderFields, updateField } = useFormBuilder();
+  const { fields, selectedField, selectedFieldId, formMeta, addField, selectField, deleteField, reorderFields, updateField, updateFormMeta } = useFormBuilder();
 
   // Preview Form
   const handlePreview = () => {
@@ -20,7 +20,7 @@ const Create = () => {
     try {
       setSaving(true);
 
-      console.log("Saving form as draft...");
+      console.log("Saving form as draft...",fields);
 
       // Backend API integration will be added later.
     } catch (error) {
@@ -60,11 +60,13 @@ const Create = () => {
           <div className="col-span-4">
             <FormCanvas
               fields={fields}
+              formMeta={formMeta}
               selectedFieldId={selectedFieldId}
               onSelectField={selectField}
               onDeleteField={deleteField}
-              onDuplicateField={duplicateField}
               onReorderFields={reorderFields}
+              onUpdateFormMeta={updateFormMeta}
+              onAddField={addField}
             />
           </div>
 

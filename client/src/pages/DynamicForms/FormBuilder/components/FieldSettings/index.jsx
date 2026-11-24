@@ -4,6 +4,11 @@ import TextSettings from "./settings/TextSettings";
 import EmailSettings from "./settings/EmailSettings";
 import NumberSettings from "./settings/NumberSettings";
 import PhoneSettings from "./settings/PhoneSettings";
+import TextAreaSettings from "./settings/TextAreaSettings";
+import DateSettings from "./settings/DateSettings";
+import SelectSettings from "./settings/SelectSettings";
+import RadioSettings from "./settings/RadioSettings";
+import CheckboxSettings from "./settings/CheckboxSettings";
 
 const FIELD_LABELS = {
   text: "Text",
@@ -17,11 +22,19 @@ const FIELD_LABELS = {
   checkbox: "Checkbox",
 };
 
+const OPTIONS_COMPONENTS = {
+  select: SelectSettings,
+  radio: RadioSettings,
+  checkbox: CheckboxSettings,
+};
+
 const VALIDATION_COMPONENTS = {
   text: TextSettings,
   email: EmailSettings,
   number: NumberSettings,
   phone: PhoneSettings,
+  textarea: TextAreaSettings,
+  date: DateSettings,
 };
 
 const FieldSettings = ({ field, onUpdate }) => {
@@ -40,6 +53,7 @@ const FieldSettings = ({ field, onUpdate }) => {
   }
 
   const fieldLabel = FIELD_LABELS[field.type] || field.type;
+  const OptionsComponent = OPTIONS_COMPONENTS[field.type];
   const ValidationComponent = VALIDATION_COMPONENTS[field.type];
 
   const handleUpdate = (updates) => {
@@ -70,7 +84,16 @@ const FieldSettings = ({ field, onUpdate }) => {
       {/* Common Settings */}
       <CommonSettings field={field} onUpdate={(updates) => onUpdate?.(field.id, updates)} />
 
-      {/* Field-specific validation components will go here */}
+      {/* Type-specific options (select, radio, checkbox) */}
+      {OptionsComponent && (
+        <div className="mt-5 border-t border-[#E5EAF2] pt-5">
+          <h4 className="text-sm font-semibold text-[#161F42] mb-3">Options</h4>
+
+          <OptionsComponent field={field} onUpdate={handleUpdate} />
+        </div>
+      )}
+
+      {/* Type-specific validation */}
       <div className="mt-5 border-t border-[#E5EAF2] pt-5">
         <h4 className="text-sm font-semibold text-[#161F42] mb-3">Validation</h4>
 
