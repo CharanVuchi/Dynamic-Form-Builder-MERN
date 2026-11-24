@@ -19,21 +19,26 @@ const navigationItems = [
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ collapsed = false }) => {
   return (
-    <aside className="w-[280px] h-screen bg-[#161F42] text-white flex flex-col shrink-0">
+    <aside
+      className={`
+        ${collapsed ? "w-[80px]" : "w-[260px]"}
+        h-screen bg-[#161F42] text-white flex flex-col shrink-0
+        overflow-hidden transition-[width] duration-300 ease-in-out
+      `}>
       {/* Logo */}
-      <div className="h-[70px] flex items-center px-7 gap-3 shrink-0">
-        <div className="w-11 h-11 rounded-xl bg-[#9CD3BB] flex items-center justify-center text-[#161F42] font-bold text-lg">DFB</div>
+      <div className={`h-[64px] flex items-center shrink-0 ${collapsed ? "justify-center px-3" : "px-6 gap-3"}`}>
+        <div className="w-10 h-10 rounded-xl bg-[#9CD3BB] flex items-center justify-center text-[#161F42] font-bold text-base shrink-0">DFB</div>
 
-        <h1 className="text-[26px] font-bold tracking-tight text-white">Form Builder</h1>
+        {!collapsed && <h1 className="text-[22px] font-bold tracking-tight text-white whitespace-nowrap">Form Builder</h1>}
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 px-5 pt-7">
-        <p className="text-xs font-bold tracking-[1.5px] text-[#9BAACB] px-4 mb-5">NAVIGATION</p>
+      <div className={`flex-1 pt-6 ${collapsed ? "px-3" : "px-4"}`}>
+        {!collapsed && <p className="text-[11px] font-bold tracking-[1.5px] text-[#9BAACB] px-3 mb-4 whitespace-nowrap">NAVIGATION</p>}
 
-        <nav className="flex flex-col gap-2">
+        <nav className="flex flex-col gap-1.5">
           {navigationItems.map((item) => {
             const Icon = item.icon;
 
@@ -42,7 +47,13 @@ const Sidebar = () => {
                 key={item.path}
                 to={item.path}
                 end={item.path === "/dashboard"}
-                className="flex items-center gap-4 px-4 py-3.5 rounded-lg transition-all duration-200 no-underline hover:no-underline"
+                title={collapsed ? item.label : undefined}
+                aria-label={item.label}
+                className={`
+                  flex items-center rounded-lg transition-all duration-200
+                  no-underline hover:no-underline whitespace-nowrap
+                  ${collapsed ? "justify-center py-3" : "gap-3 px-3 py-2.5"}
+                `}
                 style={({ isActive }) => ({
                   backgroundColor: isActive ? "#BDE2D1" : "transparent",
 
@@ -50,15 +61,17 @@ const Sidebar = () => {
                 })}>
                 {({ isActive }) => (
                   <>
-                    <Icon size={22} strokeWidth={1.8} color={isActive ? "#161F42" : "#FFFFFF"} />
+                    <Icon size={20} strokeWidth={1.8} color={isActive ? "#161F42" : "#FFFFFF"} className="shrink-0" />
 
-                    <span
-                      className="text-base font-medium"
-                      style={{
-                        color: isActive ? "#161F42" : "#FFFFFF",
-                      }}>
-                      {item.label}
-                    </span>
+                    {!collapsed && (
+                      <span
+                        className="text-sm font-medium"
+                        style={{
+                          color: isActive ? "#161F42" : "#FFFFFF",
+                        }}>
+                        {item.label}
+                      </span>
+                    )}
                   </>
                 )}
               </NavLink>
@@ -68,18 +81,22 @@ const Sidebar = () => {
       </div>
 
       {/* Bottom Profile */}
-      <div className="px-5 pb-6 shrink-0">
-        <div className="border-t border-[#394466] pt-5">
-          <button className="w-full flex items-center gap-3 px-2">
-            <div className="w-11 h-11 rounded-full bg-[#9CD3BB] text-[#161F42] flex items-center justify-center font-bold text-lg shrink-0">C</div>
+      <div className={`pb-5 shrink-0 ${collapsed ? "px-3" : "px-4"}`}>
+        <div className="border-t border-[#394466] pt-4">
+          <button type="button" title={collapsed ? "Charan Vuchi" : undefined} className={`w-full flex items-center rounded-lg ${collapsed ? "justify-center" : "gap-3 px-1.5"}`}>
+            <div className="w-9 h-9 rounded-full bg-[#9CD3BB] text-[#161F42] flex items-center justify-center font-bold text-sm shrink-0">C</div>
 
-            <div className="flex-1 text-left">
-              <p className="text-sm font-semibold text-white">Charan Vuchi</p>
+            {!collapsed && (
+              <>
+                <div className="flex-1 text-left min-w-0">
+                  <p className="text-sm font-semibold text-white truncate">Charan Vuchi</p>
 
-              <p className="text-sm text-[#9BAACB]">Administrator</p>
-            </div>
+                  <p className="text-xs text-[#9BAACB] truncate">Administrator</p>
+                </div>
 
-            <FiChevronDown size={20} />
+                <FiChevronDown size={18} className="shrink-0" />
+              </>
+            )}
           </button>
         </div>
       </div>

@@ -1,11 +1,12 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../layouts";
-import { Dashboard, DynamicForms, Submissions } from "../pages";
+import { Dashboard, DynamicForms,FormBuilder, Submissions } from "../pages";
 
 const layout = [
   { path: "/dashboard", element: <Dashboard /> },
   { path: "/dynamic-forms", element: <DynamicForms /> },
+  { path: "/dynamic-forms/create", element: <FormBuilder /> },
   { path: "/submissions", element: <Submissions /> },
 ];
 const RouteComponent = () => (

@@ -66,7 +66,7 @@ const DashboardChart = ({ analytics = {} }) => {
         ticks: {
           color: "#8190AA",
           font: {
-            size: 12,
+            size: 11,
           },
         },
       },
@@ -81,6 +81,9 @@ const DashboardChart = ({ analytics = {} }) => {
         },
         ticks: {
           color: "#8190AA",
+          font: {
+            size: 11,
+          },
           stepSize: 50,
         },
       },

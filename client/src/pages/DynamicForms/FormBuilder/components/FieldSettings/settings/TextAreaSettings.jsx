@@ -1,0 +1,48 @@
+import { InputNumber } from "antd";
+
+const TextAreaSettings = ({ field, onUpdate }) => {
+  const validation = field.validation || {};
+
+  const handleChange = (key, value) => {
+    onUpdate({
+      validation: {
+        ...validation,
+        [key]: value,
+      },
+    });
+  };
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="block text-sm font-medium text-[#344054] mb-2">Minimum Length</label>
+
+          <InputNumber
+            min={0}
+            value={validation.minLength ?? null}
+            placeholder="Minimum"
+            className="w-full h-10 flex items-center"
+            onChange={(value) => handleChange("minLength", value)}
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-[#344054] mb-2">Maximum Length</label>
+
+          <InputNumber
+            min={1}
+            value={validation.maxLength ?? null}
+            placeholder="Maximum"
+            className="w-full h-10 flex items-center"
+            onChange={(value) => handleChange("maxLength", value)}
+          />
+        </div>
+      </div>
+
+      <p className="text-xs text-[#8190AA]">Restrict how many characters users can enter in the text area. Leave empty for no limit.</p>
+    </div>
+  );
+};
+
+export default TextAreaSettings;

@@ -1,6 +1,6 @@
 import { App } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined, InfoCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
-import "./style.scss";
+
 
 export const useToast = () => {
   const { message } = App.useApp();
@@ -52,7 +52,7 @@ export const useToast = () => {
     message.open({
       content: (
         <div
-          className="flex items-center gap-[8px] font-[400] justify-center text-[16px]"
+          className="flex items-center gap-[8px] font-[400] justify-center text-sm"
           style={{
             backgroundColor: config.bgColor,
             color: config.textColor,

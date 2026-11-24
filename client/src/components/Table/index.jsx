@@ -1,24 +1,48 @@
-import { Table, Pagination, Button, ConfigProvider } from "antd";
-import { FiPlus } from "react-icons/fi";
+import { Table, Pagination, Button, ConfigProvider, Input, Select, Space } from "antd";
+
+import { FiPlus, FiSearch } from "react-icons/fi";
 
 const AntTable = ({
+  // Table
   columns = [],
   dataSource = [],
   loading = false,
   rowKey = "id",
-  pagination = {},
-  onPageChange,
-  onAdd,
-  showAdd = false,
-  addLabel = "Add New",
   rowSelection,
   scroll,
   className = "",
+
+  // Search
+  search,
+  searchPlaceholder = "Search...",
+
+  // Filters
+  filters = [],
+  filterValues = {},
+  onFilterChange,
+
+  // Extra Actions
+  extraActions,
+
+  // Add Button
+  onAdd,
+  showAdd = false,
+  addLabel = "Add New",
+
+  // Pagination
+  pagination = {},
+  onPageChange,
+  itemLabel = "items",
+
+  // Table Colors
   customColorBgContainer,
   customHeaderBg,
+
   ...rest
 }) => {
   const { current = 1, pageSize = 10, total = dataSource.length, showSizeChanger = true } = pagination;
+
+  const hasSearch = search !== undefined;
 
   return (
     <ConfigProvider
@@ -26,15 +50,50 @@ const AntTable = ({
         token: {},
         components: {
           Table: {
-            colorBgContainer: customColorBgContainer ?? "#fff",
+            colorBgContainer: customColorBgContainer ?? "#FFFFFF",
             headerBg: customHeaderBg ?? "#B0DADB",
             headerSplitColor: "transparent",
+            cellPaddingBlock: 12,
+            cellPaddingInline: 12,
           },
         },
       }}>
       <div className={`w-full ${className}`}>
-        {/* Table */}
-        <div className="w-full overflow-hidden rounded-lg border border-gray-200">
+        {/* Search and Filters */}
+        {(hasSearch || filters.length > 0 || extraActions) && (
+          <div className="flex items-center justify-between gap-4 flex-wrap mb-5">
+            <div className="flex items-center gap-3 flex-wrap">
+              {hasSearch && (
+                <Input
+                  prefix={<FiSearch size={18} className="text-[#8190AA]" />}
+                  placeholder={searchPlaceholder}
+                  value={search.value}
+                  onChange={(e) => search.onChange?.(e.target.value)}
+                  allowClear
+                  className="w-[410px] h-11 rounded-lg"
+                />
+              )}
+            </div>
+
+            {filters?.map((filter) => (
+              <Select
+                key={filter.key}
+                value={filterValues[filter.key] ?? undefined}
+                placeholder={filter.placeholder || filter.label}
+                options={filter.options || []}
+                onChange={(value) => onFilterChange?.(filter.key, value)}
+                allowClear={filter.allowClear !== false}
+                showSearch={filter.showSearch || false}
+                className="min-w-[165px] h-11"
+              />
+            ))}
+
+            {extraActions && <Space wrap>{extraActions}</Space>}
+          </div>
+        )}
+
+        {/* Table Container */}
+        <div className="relative w-full overflow-hidden rounded-lg border border-gray-200">
           <Table
             columns={columns}
             dataSource={dataSource}
@@ -46,27 +105,29 @@ const AntTable = ({
             className="custom-ant-table"
             {...rest}
           />
+
+          {/* Add Button - Bottom Right Inside Table */}
+          {showAdd && (
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<FiPlus size={18} />}
+              title={addLabel}
+              onClick={onAdd}
+              className="!absolute !bottom-4 !right-3 !z-10 !h-10 !w-10 !min-w-10 !bg-[#161F42] !text-white !border-0 shadow-lg flex items-center justify-center"
+            />
+          )}
         </div>
 
-        {/* Add Button - Bottom Right */}
-        {showAdd && (
-          <div className="flex justify-end mt-4">
-            <Button type="primary" icon={<FiPlus />} onClick={onAdd} className="h-10 font-medium">
-              {addLabel}
-            </Button>
-          </div>
-        )}
+        {/* Pagination Footer */}
+        <div className="flex items-center justify-between mt-5 flex-wrap gap-3">
+          {/* Record Count */}
+          <p className="text-sm text-[#8190AA]">
+            Showing {total === 0 ? 0 : (current - 1) * pageSize + 1}–{Math.min(current * pageSize, total)} of {total} {itemLabel}
+          </p>
 
-        {/* Pagination */}
-        <div className="flex justify-end mt-5">
-          <Pagination
-            current={current}
-            pageSize={pageSize}
-            total={total}
-            showSizeChanger={showSizeChanger}
-            showTotal={(total) => `Total ${total} items`}
-            onChange={(page, size) => onPageChange?.(page, size)}
-          />
+          {/* Pagination */}
+          <Pagination current={current} pageSize={pageSize} total={total} showSizeChanger={showSizeChanger} onChange={(page, size) => onPageChange?.(page, size)} />
         </div>
       </div>
     </ConfigProvider>
