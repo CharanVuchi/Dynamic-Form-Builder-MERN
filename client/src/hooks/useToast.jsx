@@ -1,6 +1,6 @@
 import { App } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined, InfoCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
-import "./style.scss";
+
 
 export const useToast = () => {
   const { message } = App.useApp();
