@@ -8,6 +8,7 @@ import RecordFormDrawer from "./components/RecordFormDrawer";
 import { useNavigate } from "react-router-dom";
 import { DeleteFormAction, GetFormAction, GetFormsAction } from "src/redux/actions/forms";
 import { useToast } from "src/hooks/useToast";
+import { formatDateTimeIST } from "src/utils/dateTime";
 import { FormPreview } from "./FormBuilder/components";
 
 const DynamicForms = () => {
@@ -170,7 +171,8 @@ const DynamicForms = () => {
       title: "Updated At",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      width: "16%",
+      width: "18%",
+      render: (updatedAt) => formatDateTimeIST(updatedAt),
     },
     {
       title: "Actions",

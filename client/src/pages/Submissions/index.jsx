@@ -7,6 +7,7 @@ import { Button, Popup, Table } from "src/components";
 import { useToast } from "src/hooks/useToast";
 import { GetFormsAction } from "src/redux/actions/forms";
 import { DeleteSubmissionAction, GetSubmissionsAction } from "src/redux/actions/submissions";
+import { formatDateTimeIST } from "src/utils/dateTime";
 
 const STATUS_STYLES = {
   New: "!bg-[#E8F8EF] !text-[#16834B]",
@@ -161,6 +162,7 @@ const Submissions = () => {
       dataIndex: "createdAt",
       key: "createdAt",
       width: "16%",
+      render: (createdAt) => formatDateTimeIST(createdAt),
     },
     // {
     //   title: "Status",
@@ -313,7 +315,7 @@ const Submissions = () => {
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[#8190AA]">Submitted At</p>
 
-                <p className="text-sm text-[#253858] mt-1">{viewRecord.createdAt}</p>
+                <p className="text-sm text-[#253858] mt-1">{formatDateTimeIST(viewRecord.createdAt)}</p>
               </div>
 
               <div>

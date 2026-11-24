@@ -1,5 +1,6 @@
 import { Table } from "../../../components";
 import { FiEye, FiTrash2 } from "react-icons/fi";
+import { formatDateTimeIST } from "src/utils/dateTime";
 
 const RecentSubmissions = ({ submissions = [], onView, onDelete }) => {
   const columns = [
@@ -28,23 +29,24 @@ const RecentSubmissions = ({ submissions = [], onView, onDelete }) => {
       title: "Submitted At",
       dataIndex: "submittedAt",
       key: "submittedAt",
+      render: (submittedAt) => formatDateTimeIST(submittedAt),
     },
-    {
-      title: "Actions",
-      key: "actions",
-      width: 150,
-      render: (_, record) => (
-        <div className="flex items-center gap-5">
-          <button type="button" onClick={() => onView?.(record)} className="text-[#283B80]">
-            <FiEye size={20} />
-          </button>
+    // {
+    //   title: "Actions",
+    //   key: "actions",
+    //   width: 150,
+    //   render: (_, record) => (
+    //     <div className="flex items-center gap-5">
+    //       <button type="button" onClick={() => onView?.(record)} className="text-[#283B80]">
+    //         <FiEye size={20} />
+    //       </button>
 
-          <button type="button" onClick={() => onDelete?.(record)} className="text-red-500">
-            <FiTrash2 size={20} />
-          </button>
-        </div>
-      ),
-    },
+    //       <button type="button" onClick={() => onDelete?.(record)} className="text-red-500">
+    //         <FiTrash2 size={20} />
+    //       </button>
+    //     </div>
+    //   ),
+    // },
   ];
 
   return (
