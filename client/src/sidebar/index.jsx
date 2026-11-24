@@ -1,5 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { FiGrid, FiFileText, FiInbox, FiChevronDown } from "react-icons/fi";
+import { Popconfirm } from "antd";
+import { FiGrid, FiFileText, FiInbox, FiLogOut, FiMenu } from "react-icons/fi";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const navigationItems = [
   {
@@ -19,19 +21,22 @@ const navigationItems = [
   },
 ];
 
-const Sidebar = ({ collapsed = false }) => {
+const Sidebar = ({ collapsed = false, onToggleSidebar }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
+    localStorage.removeItem("token");
+    navigate("/login", { replace: true });
   };
+
   return (
     <aside
       className={`
         ${collapsed ? "w-[80px]" : "w-[260px]"}
-        h-screen bg-gradient-to-br from-[#161F42] via-[#26345F] to-[#9CD3BB] text-white flex flex-col shrink-0
+        h-screen bg-gradient-to-br from-[#161F42] via-[#26345F] to-[#9CD3BB]
+        text-white flex flex-col shrink-0
         overflow-hidden transition-[width] duration-300 ease-in-out
+        relative
       `}>
       {/* Logo */}
       <div className={`h-[64px] flex items-center shrink-0 ${collapsed ? "justify-center px-3" : "px-6 gap-3"}`}>
@@ -62,22 +67,13 @@ const Sidebar = ({ collapsed = false }) => {
                 `}
                 style={({ isActive }) => ({
                   backgroundColor: isActive ? "#BDE2D1" : "transparent",
-
                   color: isActive ? "#161F42" : "#FFFFFF",
                 })}>
                 {({ isActive }) => (
                   <>
-                    <Icon size={20} strokeWidth={1.8} color={isActive ? "#161F42" : "#FFFFFF"} className="shrink-0" />
+                    <Icon size={20} strokeWidth={1.8} className="shrink-0" />
 
-                    {!collapsed && (
-                      <span
-                        className="text-sm font-medium"
-                        style={{
-                          color: isActive ? "#161F42" : "#FFFFFF",
-                        }}>
-                        {item.label}
-                      </span>
-                    )}
+                    {!collapsed && <span className="text-sm font-medium">{item.label}</span>}
                   </>
                 )}
               </NavLink>
@@ -86,30 +82,45 @@ const Sidebar = ({ collapsed = false }) => {
         </nav>
       </div>
 
-      {/* Bottom Profile */}
+      {/* Bottom Logout */}
       <div className={`pb-5 shrink-0 ${collapsed ? "px-3" : "px-4"}`}>
-        <div className="border-t border-[#394466] pt-4">
-          <button type="button" title={collapsed ? "Admin" : undefined} className={`w-full flex items-center rounded-lg ${collapsed ? "justify-center" : "gap-3 px-1.5"}`}>
-            <div className="w-9 h-9 rounded-full bg-[#9CD3BB] text-[#161F42] flex items-center justify-center font-bold text-sm shrink-0">A</div>
+        <div className="border-t border-white/20 pt-4">
+          <Popconfirm
+            title="Logout"
+            description="Are you sure you want to logout?"
+            okText="Logout"
+            cancelText="Cancel"
+            okButtonProps={{ danger: true }}
+            placement="topRight"
+            onConfirm={handleLogout}>
+            <button
+              type="button"
+              title={collapsed ? "Logout" : undefined}
+              className={`
+                w-full flex items-center rounded-lg
+                text-white transition-all duration-200
+               cursor-pointer
+                ${collapsed ? "justify-center py-3" : "gap-3 px-3 py-3"}
+              `}>
+              <FiLogOut size={20} strokeWidth={1.8} className="shrink-0" />
 
-            {!collapsed && (
-              <>
-                <div
-                  onClick={() => {
-                    handleLogout();
-                  }}
-                  className="flex-1 text-left min-w-0">
-                  <p className="text-sm font-semibold text-white truncate">Logout</p>
-
-                  <p className="text-xs text-[#9BAACB] truncate">Admin</p>
-                </div>
-
-                <FiChevronDown size={18} className="shrink-0" />
-              </>
-            )}
-          </button>
+              {!collapsed && <span className="text-sm font-medium">Logout</span>}
+            </button>
+          </Popconfirm>
         </div>
       </div>
+
+      <button
+        type="button"
+        onClick={onToggleSidebar}
+        title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        className={`
+            absolute right-2 z-20 cursor-pointer ${collapsed ? "top-[60px]" : "top-[60px]"} flex h-8 w-8 items-center justify-center
+            rounded-full border border-white/30 bg-white text-[#161F42] shadow-md transition-all duration-200 hover:bg-[#BDE2D1] active:scale-95
+  `      }>
+        {collapsed ? <FaArrowRight size={13} /> : <FaArrowLeft size={13} />}
+      </button>
     </aside>
   );
 };
