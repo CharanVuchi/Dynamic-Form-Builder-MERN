@@ -84,7 +84,7 @@ const DynamicForms = () => {
       key: "status",
       width: "13%",
       render: (status) => (
-        <Tag bordered={false} className={`rounded-full px-3 py-1 font-medium ${status === "Published" ? "bg-[#E8F8EF] text-[#16834B]" : "bg-[#FFF3DC] text-[#B7791F]"}`}>
+        <Tag variant="filled" className={`!rounded-full !px-3 !py-1 !font-medium ${status === "Published" ? "!bg-[#E8F8EF] !text-[#16834B]" : "!bg-[#FFF3DC] !text-[#B7791F]"}`}>
           {status}
         </Tag>
       ),
@@ -113,27 +113,27 @@ const DynamicForms = () => {
       width: "24%",
       render: (_, record) => (
         <div className="flex items-center gap-5">
-          <Tooltip title="Submissions">
+          {/* <Tooltip title="Submissions">
             <button type="button" onClick={() => handleSubmissions(record)} className="text-[#283B80] hover:text-[#161F42]">
-              <FiInbox size={20} />
+              <FiInbox size={16} />
             </button>
-          </Tooltip>
+          </Tooltip> */}
 
           <Tooltip title="View">
             <button type="button" onClick={() => handleView(record)} className="text-[#283B80] hover:text-[#161F42]">
-              <FiEye size={20} />
+              <FiEye size={16} />
             </button>
           </Tooltip>
 
           <Tooltip title="Edit">
             <button type="button" onClick={() => handleEdit(record)} className="text-[#283B80] hover:text-[#161F42]">
-              <FiEdit2 size={20} />
+              <FiEdit2 size={16} />
             </button>
           </Tooltip>
 
           <Tooltip title="Delete">
             <button type="button" onClick={() => handleDelete(record)} className="text-[#FF3B30] hover:text-red-700">
-              <FiTrash2 size={20} />
+              <FiTrash2 size={16} />
             </button>
           </Tooltip>
         </div>

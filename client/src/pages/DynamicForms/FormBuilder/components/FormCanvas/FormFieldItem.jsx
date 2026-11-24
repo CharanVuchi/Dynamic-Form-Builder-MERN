@@ -26,7 +26,7 @@ const FormFieldItem = ({ field, index, isSelected, onSelect, onDelete, onDuplica
       </div>
 
       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button
+        {/* <button
           type="button"
           title="Duplicate field"
           onClick={(event) => {
@@ -35,7 +35,7 @@ const FormFieldItem = ({ field, index, isSelected, onSelect, onDelete, onDuplica
           }}
           className="w-8 h-8 flex items-center justify-center rounded-lg text-[#718096] hover:bg-[#EDF1FF] hover:text-[#161F42]">
           <FiCopy size={16} />
-        </button>
+        </button> */}
 
         <button
           type="button"

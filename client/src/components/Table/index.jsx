@@ -53,6 +53,8 @@ const AntTable = ({
             colorBgContainer: customColorBgContainer ?? "#FFFFFF",
             headerBg: customHeaderBg ?? "#B0DADB",
             headerSplitColor: "transparent",
+            cellPaddingBlock: 12,
+            cellPaddingInline: 12,
           },
         },
       }}>
@@ -109,10 +111,10 @@ const AntTable = ({
             <Button
               type="primary"
               shape="circle"
-              icon={<FiPlus size={24} />}
+              icon={<FiPlus size={18} />}
               title={addLabel}
               onClick={onAdd}
-              className="!absolute !bottom-4 !right-0 !z-10 !h-10 !w-10 !min-w-10 !bg-[#161F42] !text-white !border-0 shadow-lg flex items-center justify-center"
+              className="!absolute !bottom-4 !right-3 !z-10 !h-10 !w-10 !min-w-10 !bg-[#161F42] !text-white !border-0 shadow-lg flex items-center justify-center"
             />
           )}
         </div>
