@@ -23,7 +23,7 @@ export const login_dbServices = async (request) => {
     user.lastLoginAt = new Date();
     await user.save();
 
-    const token = generateToken({ uid: user.uid, userName: user.userName });
+    const token = generateToken({ uid: user.uid, userName: user.userName, role: user.role, });
 
     console.log(`User logged in: ${user.userName}`);
 

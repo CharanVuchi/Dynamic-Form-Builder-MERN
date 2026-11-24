@@ -1,59 +1,79 @@
 import jwt from "jsonwebtoken";
 import { apiResponse } from "../../shared/response.js";
 
-const extractAndVerifyToken = (req) => {
+export const extractAndVerifyToken = (req) => {
   try {
-    const authHeader = req.headers["authorization"];
+    const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return { success: false, status: 401, message: "Access Token missing", user: null };
+      return { success: false, action: 3 };
     }
 
-    const token = authHeader.split(" ")[1];
+    const token = authHeader.slice(7).trim();
+
     if (!token) {
-      return { success: false, status: 401, message: "Access Token missing", user: null };
+      return { success: false, action: 3 };
     }
 
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(`Token verified → uid: ${decoded.uid}`);
-      return {
-        success: true,
-        status: 200,
-        message: "Token verified successfully",
-        user: decoded,
-        id: decoded.uid,
-      };
-    } catch (jwtError) {
-      console.log(`JWT error: ${jwtError.message}`);
-      return { success: false, status: 403, message: "Invalid or expired token", user: null };
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET is not configured");
     }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!decoded.uid) {
+      return { success: false, action: 15 };
+    }
+
+    return { success: true, user: decoded, uid: decoded.uid };
   } catch (error) {
-    console.log(`extractAndVerifyToken: ${error.message}`);
-    return { success: false, status: 500, message: "Internal Server Error", user: null, errors: error.message };
+    if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
+      return { success: false, action: 15 };
+    }
+
+    throw error;
   }
 };
 
-//  Authenticate Token Middleware
-const authenticateToken = (req, res, next) => {
-  const result = extractAndVerifyToken(req);
-  if (!result.success) return response(res, result);
+export const authenticateToken = (req, res, next) => {
+  try {
+    const result = extractAndVerifyToken(req);
 
-  if (!req.body) req.body = {};
+    if (!result.success) {
+      return apiResponse(res, { action: result.action });
+    }
 
-  const Method = ["POST", "PUT", "PATCH", "DELETE"];
+    req.user = result.user;
+    req.userId = result.uid;
 
-  if (Method.includes(req.method)) {
-    req.body.CreatedBy = result.uid;
-    req.body.UpdatedBy = result.uid;
-  }
-
-  if (req.method === "GET") {
+    
     req.AccessedBy = result.uid;
+
+    if (!req.body || typeof req.body !== "object") {
+      req.body = {};
+    }
+
+    if (["POST", "PUT", "PATCH"].includes(req.method)) {
+      req.body.CreatedBy = result.uid;
+      req.body.UpdatedBy = result.uid;
+    }
+
+    if (req.method === "DELETE") {
+      req.body.UpdatedBy = result.uid;
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const authorizeAdmin = (req, res, next) => {
+  if (!req.user || req.user.role !== "admin") {
+    return apiResponse(res, {
+      action: 4,
+    });
   }
 
-  req.user = result.user;
   next();
 };
-
-export { extractAndVerifyToken, authenticateToken };
