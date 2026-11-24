@@ -1,123 +1,240 @@
-import { randomUUID } from "node:crypto";
+import mongoose from "mongoose";
 
-import FormModel from "../schema/form.js";
+import Form from "../schema/form.js";
 
-const generateFormId = () => `FC-${randomUUID().slice(0, 8).toUpperCase()}`;
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-export const create_form_dbServices = async (request) => {
-  try {
-    const { formId, name, description, status, fields } = request;
+const formIdQuery = (id) => (mongoose.isValidObjectId(id) ? { _id: id } : { formId: id });
 
-    if (!name) {
-      return { action: 25, data: null, success: false, message: "Please fill in the fields to continue." };
-    }
+export const createForm_dbServices = async (request) => {
+  const { name, description = "", showName = true, showDescription = true, fields = [], status, CreatedBy } = request;
 
-    const newFormId = formId || generateFormId();
+  const form = await Form.create({
+    name,
+    description,
+    showName,
+    showDescription,
+    fields,
+    status: status || "Draft",
+    createdBy: CreatedBy,
+    updatedBy: CreatedBy,
+  });
 
-    const existing = await FormModel.findOne({ formId: newFormId });
-    if (existing) {
-      return { action: 7, data: null, success: false, message: "A form with this ID already exists." };
-    }
+  return {
+    action: 1001,
+    data: form,
+  };
+};
 
-    const form = new FormModel({ formId: newFormId, name, description, status, fields });
-    await form.save();
+export const getForms_dbServices = async (request) => {
+  const { search = "", status, page = 1, limit = 10, AccessedBy } = request;
 
-    console.log(`Form created: ${form.formId}`);
+  const currentPage = Math.max(1, Number(page) || 1);
+  const pageLimit = Math.min(100, Math.max(1, Number(limit) || 10));
 
+  const filter = {
+    createdBy: AccessedBy,
+    isDeleted: false,
+  };
+
+  if (["Draft", "Published"].includes(status)) {
+    filter.status = status;
+  }
+
+  if (search.trim()) {
+    const searchRegex = new RegExp(escapeRegex(search.trim()), "i");
+
+    filter.$or = [{ name: searchRegex }, { formId: searchRegex }];
+  }
+
+  const [forms, total] = await Promise.all([
+    Form.find(filter)
+      .select("formId name status fields createdAt updatedAt")
+      .sort({ updatedAt: -1, _id: -1 })
+      .skip((currentPage - 1) * pageLimit)
+      .limit(pageLimit)
+      .lean(),
+
+    Form.countDocuments(filter),
+  ]);
+
+  return {
+    action: 1000,
+    data: forms.map((form) => ({
+      id: form._id,
+      _id: form._id,
+      formId: form.formId,
+      name: form.name,
+      status: form.status,
+      fields: form.fields.length,
+      submissions: 0,
+      createdAt: form.createdAt,
+      updatedAt: form.updatedAt,
+    })),
+    pagination: {
+      total,
+      page: currentPage,
+      limit: pageLimit,
+      totalPages: Math.ceil(total / pageLimit),
+    },
+  };
+};
+
+export const getFormById_dbServices = async (request) => {
+  const { id, AccessedBy } = request;
+
+  const form = await Form.findOne({
+    ...formIdQuery(id),
+    createdBy: AccessedBy,
+    isDeleted: false,
+  }).lean();
+
+  if (!form) {
     return {
-      action: 1001,
-      data: {
-        formId: form.formId,
-        name: form.name,
-        status: form.status,
-        fields: (form.fields || []).length,
+      action: 1,
+      data: null,
+    };
+  }
+
+  return {
+    action: 1000,
+    data: form,
+  };
+};
+
+export const updateForm_dbServices = async (request) => {
+  const { id, name, description, showName, showDescription, fields, status, UpdatedBy } = request;
+
+  const form = await Form.findOne({
+    ...formIdQuery(id),
+    createdBy: UpdatedBy,
+    isDeleted: false,
+  });
+
+  if (!form) {
+    return {
+      action: 1,
+      data: null,
+    };
+  }
+
+  if (name !== undefined) form.name = name;
+  if (description !== undefined) form.description = description;
+  if (showName !== undefined) form.showName = showName;
+
+  if (showDescription !== undefined) {
+    form.showDescription = showDescription;
+  }
+
+  if (fields !== undefined) {
+    form.fields = fields;
+  }
+
+  if (status !== undefined) {
+    form.status = status;
+  }
+
+  form.updatedBy = UpdatedBy;
+
+  await form.save();
+
+  return {
+    action: 1003,
+    data: form,
+  };
+};
+
+export const publishForm_dbServices = async (request) => {
+  const { id, UpdatedBy } = request;
+
+  const form = await Form.findOne({
+    ...formIdQuery(id),
+    createdBy: UpdatedBy,
+    isDeleted: false,
+  });
+
+  if (!form) {
+    return {
+      action: 1,
+      data: null,
+    };
+  }
+
+  if (!form.name || !form.fields.length) {
+    return {
+      action: 2,
+      data: null,
+      missing_fields: ["Form name and at least one field are required."],
+    };
+  }
+
+  form.status = "Published";
+  form.updatedBy = UpdatedBy;
+
+  await form.save();
+
+  return {
+    action: 1003,
+    data: form,
+  };
+};
+
+export const deleteForm_dbServices = async (request) => {
+  const { id, UpdatedBy } = request;
+
+  const form = await Form.findOneAndUpdate(
+    {
+      ...formIdQuery(id),
+      createdBy: UpdatedBy,
+      isDeleted: false,
+    },
+    {
+      $set: {
+        isDeleted: true,
+        updatedBy: UpdatedBy,
       },
-    };
-  } catch (error) {
-    console.error(`create_form_dbServices: ${error.message}`);
-    throw error;
-  }
-};
+    },
+    {
+      new: true,
+    },
+  );
 
-export const get_form_dbServices = async (formId) => {
-  try {
-    const form = await FormModel.findOne({ formId });
-    if (!form) {
-      return { action: 1, data: null, success: false, message: "Form not found." };
-    }
-    return { action: 1000, data: form.toObject() };
-  } catch (error) {
-    console.error(`get_form_dbServices: ${error.message}`);
-    throw error;
-  }
-};
-
-export const get_forms_dbServices = async () => {
-  try {
-    const forms = await FormModel.find();
+  if (!form) {
     return {
-      action: 1000,
-      data: forms.map((form) => ({
-        formId: form.formId,
-        name: form.name,
-        status: form.status,
-        fields: (form.fields || []).length,
-      })),
+      action: 1,
+      data: null,
     };
-  } catch (error) {
-    console.error(`get_forms_dbServices: ${error.message}`);
-    throw error;
   }
+
+  return {
+    action: 1004,
+    data: {
+      id: form._id,
+      formId: form.formId,
+    },
+  };
 };
 
-export const update_form_dbServices = async (formId, request) => {
-  try {
-    const form = await FormModel.findOne({ formId });
-    if (!form) {
-      return { action: 1, data: null, success: false, message: "Form not found." };
-    }
+export const getPublicForm_dbServices = async (request) => {
+  const { formId } = request;
 
-    const update = {};
-    if (request.name !== undefined) update.name = request.name;
-    if (request.description !== undefined) update.description = request.description;
-    if (request.status !== undefined) update.status = request.status;
-    if (request.fields !== undefined) update.fields = request.fields;
+  const form = await Form.findOne({
+    formId,
+    status: "Published",
+    isDeleted: false,
+  })
+    .select("formId name description showName showDescription fields status")
+    .lean();
 
-    if (Object.keys(update).length === 0) {
-      return { action: 26, data: null, success: false, message: "Record has no changes. Unable to update record" };
-    }
-
-    await form.set(update).save();
-
-    console.log(`Form updated: ${form.formId}`);
-
+  if (!form) {
     return {
-      action: 1003,
-      data: {
-        formId: form.formId,
-        name: form.name,
-        status: form.status,
-        fields: (form.fields || []).length,
-      },
+      action: 1,
+      data: null,
     };
-  } catch (error) {
-    console.error(`update_form_dbServices: ${error.message}`);
-    throw error;
   }
-};
 
-export const delete_form_dbServices = async (formId) => {
-  try {
-    const deleted = await FormModel.deleteOne({ formId });
-    if (deleted.deletedCount === 0) {
-      return { action: 1, data: null, success: false, message: "Form not found." };
-    }
-
-    console.log(`Form deleted: ${formId}`);
-
-    return { action: 1004, data: null };
-  } catch (error) {
-    console.error(`delete_form_dbServices: ${error.message}`);
-    throw error;
-  }
+  return {
+    action: 1000,
+    data: form,
+  };
 };
