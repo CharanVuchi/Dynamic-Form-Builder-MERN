@@ -1,19 +1,22 @@
 import Form from "../schema/form.js";
-import {
-  createSubmission_dbServices,
-  deleteSubmission_dbServices,
-  getSubmissionById_dbServices,
-  getSubmissions_dbServices,
-} from "../repository/submission.js";
+import { createSubmission_dbServices, deleteSubmission_dbServices, getSubmissionById_dbServices, getSubmissions_dbServices } from "../repository/submission.js";
 import { validateSubmissionValues } from "./formValidation.js";
 
-export const createSubmission_services = (request) => createSubmission_dbServices(request);
+export const createSubmission_services = async (request) => {
+  return await createSubmission_dbServices(request);
+};
 
-export const getSubmissions_services = (request) => getSubmissions_dbServices(request);
+export const getSubmissions_services = async (request) => {
+  return await getSubmissions_dbServices(request);
+};
 
-export const getSubmissionById_services = (request) => getSubmissionById_dbServices(request);
+export const getSubmissionById_services = async (request) => {
+  return await getSubmissionById_dbServices(request);
+};
 
-export const deleteSubmission_services = (request) => deleteSubmission_dbServices(request);
+export const deleteSubmission_services = async (request) => {
+  return await deleteSubmission_dbServices(request);
+};
 
 export const createPublicSubmission_services = async (request) => {
   try {
