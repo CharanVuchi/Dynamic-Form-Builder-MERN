@@ -188,26 +188,26 @@ const DynamicForms = () => {
                 type="button"
                 disabled={!isPublished}
                 onClick={() => handleOpenAddRecord(record)}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-[#BDE2D1] bg-[#F3FBF7] px-2.5 py-1.5 text-xs font-semibold text-[#16834B] whitespace-nowrap transition-colors hover:bg-[#E8F8EF] disabled:cursor-not-allowed disabled:border-[#E5EAF2] disabled:bg-[#F8FAFC] disabled:text-[#A0AEC0]">
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[#BDE2D1] bg-[#F3FBF7] px-2.5 py-1.5 text-xs font-semibold text-[#16834B] whitespace-nowrap transition-colors hover:bg-[#E8F8EF] disabled:cursor-not-allowed disabled:border-[#E5EAF2] disabled:bg-[#F8FAFC] disabled:text-[#A0AEC0] cursor-pointer">
                 <FiPlus size={14} />
                 Add Record
               </button>
             </Tooltip>
 
             <Tooltip title="View">
-              <button type="button" onClick={() => handleView(record)} className="text-[#283B80] hover:text-[#161F42]">
+              <button type="button" onClick={() => handleView(record)} className="text-[#283B80] hover:text-[#161F42] cursor-pointer">
                 <FiEye size={16} />
               </button>
             </Tooltip>
 
             <Tooltip title="Edit">
-              <button type="button" onClick={() => handleEdit(record)} className="text-[#283B80] hover:text-[#161F42]">
+              <button type="button" onClick={() => handleEdit(record)} className="text-[#283B80] hover:text-[#161F42] cursor-pointer">
                 <FiEdit2 size={16} />
               </button>
             </Tooltip>
 
             <Tooltip title="Delete">
-              <button type="button" onClick={() => handleDelete(record)} className="text-[#FF3B30] hover:text-red-700">
+              <button type="button" onClick={() => handleDelete(record)} className="text-[#FF3B30] hover:text-red-700 cursor-pointer">
                 <FiTrash2 size={16} />
               </button>
             </Tooltip>

@@ -164,17 +164,6 @@ const Submissions = () => {
       width: "16%",
       render: (createdAt) => formatDateTimeIST(createdAt),
     },
-    // {
-    //   title: "Status",
-    //   dataIndex: "status",
-    //   key: "status",
-    //   width: "10%",
-    //   render: (status) => (
-    //     <Tag variant="filled" className={`!rounded-full !px-3 !py-1 !font-medium ${STATUS_STYLES[status] || STATUS_STYLES.Reviewed}`}>
-    //       {status}
-    //     </Tag>
-    //   ),
-    // },
     {
       title: "Actions",
       key: "actions",
@@ -182,13 +171,13 @@ const Submissions = () => {
       render: (_, record) => (
         <div className="flex items-center gap-4">
           <Tooltip title="View submission">
-            <button type="button" onClick={() => setViewRecord(record)} className="text-[#283B80] hover:text-[#161F42]">
+            <button type="button" onClick={() => setViewRecord(record)} className="text-[#283B80] hover:text-[#161F42] cursor-pointer">
               <FiEye size={17} />
             </button>
           </Tooltip>
 
           <Tooltip title="Delete submission">
-            <button type="button" onClick={() => handleDelete(record)} className="text-[#FF3B30] hover:text-red-700">
+            <button type="button" onClick={() => handleDelete(record)} className="text-[#FF3B30] hover:text-red-700 cursor-pointer">
               <FiTrash2 size={17} />
             </button>
           </Tooltip>
@@ -244,14 +233,6 @@ const Submissions = () => {
               placeholder: "All Forms",
               options: formOptions,
             },
-            // {
-            //   key: "status",
-            //   placeholder: "All Status",
-            //   options: [
-            //     { label: "New", value: "New" },
-            //     { label: "Reviewed", value: "Reviewed" },
-            //   ],
-            // },
           ]}
           filterValues={{ formId: formFilter, status: statusFilter }}
           onFilterChange={handleFilterChange}
