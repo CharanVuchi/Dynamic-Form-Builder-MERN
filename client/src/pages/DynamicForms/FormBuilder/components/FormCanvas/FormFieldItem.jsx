@@ -10,30 +10,30 @@ const FormFieldItem = ({ field, isSelected, onSelect, onDelete }) => {
     <div
       onClick={() => onSelect?.(field.id)}
       className={`group flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
-        isSelected ? "border-[#161F42] bg-[#F7F9FF] shadow-sm" : "border-[#E5EAF2] bg-white hover:border-[#9CD3BB]"
+        isSelected ? "border-[var(--theme-brand-primary)] bg-[var(--theme-surface-selected)] shadow-sm" : "border-[var(--theme-border-default)] bg-[var(--theme-surface)] hover:border-[var(--theme-brand-accent)]"
       }`}>
-      <div className="text-[#A0AEC0] cursor-grab shrink-0">
+      <div className="text-[var(--theme-text-disabled-light)] cursor-grab shrink-0">
         <LuGripVertical size={18} />
       </div>
 
-      <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${isSelected ? "bg-[#161F42] text-white" : "bg-[#EDF1FF] text-[#283B80]"}`}>
+      <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${isSelected ? "bg-[var(--theme-brand-primary)] text-[var(--theme-white)]" : "bg-[var(--theme-brand-wash)] text-[var(--theme-brand-secondary)]"}`}>
         {Icon && <Icon size={17} />}
       </div>
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5">
-          <p className="text-sm font-semibold text-[#161F42] truncate">{field.label || `Untitled ${field.type} field`}</p>
+          <p className="text-sm font-semibold text-[var(--theme-brand-primary)] truncate">{field.label || `Untitled ${field.type} field`}</p>
 
-          {field.required && <span className="text-xs text-red-500">*</span>}
+          {field.required && <span className="text-xs text-[var(--theme-danger-light)]">*</span>}
         </div>
 
-        <p className="text-xs text-[#8190AA] mt-1 truncate">
+        <p className="text-xs text-[var(--theme-text-subtle)] mt-1 truncate">
           {field.fieldKey || field.type}
           {field.defaultValue ? ` · Default: ${field.defaultValue}` : ""}
         </p>
       </div>
 
-      <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-[#F1F5F9] text-[10px] font-semibold uppercase tracking-wide text-[#64748B] shrink-0">{field.type}</span>
+      <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-[var(--theme-surface-slate)] text-[10px] font-semibold uppercase tracking-wide text-[var(--theme-text-slate)] shrink-0">{field.type}</span>
 
       <div className="flex items-center gap-0.5 shrink-0">
         <button
@@ -43,7 +43,7 @@ const FormFieldItem = ({ field, isSelected, onSelect, onDelete }) => {
             event.stopPropagation();
             onDelete?.(field.id);
           }}
-          className="w-8 h-8 flex items-center justify-center rounded-lg text-[#718096] hover:bg-red-50 hover:text-red-500 transition-colors">
+          className="w-8 h-8 flex items-center justify-center rounded-lg text-[var(--theme-text-muted)] hover:bg-[var(--theme-danger-surface)] hover:text-[var(--theme-danger-light)] transition-colors">
           <FiTrash2 size={15} />
         </button>
       </div>

@@ -15,7 +15,7 @@ const FormPreview = ({ open = false, onClose, formMeta = {}, fields = [] }) => {
       )}
 
       {fields.length > 0 && (
-        <div className="rounded-xl border border-[#E5EAF2] bg-white p-6">
+        <div className="rounded-xl border border-[var(--theme-border-default)] bg-[var(--theme-surface)] p-6">
           <DynamicFormRenderer form={form} showActions={false} disabled formId="form-preview" />
         </div>
       )}

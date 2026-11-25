@@ -36,11 +36,11 @@ const SelectSettings = ({ field, onUpdate }) => {
   return (
     <div className="flex flex-col gap-2">
       {options.length === 0 ? (
-        <p className="text-xs text-[#8190AA]">No options added yet. Add at least one option for this field.</p>
+        <p className="text-xs text-[var(--theme-text-subtle)]">No options added yet. Add at least one option for this field.</p>
       ) : (
         options.map((option, index) => (
           <div key={index} className="flex items-center gap-2">
-            <span className="w-4 shrink-0 text-xs text-[#8190AA]">{index + 1}.</span>
+            <span className="w-4 shrink-0 text-xs text-[var(--theme-text-subtle)]">{index + 1}.</span>
 
             <TextInput
               value={option.label}
@@ -53,7 +53,7 @@ const SelectSettings = ({ field, onUpdate }) => {
               type="button"
               title="Remove option"
               onClick={() => handleRemoveOption(index)}
-              className="w-8 h-8 flex items-center justify-center rounded-lg text-[#718096] hover:bg-red-50 hover:text-red-500 transition-colors shrink-0">
+              className="w-8 h-8 flex items-center justify-center rounded-lg text-[var(--theme-text-muted)] hover:bg-[var(--theme-danger-surface)] hover:text-[var(--theme-danger-light)] transition-colors shrink-0">
               <FiTrash2 size={15} />
             </button>
           </div>
@@ -62,7 +62,7 @@ const SelectSettings = ({ field, onUpdate }) => {
 
       <Button variant="outline" icon={<FiPlus size={15} />} textContent="Add Option" className="h-9 rounded-lg text-xs font-medium" onClick={handleAddOption} />
 
-      <p className="text-xs text-[#8190AA]">{helperText}</p>
+      <p className="text-xs text-[var(--theme-text-subtle)]">{helperText}</p>
     </div>
   );
 };

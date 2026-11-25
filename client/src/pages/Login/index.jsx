@@ -65,31 +65,31 @@ const Login = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#161F42] via-[#26345F] to-[#9CD3BB] px-4 py-10">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[var(--theme-brand-primary)] via-[var(--theme-brand-mid)] to-[var(--theme-brand-accent)] px-4 py-10">
       {/* Background Decorations */}
-      <div className="absolute -top-40 -right-32 h-[450px] w-[450px] rounded-full bg-[#9CD3BB]/20 blur-3xl" />
+      <div className="absolute -top-40 -right-32 h-[450px] w-[450px] rounded-full bg-[var(--theme-brand-accent)]/20 blur-3xl" />
 
-      <div className="absolute -bottom-40 -left-32 h-[450px] w-[450px] rounded-full bg-white/10 blur-3xl" />
+      <div className="absolute -bottom-40 -left-32 h-[450px] w-[450px] rounded-full bg-[var(--theme-surface)]/10 blur-3xl" />
 
       {/* Login Card */}
-      <div className="relative z-10 w-full max-w-[440px] rounded-2xl border border-white/60 bg-white p-8 shadow-2xl sm:p-10">
+      <div className="relative z-10 w-full max-w-[440px] rounded-2xl border border-[var(--theme-white)]/60 bg-[var(--theme-surface)] p-8 shadow-2xl sm:p-10">
         {/* Branding */}
         <div className="mb-9">
           <div className="mb-7 flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#161F42] text-[#9CD3BB] shadow-md">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--theme-brand-primary)] text-[var(--theme-brand-accent)] shadow-md">
               <span className="text-lg font-bold">DFB</span>
             </div>
 
             <div>
-              <h2 className="text-lg font-bold tracking-tight text-[#161F42]">Form Builder</h2>
+              <h2 className="text-lg font-bold tracking-tight text-[var(--theme-brand-primary)]">Form Builder</h2>
 
-              <p className="text-xs text-[#8190AA]">Dynamic Form Management</p>
+              <p className="text-xs text-[var(--theme-text-subtle)]">Dynamic Form Management</p>
             </div>
           </div>
 
-          <h1 className="text-[28px] font-bold tracking-tight text-[#161F42]">Welcome back!</h1>
+          <h1 className="text-[28px] font-bold tracking-tight text-[var(--theme-brand-primary)]">Welcome back!</h1>
 
-          <p className="mt-2 text-sm leading-6 text-[#8190AA]">Sign in to your account to manage forms, track submissions and access your workspace.</p>
+          <p className="mt-2 text-sm leading-6 text-[var(--theme-text-subtle)]">Sign in to your account to manage forms, track submissions and access your workspace.</p>
         </div>
 
         {/* Login Form */}
@@ -115,7 +115,7 @@ const Login = () => {
 
       {/* Footer */}
       <div className="absolute bottom-4 left-0 right-0 text-center">
-        <p className="text-xs text-white/70">© {new Date().getFullYear()} Dynamic Form Builder. All rights reserved.</p>
+        <p className="text-xs text-[var(--theme-white)]/70">© {new Date().getFullYear()} Dynamic Form Builder. All rights reserved.</p>
       </div>
     </div>
   );

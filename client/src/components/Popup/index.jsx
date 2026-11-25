@@ -46,14 +46,14 @@ const CustomModal = ({
         className={'thin-scrollbar'}
         title={
           <div className="relative flex items-center justify-center min-h-6 pr-8">
-            <h5 className="text-center font-semibold text-[#161F42]">{title}</h5>
+            <h5 className="text-center font-semibold text-[var(--theme-brand-primary)]">{title}</h5>
 
             {closable && (
               <button
                 type="button"
                 onClick={handleClose}
                 aria-label="Close"
-                className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 transition-all hover:text-gray-900">
+                className="absolute right-0 top-1/2 -translate-y-1/2 text-[var(--theme-text-neutral)] transition-all hover:text-[var(--theme-text-neutral-darker)]">
                 <CloseOutlined className="cursor-pointer text-lg" />
               </button>
             )}
@@ -66,11 +66,11 @@ const CustomModal = ({
             padding: "20px 24px",
           },
           footer: {
-            borderTop: "1px solid #E5EAF2",
+            borderTop: "1px solid var(--theme-border-default)",
             padding: "12px 24px",
           },
         }}>
-        <div className={`text-gray-700 ${bodyClassName}`}>{children}</div>
+        <div className={`text-[var(--theme-text-neutral-dark)] ${bodyClassName}`}>{children}</div>
       </Modal>
 
       {/* Confirmation Modal */}
@@ -78,7 +78,7 @@ const CustomModal = ({
         open={showConfirmation}
         title={
           <div className="flex items-center">
-            <ExclamationCircleOutlined className="text-orange-500 mr-2" />
+            <ExclamationCircleOutlined className="text-[var(--theme-warning-orange)] mr-2" />
             {confirmTitle}
           </div>
         }
@@ -87,7 +87,7 @@ const CustomModal = ({
         okText="Yes, Close"
         cancelText="Stay"
         okButtonProps={{
-          style: { backgroundColor: "#00888A", borderColor: "#00888A" },
+          style: { backgroundColor: "var(--theme-teal)", borderColor: "var(--theme-teal)" },
         }}
         centered
         width={400}>

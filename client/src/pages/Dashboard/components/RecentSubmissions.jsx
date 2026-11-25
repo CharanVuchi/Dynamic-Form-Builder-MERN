@@ -10,8 +10,8 @@ const RecentSubmissions = ({ submissions = [], onView, onDelete }) => {
       key: "name",
       render: (name, record) => (
         <div>
-          <p className="font-medium text-[#253858]">{name}</p>
-          <p className="text-xs text-[#94A3B8] mt-1">{record.submissionId}</p>
+          <p className="font-medium text-[var(--theme-text-body)]">{name}</p>
+          <p className="text-xs text-[var(--theme-text-disabled)] mt-1">{record.submissionId}</p>
         </div>
       ),
     },
@@ -37,11 +37,11 @@ const RecentSubmissions = ({ submissions = [], onView, onDelete }) => {
     //   width: 150,
     //   render: (_, record) => (
     //     <div className="flex items-center gap-5">
-    //       <button type="button" onClick={() => onView?.(record)} className="text-[#283B80]">
+    //       <button type="button" onClick={() => onView?.(record)} className="text-[var(--theme-brand-secondary)]">
     //         <FiEye size={20} />
     //       </button>
 
-    //       <button type="button" onClick={() => onDelete?.(record)} className="text-red-500">
+    //       <button type="button" onClick={() => onDelete?.(record)} className="text-[var(--theme-danger-light)]">
     //         <FiTrash2 size={20} />
     //       </button>
     //     </div>
@@ -50,10 +50,10 @@ const RecentSubmissions = ({ submissions = [], onView, onDelete }) => {
   ];
 
   return (
-    <div className="bg-white rounded-xl border border-[#E5EAF2] shadow-sm p-6">
+    <div className="bg-[var(--theme-surface)] rounded-xl border border-[var(--theme-border-default)] shadow-sm p-6">
       <div className="mb-3">
-        <h3 className="text-lg font-semibold text-[#161F42]">Recent Submissions</h3>
-        <p className="text-sm text-[#8190AA]">Latest responses received</p>
+        <h3 className="text-lg font-semibold text-[var(--theme-brand-primary)]">Recent Submissions</h3>
+        <p className="text-sm text-[var(--theme-text-subtle)]">Latest responses received</p>
       </div>
 
       <Table

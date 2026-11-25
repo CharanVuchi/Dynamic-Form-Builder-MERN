@@ -12,35 +12,35 @@ export const useToast = () => {
     switch (type) {
       case "success":
         config = {
-          borderLeft: "2px solid #009A0A",
-          textColor: "#fff",
-          bgColor: "#009A0A",
-          icon: <CheckCircleOutlined style={{ fontSize: 16, color: "#fff" }} />,
+          borderLeft: "2px solid var(--theme-success)",
+          textColor: "var(--theme-white)",
+          bgColor: "var(--theme-success)",
+          icon: <CheckCircleOutlined style={{ fontSize: 16, color: "var(--theme-white)" }} />,
         };
         break;
       case "error":
         config = {
-          borderLeft: "2px solid #D32029",
-          textColor: "#fff",
-          bgColor: "#D32029",
-          icon: <CloseCircleOutlined style={{ fontSize: 16, color: "#fff" }} />,
+          borderLeft: "2px solid var(--theme-error)",
+          textColor: "var(--theme-white)",
+          bgColor: "var(--theme-error)",
+          icon: <CloseCircleOutlined style={{ fontSize: 16, color: "var(--theme-white)" }} />,
         };
         break;
       case "warning":
         config = {
-          borderLeft: "2px solid #D89614",
-          textColor: "#D89614",
-          bgColor: "#FFF7E6",
-          icon: <ExclamationCircleOutlined style={{ fontSize: 18, color: "#D89614" }} />,
+          borderLeft: "2px solid var(--theme-warning)",
+          textColor: "var(--theme-warning)",
+          bgColor: "var(--theme-warning-surface)",
+          icon: <ExclamationCircleOutlined style={{ fontSize: 18, color: "var(--theme-warning)" }} />,
         };
         break;
       case "info":
       default:
         config = {
-          borderLeft: "2px solid #1890ff",
-          textColor: "#1890ff",
-          bgColor: "#E6F7FF",
-          icon: <InfoCircleOutlined style={{ fontSize: 18, color: "#1890ff" }} />,
+          borderLeft: "2px solid var(--theme-info)",
+          textColor: "var(--theme-info)",
+          bgColor: "var(--theme-info-surface)",
+          icon: <InfoCircleOutlined style={{ fontSize: 18, color: "var(--theme-info)" }} />,
         };
         break;
     }
@@ -55,7 +55,7 @@ export const useToast = () => {
             borderLeft: config.borderLeft,
             padding: "10px 15px",
             borderRadius: "8px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.25)",
+            boxShadow: "0 4px 8px var(--theme-shadow)",
             fontFamily: "Cabin, sans-serif",
           }}>
           {config.icon}

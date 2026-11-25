@@ -32,9 +32,9 @@ const TextInput = ({
   return (
     <div className={`w-full flex flex-col gap-1 ${className}`}>
       {label && (
-        <label className="text-sm font-medium text-gray-700">
+        <label className="text-sm font-medium text-[var(--theme-text-neutral-dark)]">
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="text-[var(--theme-danger-light)] ml-1">*</span>}
         </label>
       )}
 

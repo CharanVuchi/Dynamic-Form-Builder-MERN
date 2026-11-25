@@ -138,9 +138,9 @@ const DynamicForms = () => {
       width: "24%",
       render: (name, record) => (
         <div>
-          <p className="font-semibold text-[#1F1F1F]">{name}</p>
+          <p className="font-semibold text-[var(--theme-text-primary)]">{name}</p>
 
-          <p className="text-xs text-[#94A3B8] mt-1">{record.formId}</p>
+          <p className="text-xs text-[var(--theme-text-disabled)] mt-1">{record.formId}</p>
         </div>
       ),
     },
@@ -150,7 +150,7 @@ const DynamicForms = () => {
       key: "status",
       width: "12%",
       render: (status) => (
-        <Tag variant="filled" className={`!rounded-full !px-3 !py-1 !font-medium ${status === "Published" ? "!bg-[#E8F8EF] !text-[#16834B]" : "!bg-[#FFF3DC] !text-[#B7791F]"}`}>
+        <Tag variant="filled" className={`!rounded-full !px-3 !py-1 !font-medium ${status === "Published" ? "!bg-[var(--theme-success-surface)] !text-[var(--theme-success-text)]" : "!bg-[var(--theme-warning-background)] !text-[var(--theme-warning-text)]"}`}>
           {status}
         </Tag>
       ),
@@ -188,26 +188,26 @@ const DynamicForms = () => {
                 type="button"
                 disabled={!isPublished}
                 onClick={() => handleOpenAddRecord(record)}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-[#BDE2D1] bg-[#F3FBF7] px-2.5 py-1.5 text-xs font-semibold text-[#16834B] whitespace-nowrap transition-colors hover:bg-[#E8F8EF] disabled:cursor-not-allowed disabled:border-[#E5EAF2] disabled:bg-[#F8FAFC] disabled:text-[#A0AEC0] cursor-pointer">
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--theme-brand-accent-hover)] bg-[var(--theme-surface-accent)] px-2.5 py-1.5 text-xs font-semibold text-[var(--theme-success-text)] whitespace-nowrap transition-colors hover:bg-[var(--theme-success-surface)] disabled:cursor-not-allowed disabled:border-[var(--theme-border-default)] disabled:bg-[var(--theme-surface-disabled)] disabled:text-[var(--theme-text-disabled-light)] cursor-pointer">
                 <FiPlus size={14} />
                 Add Record
               </button>
             </Tooltip>
 
             <Tooltip title="View">
-              <button type="button" onClick={() => handleView(record)} className="text-[#283B80] hover:text-[#161F42] cursor-pointer">
+              <button type="button" onClick={() => handleView(record)} className="text-[var(--theme-brand-secondary)] hover:text-[var(--theme-brand-primary)] cursor-pointer">
                 <FiEye size={16} />
               </button>
             </Tooltip>
 
             <Tooltip title="Edit">
-              <button type="button" onClick={() => handleEdit(record)} className="text-[#283B80] hover:text-[#161F42] cursor-pointer">
+              <button type="button" onClick={() => handleEdit(record)} className="text-[var(--theme-brand-secondary)] hover:text-[var(--theme-brand-primary)] cursor-pointer">
                 <FiEdit2 size={16} />
               </button>
             </Tooltip>
 
             <Tooltip title="Delete">
-              <button type="button" onClick={() => handleDelete(record)} className="text-[#FF3B30] hover:text-red-700 cursor-pointer">
+              <button type="button" onClick={() => handleDelete(record)} className="text-[var(--theme-danger)] hover:text-[var(--theme-danger-hover)] cursor-pointer">
                 <FiTrash2 size={16} />
               </button>
             </Tooltip>
@@ -222,14 +222,14 @@ const DynamicForms = () => {
       {/* Page Heading */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-[24px] font-bold text-[#161F42]">Forms</h1>
+          <h1 className="text-[24px] font-bold text-[var(--theme-brand-primary)]">Forms</h1>
 
-          <p className="text-base text-[#718096]">Create, manage and publish your forms.</p>
+          <p className="text-base text-[var(--theme-text-muted)]">Create, manage and publish your forms.</p>
         </div>
       </div>
 
       {/* Forms Table Container */}
-      <div className="bg-white rounded-xl border border-[#E5EAF2] shadow-sm p-6">
+      <div className="bg-[var(--theme-surface)] rounded-xl border border-[var(--theme-border-default)] shadow-sm p-6">
         <Table
           search={{
             value: search,

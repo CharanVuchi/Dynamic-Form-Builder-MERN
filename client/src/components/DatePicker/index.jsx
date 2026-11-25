@@ -16,9 +16,9 @@ const DatePickerComponent = ({
   return (
     <div className={`w-full flex flex-col gap-1 ${className}`}>
       {label && (
-        <label className="text-sm font-medium text-gray-700">
+        <label className="text-sm font-medium text-[var(--theme-text-neutral-dark)]">
           {label}
-          {required && <span className="ml-1 text-red-500">*</span>}
+          {required && <span className="ml-1 text-[var(--theme-danger-light)]">*</span>}
         </label>
       )}
 

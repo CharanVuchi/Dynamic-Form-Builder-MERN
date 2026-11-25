@@ -7,12 +7,12 @@
 }
 
 .thin-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(100, 100, 100, 0.4) !important;
+  background-color: var(--theme-scrollbar) !important;
 }
 
 .thin-scrollbar {
   scrollbar-width: thin !important;
-  scrollbar-color: rgba(100, 100, 100, 0.4) transparent !important;
+  scrollbar-color: var(--theme-scrollbar) var(--theme-transparent) !important;
 }
 
 
@@ -29,7 +29,7 @@
 
 
 .ant-message-notice-content {
-  background-color: transparent !important;
+  background-color: var(--theme-transparent) !important;
   box-shadow: none !important;
   padding: 0 !important;
 }
@@ -42,7 +42,7 @@
     top: 20px;
     left: auto !important;
     transform: translateX(0) !important;
-    background-color: transparent !important;
+    background-color: var(--theme-transparent) !important;
     box-shadow: none !important;
     padding: 0 !important;
   }
@@ -69,6 +69,11 @@
   }
 
   .ant-spin {
-    color: #4c5457;
+    color: var(--theme-text-neutral);
   }
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td,
+.ant-table-tbody > tr > td.ant-table-cell-row-hover {
+  background: var(--theme-text-neutral)f !important; /* Replace with your color */
 }

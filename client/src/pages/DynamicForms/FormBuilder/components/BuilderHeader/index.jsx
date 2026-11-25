@@ -16,15 +16,15 @@ const BuilderHeader = ({
     <div className="flex items-center justify-between gap-4 flex-wrap">
       {/* Left Section */}
       <div>
-        <h1 className="text-[24px] font-bold text-[#161F42]">{title}</h1>
+        <h1 className="text-[24px] font-bold text-[var(--theme-brand-primary)]">{title}</h1>
 
-        <p className="text-base text-[#718096] mt-1">{description}</p>
+        <p className="text-base text-[var(--theme-text-muted)] mt-1">{description}</p>
       </div>
 
       {/* Right Section */}
       <div className="flex items-center gap-3 flex-wrap">
         {/* Status */}
-        <Tag variant="filled" className={`!rounded-full !px-3 !py-1 font-medium ${status === "Published" ? "!bg-[#E8F8EF] !text-[#16834B]" : "!bg-[#FFF3DC] !text-[#B7791F]"}`}>
+        <Tag variant="filled" className={`!rounded-full !px-3 !py-1 font-medium ${status === "Published" ? "!bg-[var(--theme-success-surface)] !text-[var(--theme-success-text)]" : "!bg-[var(--theme-warning-background)] !text-[var(--theme-warning-text)]"}`}>
           {status}
         </Tag>
 

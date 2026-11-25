@@ -16,7 +16,7 @@ const TextAreaSettings = ({ field, onUpdate }) => {
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-sm font-medium text-[#344054] mb-2">Minimum Length</label>
+          <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">Minimum Length</label>
 
           <TextInput type="number"
             min={0}
@@ -28,7 +28,7 @@ const TextAreaSettings = ({ field, onUpdate }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-[#344054] mb-2">Maximum Length</label>
+          <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">Maximum Length</label>
 
           <TextInput type="number"
             min={1}
@@ -40,7 +40,7 @@ const TextAreaSettings = ({ field, onUpdate }) => {
         </div>
       </div>
 
-      <p className="text-xs text-[#8190AA]">Restrict how many characters users can enter in the text area. Leave empty for no limit.</p>
+      <p className="text-xs text-[var(--theme-text-subtle)]">Restrict how many characters users can enter in the text area. Leave empty for no limit.</p>
     </div>
   );
 };
