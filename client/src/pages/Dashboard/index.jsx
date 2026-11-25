@@ -34,11 +34,11 @@ const Dashboard = () => {
       <div className="grid grid-cols-12 gap-6">
         {/* Submission Analytics */}
         <div className="col-span-7">
-          <Card className="h-full rounded-xl border border-[#E5EAF2] shadow-sm" styles={{ body: { padding: 24 } }}>
+          <Card className="h-full rounded-xl border border-[var(--theme-border-default)] shadow-sm" styles={{ body: { padding: 24 } }}>
             <div className="mb-5">
-              <h3 className="text-lg font-semibold text-[#161F42]">Submission Analytics</h3>
+              <h3 className="text-lg font-semibold text-[var(--theme-brand-primary)]">Submission Analytics</h3>
 
-              <p className="text-sm text-[#8190AA]">Submission activity over the last 7 days</p>
+              <p className="text-sm text-[var(--theme-text-subtle)]">Submission activity over the last 7 days</p>
             </div>
 
             <DashboardChart analytics={submissionAnalytics} />

@@ -1,11 +1,11 @@
 import React from "react";
 
 const BUTTON_VARIANTS = {
-  primary: "bg-[#161F42] text-white border border-[#161F42] hover:bg-[#404D81] ",
+  primary: "bg-[var(--theme-brand-primary)] text-[var(--theme-white)] border border-[var(--theme-brand-primary)] hover:bg-[var(--theme-brand-hover)] ",
 
-  secondary: "bg-[#9CD3BB] text-[#161F42] border border-[#9CD3BB] hover:bg-[#BDE2D1] ",
+  secondary: "bg-[var(--theme-brand-accent)] text-[var(--theme-brand-primary)] border border-[var(--theme-brand-accent)] hover:bg-[var(--theme-brand-accent-hover)] ",
 
-  outline: "bg-transparent text-[#161F42] border border-[#161F42] hover:bg-[#E7ECFF4D]",
+  outline: "bg-[var(--theme-transparent)] text-[var(--theme-brand-primary)] border border-[var(--theme-brand-primary)] hover:bg-[var(--theme-brand-wash-transparent)]",
 };
 
 const Button = ({ variant = "primary", textContent, children, onClick, type = "button", isLoading = false, className = "", disabled = false, icon, rightIcon, style, ...rest }) => {
@@ -25,7 +25,7 @@ const Button = ({ variant = "primary", textContent, children, onClick, type = "b
         text-sm font-medium
         whitespace-nowrap
         transition-all duration-200 ease-in-out
-        focus:outline-none focus:ring-2 focus:ring-[#161F42]/20 focus:ring-offset-2
+        focus:outline-none focus:ring-2 focus:ring-[var(--theme-brand-primary)]/20 focus:ring-offset-2
         disabled:opacity-50 disabled:cursor-not-allowed
         cursor-pointer
         ${BUTTON_VARIANTS[variant] || BUTTON_VARIANTS.primary}

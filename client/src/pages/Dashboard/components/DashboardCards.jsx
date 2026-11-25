@@ -15,18 +15,18 @@ const DashboardCards = ({ cards = [] }) => {
         const Icon = iconMap[card.icon] || FiFileText;
 
         return (
-          <Card key={card.id} className="rounded-xl border border-[#E5EAF2] shadow-sm" styles={{ body: { padding: 20 } }}>
+          <Card key={card.id} className="rounded-xl border border-[var(--theme-border-default)] shadow-sm" styles={{ body: { padding: 20 } }}>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-[#718096] mb-2">{card.title}</p>
+                <p className="text-sm text-[var(--theme-text-muted)] mb-2">{card.title}</p>
 
-                <h2 className="text-2xl font-bold text-[#161F42] mb-1">{card.value.toLocaleString("en-IN")}</h2>
+                <h2 className="text-2xl font-bold text-[var(--theme-brand-primary)] mb-1">{card.value.toLocaleString("en-IN")}</h2>
 
-                <p className="text-xs text-[#8A96AA]">{card.description}</p>
+                <p className="text-xs text-[var(--theme-text-dim)]">{card.description}</p>
               </div>
 
-              <div className="w-12 h-12 rounded-xl bg-[#EDF1FF] flex items-center justify-center">
-                <Icon size={23} className="text-[#283B80]" />
+              <div className="w-12 h-12 rounded-xl bg-[var(--theme-brand-wash)] flex items-center justify-center">
+                <Icon size={23} className="text-[var(--theme-brand-secondary)]" />
               </div>
             </div>
           </Card>

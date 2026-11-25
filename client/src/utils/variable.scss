@@ -1,0 +1,68 @@
+:root {
+  --theme-brand-primary: #161F42;
+  --theme-brand-mid: #26345F;
+  --theme-brand-secondary: #283B80;
+  --theme-brand-hover: #404D81;
+  --theme-brand-accent: #9CD3BB;
+  --theme-brand-accent-hover: #BDE2D1;
+  --theme-brand-wash: #EDF1FF;
+  --theme-brand-wash-transparent: #E7ECFF4D;
+
+  --theme-page-background: #F5F7FA;
+  --theme-surface: #FFFFFF;
+  --theme-surface-muted: #F0F4FA;
+  --theme-surface-slate: #F1F5F9;
+  --theme-surface-light: #FAFBFD;
+  --theme-surface-selected: #F7F9FF;
+  --theme-surface-disabled: #F8FAFC;
+  --theme-surface-accent: #F3FBF7;
+  --theme-surface-accent-hover: #F8FBF9;
+
+  --theme-text-primary: #1F1F1F;
+  --theme-text-body: #253858;
+  --theme-text-secondary: #52617D;
+  --theme-text-muted: #718096;
+  --theme-text-subtle: #8190AA;
+  --theme-text-dim: #8A96AA;
+  --theme-text-disabled: #94A3B8;
+  --theme-text-disabled-light: #A0AEC0;
+  --theme-text-navigation: #9BAACB;
+  --theme-text-slate: #64748B;
+  --theme-text-neutral: #4c5457;
+  --theme-text-neutral-strong: #344054;
+  --theme-text-neutral-dark: #374151;
+  --theme-text-neutral-darker: #111827;
+
+  --theme-border-header: #E5E9F0;
+  --theme-border-default: #E5EAF2;
+  --theme-border-muted: #D9E0EA;
+  --theme-border-subtle: #EDF0F5;
+  --theme-border-neutral: #e5e7eb;
+
+  --theme-success: #009A0A;
+  --theme-success-text: #16834B;
+  --theme-success-surface: #E8F8EF;
+  --theme-error: #D32029;
+  --theme-danger: #FF3B30;
+  --theme-danger-dot: #E74C3C;
+  --theme-danger-light: #ef4444;
+  --theme-danger-surface: #fef2f2;
+  --theme-danger-hover: #b91c1c;
+  --theme-warning: #D89614;
+  --theme-warning-text: #B7791F;
+  --theme-warning-surface: #FFF7E6;
+  --theme-warning-background: #FFF3DC;
+  --theme-warning-orange: #f97316;
+  --theme-info: #1890ff;
+  --theme-info-surface: #E6F7FF;
+  --theme-teal: #00888A;
+  --theme-table-header: #B0DADB;
+
+  --theme-white: #fff;
+  --theme-transparent: transparent;
+  --theme-shadow: rgba(0, 0, 0, 0.25);
+  --theme-scrollbar: rgba(100, 100, 100, 0.4);
+  --theme-chart-fill-strong: rgba(156, 211, 187, 0.55);
+  --theme-chart-fill: rgba(156, 211, 187, 0.2);
+  --theme-chart-fill-subtle: rgba(156, 211, 187, 0.02);
+}

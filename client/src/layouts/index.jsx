@@ -33,7 +33,7 @@ const ProtectedLayout = () => {
   };
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-[#F5F7FA]">
+    <div className="flex h-screen w-full overflow-hidden bg-[var(--theme-page-background)]">
       {/* Sidebar */}
       <Sidebar collapsed={isSideBarCollapsed} onToggleSidebar={toggleSidebar} />
 
@@ -53,7 +53,7 @@ const ProtectedLayout = () => {
 
 const PublicLayout = () => {
   const isAuthenticated = !!localStorage.getItem("token");
-  return <div className="h-screen w-full overflow-hidden bg-[#F5F7FA]">{!isAuthenticated ? <Outlet /> : <Navigate to="/dashboard" replace />}</div>;
+  return <div className="h-screen w-full overflow-hidden bg-[var(--theme-page-background)]">{!isAuthenticated ? <Outlet /> : <Navigate to="/dashboard" replace />}</div>;
 };
 
 export default ProtectedLayout;

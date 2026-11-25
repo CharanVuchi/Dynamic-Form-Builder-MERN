@@ -3,7 +3,7 @@ import { TextInput } from "src/components";
 const EmailSettings = ({ field, onUpdate }) => {
   return (
     <div>
-      <label className="block text-sm font-medium text-[#344054] mb-2">Allowed Domain</label>
+      <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">Allowed Domain</label>
 
       <TextInput
         value={field.validation?.allowedDomain || ""}
@@ -19,7 +19,7 @@ const EmailSettings = ({ field, onUpdate }) => {
         }
       />
 
-      <p className="text-xs text-[#8190AA] mt-2">Allow email addresses from a specific domain. Leave empty to allow all domains.</p>
+      <p className="text-xs text-[var(--theme-text-subtle)] mt-2">Allow email addresses from a specific domain. Leave empty to allow all domains.</p>
     </div>
   );
 };

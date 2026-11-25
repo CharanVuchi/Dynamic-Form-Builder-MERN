@@ -65,7 +65,7 @@ const RecordFormDrawer = ({ form, onClose, onSubmitted }) => {
         <div className="min-h-[320px] thin-scrollbar flex flex-col items-center justify-center gap-3">
           <Spin size="large" />
 
-          <p className="text-sm text-[#718096]">Loading form fields...</p>
+          <p className="text-sm text-[var(--theme-text-muted)]">Loading form fields...</p>
         </div>
       )}
 
@@ -73,15 +73,15 @@ const RecordFormDrawer = ({ form, onClose, onSubmitted }) => {
 
       {publicForm && (
         <>
-          <div className="flex items-center gap-3 rounded-xl bg-[#F0F4FA] p-4 mb-5">
-            <div className="w-10 h-10 rounded-lg bg-white text-[#283B80] flex items-center justify-center shrink-0">
+          <div className="flex items-center gap-3 rounded-xl bg-[var(--theme-surface-muted)] p-4 mb-5">
+            <div className="w-10 h-10 rounded-lg bg-[var(--theme-surface)] text-[var(--theme-brand-secondary)] flex items-center justify-center shrink-0">
               <FiFileText size={18} />
             </div>
 
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-[#161F42] truncate">{publicForm.name}</p>
+              <p className="text-sm font-semibold text-[var(--theme-brand-primary)] truncate">{publicForm.name}</p>
 
-              <p className="text-xs text-[#718096] mt-0.5">
+              <p className="text-xs text-[var(--theme-text-muted)] mt-0.5">
                 {publicForm.formId} · {publicForm.fields?.length || 0} fields
               </p>
             </div>

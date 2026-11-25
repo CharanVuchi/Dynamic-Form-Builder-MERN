@@ -50,9 +50,9 @@ const AntTable = ({
         token: {},
         components: {
           Table: {
-            colorBgContainer: customColorBgContainer ?? "#FFFFFF",
-            headerBg: customHeaderBg ?? "#B0DADB",
-            headerSplitColor: "transparent",
+            colorBgContainer: customColorBgContainer ?? "var(--theme-surface)",
+            headerBg: customHeaderBg ?? "var(--theme-table-header)",
+            headerSplitColor: "var(--theme-transparent)",
             cellPaddingBlock: 12,
             cellPaddingInline: 12,
           },
@@ -65,7 +65,7 @@ const AntTable = ({
             <div className="flex items-center gap-3 flex-wrap">
               {hasSearch && (
                 <Input
-                  prefix={<FiSearch size={18} className="text-[#8190AA]" />}
+                  prefix={<FiSearch size={18} className="text-[var(--theme-text-subtle)]" />}
                   placeholder={searchPlaceholder}
                   value={search.value}
                   onChange={(e) => search.onChange?.(e.target.value)}
@@ -93,7 +93,7 @@ const AntTable = ({
         )}
 
         {/* Table Container */}
-        <div className="relative w-full overflow-hidden rounded-lg border border-gray-200">
+        <div className="relative w-full overflow-hidden rounded-lg border border-[var(--theme-border-neutral)]">
           <Table
             columns={columns}
             dataSource={dataSource}
@@ -114,7 +114,7 @@ const AntTable = ({
               icon={<FiPlus size={18} />}
               title={addLabel}
               onClick={onAdd}
-              className="!absolute !bottom-4 !right-3 !z-10 !h-10 !w-10 !min-w-10 !bg-[#161F42] !text-white !border-0 shadow-lg flex items-center justify-center"
+              className="!absolute !bottom-4 !right-3 !z-10 !h-10 !w-10 !min-w-10 !bg-[var(--theme-brand-primary)] !text-[var(--theme-white)] !border-0 shadow-lg flex items-center justify-center"
             />
           )}
         </div>
@@ -122,7 +122,7 @@ const AntTable = ({
         {/* Pagination Footer */}
         <div className="flex items-center justify-between mt-5 flex-wrap gap-3">
           {/* Record Count */}
-          <p className="text-sm text-[#8190AA]">
+          <p className="text-sm text-[var(--theme-text-subtle)]">
             Showing {total === 0 ? 0 : (current - 1) * pageSize + 1}–{Math.min(current * pageSize, total)} of {total} {itemLabel}
           </p>
 

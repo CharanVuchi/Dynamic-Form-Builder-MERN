@@ -15,7 +15,7 @@ const PhoneSettings = ({ field, onUpdate }) => {
   return (
     <div className="grid grid-cols-2 gap-3">
       <div>
-        <label className="block text-sm font-medium text-[#344054] mb-2">Minimum Length</label>
+        <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">Minimum Length</label>
 
         <TextInput type="number"
           min={1}
@@ -27,7 +27,7 @@ const PhoneSettings = ({ field, onUpdate }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-[#344054] mb-2">Maximum Length</label>
+        <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">Maximum Length</label>
 
         <TextInput type="number"
           min={1}

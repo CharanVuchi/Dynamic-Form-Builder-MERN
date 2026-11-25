@@ -10,8 +10,8 @@ import { DeleteSubmissionAction, GetSubmissionsAction } from "src/redux/actions/
 import { formatDateTimeIST } from "src/utils/dateTime";
 
 const STATUS_STYLES = {
-  New: "!bg-[#E8F8EF] !text-[#16834B]",
-  Reviewed: "!bg-[#EDF1FF] !text-[#283B80]",
+  New: "!bg-[var(--theme-success-surface)] !text-[var(--theme-success-text)]",
+  Reviewed: "!bg-[var(--theme-brand-wash)] !text-[var(--theme-brand-secondary)]",
 };
 
 const Submissions = () => {
@@ -123,7 +123,7 @@ const Submissions = () => {
       dataIndex: "submissionId",
       key: "submissionId",
       width: "13%",
-      render: (submissionId) => <p className="text-sm font-semibold text-[#161F42]">{submissionId}</p>,
+      render: (submissionId) => <p className="text-sm font-semibold text-[var(--theme-brand-primary)]">{submissionId}</p>,
     },
     {
       title: "Form",
@@ -132,9 +132,9 @@ const Submissions = () => {
       width: "18%",
       render: (formName, record) => (
         <div>
-          <p className="font-medium text-[#253858]">{formName}</p>
+          <p className="font-medium text-[var(--theme-text-body)]">{formName}</p>
 
-          <p className="text-xs text-[#94A3B8] mt-1">{record.formId}</p>
+          <p className="text-xs text-[var(--theme-text-disabled)] mt-1">{record.formId}</p>
         </div>
       ),
     },
@@ -145,9 +145,9 @@ const Submissions = () => {
       width: "18%",
       render: (submittedBy, record) => (
         <div>
-          <p className="font-medium text-[#253858]">{submittedBy}</p>
+          <p className="font-medium text-[var(--theme-text-body)]">{submittedBy}</p>
 
-          <p className="text-xs text-[#94A3B8] mt-1">{record.email}</p>
+          <p className="text-xs text-[var(--theme-text-disabled)] mt-1">{record.email}</p>
         </div>
       ),
     },
@@ -164,17 +164,6 @@ const Submissions = () => {
       width: "16%",
       render: (createdAt) => formatDateTimeIST(createdAt),
     },
-    // {
-    //   title: "Status",
-    //   dataIndex: "status",
-    //   key: "status",
-    //   width: "10%",
-    //   render: (status) => (
-    //     <Tag variant="filled" className={`!rounded-full !px-3 !py-1 !font-medium ${STATUS_STYLES[status] || STATUS_STYLES.Reviewed}`}>
-    //       {status}
-    //     </Tag>
-    //   ),
-    // },
     {
       title: "Actions",
       key: "actions",
@@ -182,13 +171,13 @@ const Submissions = () => {
       render: (_, record) => (
         <div className="flex items-center gap-4">
           <Tooltip title="View submission">
-            <button type="button" onClick={() => setViewRecord(record)} className="text-[#283B80] hover:text-[#161F42]">
+            <button type="button" onClick={() => setViewRecord(record)} className="text-[var(--theme-brand-secondary)] hover:text-[var(--theme-brand-primary)] cursor-pointer">
               <FiEye size={17} />
             </button>
           </Tooltip>
 
           <Tooltip title="Delete submission">
-            <button type="button" onClick={() => handleDelete(record)} className="text-[#FF3B30] hover:text-red-700">
+            <button type="button" onClick={() => handleDelete(record)} className="text-[var(--theme-danger)] hover:text-[var(--theme-danger-hover)] cursor-pointer">
               <FiTrash2 size={17} />
             </button>
           </Tooltip>
@@ -201,9 +190,9 @@ const Submissions = () => {
     <div className="flex flex-col gap-6">
       {/* Page Heading */}
       <div>
-        <h1 className="text-[24px] font-bold text-[#161F42]">Submissions</h1>
+        <h1 className="text-[24px] font-bold text-[var(--theme-brand-primary)]">Submissions</h1>
 
-        <p className="text-base text-[#718096]">Review all records submitted through your forms.</p>
+        <p className="text-base text-[var(--theme-text-muted)]">Review all records submitted through your forms.</p>
       </div>
 
       {/* Summary Cards */}
@@ -212,15 +201,15 @@ const Submissions = () => {
           const Icon = stat.icon;
 
           return (
-            <div key={stat.label} className="bg-white rounded-xl border border-[#E5EAF2] shadow-sm p-5">
+            <div key={stat.label} className="bg-[var(--theme-surface)] rounded-xl border border-[var(--theme-border-default)] shadow-sm p-5">
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-sm text-[#718096]">{stat.label}</p>
+                  <p className="text-sm text-[var(--theme-text-muted)]">{stat.label}</p>
 
-                  <h2 className="text-2xl font-bold text-[#161F42] mt-1">{stat.value}</h2>
+                  <h2 className="text-2xl font-bold text-[var(--theme-brand-primary)] mt-1">{stat.value}</h2>
                 </div>
 
-                <div className="w-11 h-11 rounded-xl bg-[#EDF1FF] text-[#283B80] flex items-center justify-center shrink-0">
+                <div className="w-11 h-11 rounded-xl bg-[var(--theme-brand-wash)] text-[var(--theme-brand-secondary)] flex items-center justify-center shrink-0">
                   <Icon size={20} />
                 </div>
               </div>
@@ -230,7 +219,7 @@ const Submissions = () => {
       </div>
 
       {/* Submissions Table */}
-      <div className="bg-white rounded-xl border border-[#E5EAF2] shadow-sm p-6">
+      <div className="bg-[var(--theme-surface)] rounded-xl border border-[var(--theme-border-default)] shadow-sm p-6">
         <Table
           loading={loading}
           search={{
@@ -244,14 +233,6 @@ const Submissions = () => {
               placeholder: "All Forms",
               options: formOptions,
             },
-            // {
-            //   key: "status",
-            //   placeholder: "All Status",
-            //   options: [
-            //     { label: "New", value: "New" },
-            //     { label: "Reviewed", value: "Reviewed" },
-            //   ],
-            // },
           ]}
           filterValues={{ formId: formFilter, status: statusFilter }}
           onFilterChange={handleFilterChange}
@@ -286,7 +267,7 @@ const Submissions = () => {
               <button
                 type="button"
                 onClick={() => handleDelete(viewRecord)}
-                className="inline-flex items-center gap-2 rounded-lg border border-[#FF3B30] bg-[#FF3B30] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700">
+                className="inline-flex items-center gap-2 rounded-lg border border-[var(--theme-danger)] bg-[var(--theme-danger)] px-4 py-2 text-sm font-medium text-[var(--theme-white)] transition-colors hover:bg-[var(--theme-danger-hover)]">
                 <FiTrash2 size={16} />
                 Delete Submission
               </button>
@@ -295,37 +276,37 @@ const Submissions = () => {
         }>
         {viewRecord && (
           <div className="flex flex-col gap-5 thin-scrollbar">
-            <div className="rounded-xl bg-[#F0F4FA] p-4">
-              <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[#8190AA]">Form</p>
+            <div className="rounded-xl bg-[var(--theme-surface-muted)] p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[var(--theme-text-subtle)]">Form</p>
 
-              <p className="text-sm font-semibold text-[#161F42] mt-1">{viewRecord.formName}</p>
+              <p className="text-sm font-semibold text-[var(--theme-brand-primary)] mt-1">{viewRecord.formName}</p>
 
-              <p className="text-xs text-[#718096] mt-0.5">{viewRecord.formId}</p>
+              <p className="text-xs text-[var(--theme-text-muted)] mt-0.5">{viewRecord.formId}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[#8190AA]">Submitted By</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[var(--theme-text-subtle)]">Submitted By</p>
 
-                <p className="text-sm text-[#253858] mt-1">{viewRecord.submittedBy}</p>
+                <p className="text-sm text-[var(--theme-text-body)] mt-1">{viewRecord.submittedBy}</p>
 
-                <p className="text-xs text-[#8190AA]">{viewRecord.email}</p>
+                <p className="text-xs text-[var(--theme-text-subtle)]">{viewRecord.email}</p>
               </div>
 
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[#8190AA]">Submitted At</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[var(--theme-text-subtle)]">Submitted At</p>
 
-                <p className="text-sm text-[#253858] mt-1">{formatDateTimeIST(viewRecord.createdAt)}</p>
+                <p className="text-sm text-[var(--theme-text-body)] mt-1">{formatDateTimeIST(viewRecord.createdAt)}</p>
               </div>
 
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[#8190AA]">Mobile Number</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[var(--theme-text-subtle)]">Mobile Number</p>
 
-                <p className="text-sm text-[#253858] mt-1">{viewRecord.mobile}</p>
+                <p className="text-sm text-[var(--theme-text-body)] mt-1">{viewRecord.mobile}</p>
               </div>
 
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[#8190AA]">Status</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[1.2px] text-[var(--theme-text-subtle)]">Status</p>
 
                 <div className="mt-1.5">
                   <Tag variant="filled" className={`!rounded-full !px-3 !py-1 !font-medium ${STATUS_STYLES[viewRecord.status] || STATUS_STYLES.Reviewed}`}>
@@ -336,14 +317,14 @@ const Submissions = () => {
             </div>
 
             <div>
-              <h4 className="text-sm font-semibold text-[#161F42] mb-3">Submitted Values</h4>
+              <h4 className="text-sm font-semibold text-[var(--theme-brand-primary)] mb-3">Submitted Values</h4>
 
-              <div className="rounded-xl border border-[#E5EAF2] overflow-hidden">
+              <div className="rounded-xl border border-[var(--theme-border-default)] overflow-hidden">
                 {(viewRecord.answers || []).map((answer) => (
-                  <div key={answer.label} className="flex items-start justify-between gap-4 px-4 py-3 border-b border-[#EDF0F5] last:border-0">
-                    <p className="text-xs font-medium text-[#8190AA]">{answer.label}</p>
+                  <div key={answer.label} className="flex items-start justify-between gap-4 px-4 py-3 border-b border-[var(--theme-border-subtle)] last:border-0">
+                    <p className="text-xs font-medium text-[var(--theme-text-subtle)]">{answer.label}</p>
 
-                    <p className="text-sm text-[#253858] text-right break-words">{answer.value || "—"}</p>
+                    <p className="text-sm text-[var(--theme-text-body)] text-right break-words">{answer.value || "—"}</p>
                   </div>
                 ))}
               </div>

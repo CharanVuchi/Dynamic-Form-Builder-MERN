@@ -19,7 +19,7 @@ const DateSettings = ({ field, onUpdate }) => {
   return (
     <div className="flex flex-col gap-3">
       <div>
-        <label className="block text-sm font-medium text-[#344054] mb-2">Start Date</label>
+        <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">Start Date</label>
 
         <DatePicker
           value={minDate}
@@ -32,7 +32,7 @@ const DateSettings = ({ field, onUpdate }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-[#344054] mb-2">End Date</label>
+        <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">End Date</label>
 
         <DatePicker
           value={maxDate}
@@ -44,7 +44,7 @@ const DateSettings = ({ field, onUpdate }) => {
         />
       </div>
 
-      <p className="text-xs text-[#8190AA]">Users can only pick a date within the selected start and end date range.</p>
+      <p className="text-xs text-[var(--theme-text-subtle)]">Users can only pick a date within the selected start and end date range.</p>
     </div>
   );
 };

@@ -14,7 +14,7 @@ const SideDrawer = ({ open = false, onClose, title = "Details", children, placem
       closable={false}
       className={className}
       extra={
-        <button type="button" onClick={onClose} className="text-gray-500 hover:text-gray-900">
+        <button type="button" onClick={onClose} className="text-[var(--theme-text-neutral)] hover:text-[var(--theme-text-neutral-darker)]">
           <FiX size={20} />
         </button>
       }

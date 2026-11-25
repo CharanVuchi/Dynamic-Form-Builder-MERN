@@ -147,7 +147,7 @@ const DynamicFormRenderer = ({ form, submitting = false, onSubmit, onCancel, sub
 
   return (
     <Form id={formId} layout="vertical" initialValues={initialValues} onFinish={handleFinish} requiredMark="optional" className="flex flex-col gap-1">
-      {form?.description && <p className="text-sm text-[#718096] mb-4">{form.description}</p>}
+      {form?.description && <p className="text-sm text-[var(--theme-text-muted)] mb-4">{form.description}</p>}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
         {(form?.fields || []).map((field) => {
@@ -167,7 +167,7 @@ const DynamicFormRenderer = ({ form, submitting = false, onSubmit, onCancel, sub
       </div>
 
       {showActions && (
-        <div className="sticky bottom-0 z-10 flex items-center justify-end gap-3 border-t border-[#E5EAF2] bg-white pt-4 mt-2 pb-1">
+        <div className="sticky bottom-0 z-10 flex items-center justify-end gap-3 border-t border-[var(--theme-border-default)] bg-[var(--theme-surface)] pt-4 mt-2 pb-1">
           <Button type="button" variant="outline" textContent="Cancel" onClick={onCancel} />
 
           <Button type="submit" variant="primary" textContent={submitLabel} isLoading={submitting} />

@@ -4,7 +4,7 @@ import { FIELD_TYPES } from "./config";
 const FieldTypes = ({ onAddField, selectedType }) => {
   return (
     <Card
-      className="rounded-xl border border-[#E5EAF2] shadow-sm h-full"
+      className="rounded-xl border border-[var(--theme-border-default)] shadow-sm h-full"
       styles={{
         body: {
           padding: 20,
@@ -12,9 +12,9 @@ const FieldTypes = ({ onAddField, selectedType }) => {
       }}>
       {/* Header */}
       <div className="mb-5">
-        <h3 className="text-lg font-semibold text-[#161F42]">Add Fields</h3>
+        <h3 className="text-lg font-semibold text-[var(--theme-brand-primary)]">Add Fields</h3>
 
-        <p className="text-sm text-[#8190AA] mt-1">Click a field to add it to your form</p>
+        <p className="text-sm text-[var(--theme-text-subtle)] mt-1">Click a field to add it to your form</p>
       </div>
 
       {/* Field Types */}
@@ -33,22 +33,22 @@ const FieldTypes = ({ onAddField, selectedType }) => {
                 w-full flex items-center gap-3
                 p-3 rounded-lg border text-left
                 transition-all duration-200
-                ${isSelected ? "border-[#161F42] bg-[#E7ECFF4D]" : "border-[#E5EAF2] bg-white hover:border-[#9CD3BB] hover:bg-[#F8FBF9]"}
+                ${isSelected ? "border-[var(--theme-brand-primary)] bg-[var(--theme-brand-wash-transparent)]" : "border-[var(--theme-border-default)] bg-[var(--theme-surface)] hover:border-[var(--theme-brand-accent)] hover:bg-[var(--theme-surface-accent-hover)]"}
               `}>
               {/* Icon */}
               <div
                 className={`
                   w-10 h-10 rounded-lg flex items-center justify-center shrink-0
-                  ${isSelected ? "bg-[#161F42] text-white" : "bg-[#EDF1FF] text-[#283B80]"}
+                  ${isSelected ? "bg-[var(--theme-brand-primary)] text-[var(--theme-white)]" : "bg-[var(--theme-brand-wash)] text-[var(--theme-brand-secondary)]"}
                 `}>
                 <Icon size={19} />
               </div>
 
               {/* Label */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-[#161F42]">{field.label}</p>
+                <p className="text-sm font-semibold text-[var(--theme-brand-primary)]">{field.label}</p>
 
-                <p className="text-xs text-[#8190AA] mt-1">{field.description}</p>
+                <p className="text-xs text-[var(--theme-text-subtle)] mt-1">{field.description}</p>
               </div>
             </button>
           );

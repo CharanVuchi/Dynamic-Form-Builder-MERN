@@ -5,18 +5,20 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Filler);
 
+const getThemeColor = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
 const DashboardChart = ({ analytics = {} }) => {
   const chartData = useMemo(() => {
     const canvasGradient = (context) => {
       const chart = context.chart;
       const { ctx, chartArea } = chart;
 
-      if (!chartArea) return "rgba(156, 211, 187, 0.2)";
+      if (!chartArea) return getThemeColor("--theme-chart-fill");
 
       const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
 
-      gradient.addColorStop(0, "rgba(156, 211, 187, 0.55)");
-      gradient.addColorStop(1, "rgba(156, 211, 187, 0.02)");
+      gradient.addColorStop(0, getThemeColor("--theme-chart-fill-strong"));
+      gradient.addColorStop(1, getThemeColor("--theme-chart-fill-subtle"));
 
       return gradient;
     };
@@ -27,15 +29,15 @@ const DashboardChart = ({ analytics = {} }) => {
         {
           label: "Submissions",
           data: analytics.values || [],
-          borderColor: "#283B80",
+          borderColor: getThemeColor("--theme-brand-secondary"),
           backgroundColor: canvasGradient,
           fill: true,
           tension: 0,
           borderWidth: 4,
           pointRadius: 6,
           pointHoverRadius: 8,
-          pointBackgroundColor: "#283B80",
-          pointBorderColor: "#FFFFFF",
+          pointBackgroundColor: getThemeColor("--theme-brand-secondary"),
+          pointBorderColor: getThemeColor("--theme-surface"),
           pointBorderWidth: 2,
         },
       ],
@@ -64,7 +66,7 @@ const DashboardChart = ({ analytics = {} }) => {
           display: false,
         },
         ticks: {
-          color: "#8190AA",
+          color: getThemeColor("--theme-text-subtle"),
           font: {
             size: 11,
           },
@@ -77,10 +79,10 @@ const DashboardChart = ({ analytics = {} }) => {
           display: false,
         },
         grid: {
-          color: "#EDF0F5",
+          color: getThemeColor("--theme-border-subtle"),
         },
         ticks: {
-          color: "#8190AA",
+          color: getThemeColor("--theme-text-subtle"),
           font: {
             size: 11,
           },

@@ -1,0 +1,560 @@
+{
+  "info": {
+    "_postman_id": "cdbf7d4a-75d7-4d83-92e2-8f1ad67a44a1",
+    "name": "Dynamic Form Builder MERN API",
+    "description": "API collection aligned to the Express routes in the supplied Dynamic-Form-Builder-MERN source snapshot. Set baseUrl, log in, then set token and IDs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:3000/dynamic-form-builder/api/v1"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "formId",
+      "value": ""
+    },
+    {
+      "key": "formMongoId",
+      "value": ""
+    },
+    {
+      "key": "submissionId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Health endpoint.",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/user/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "login"
+              ]
+            },
+            "description": "Log in with a provisioned and verified admin account. Copy data.token to the token collection variable.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userName\": \"admin\",\n  \"password\": \"replace-me\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Register (development only)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/user/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "register"
+              ]
+            },
+            "description": "Registration is public in the current code; new accounts default to admin but unverified. Disable or secure this endpoint before production.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userName\": \"new-admin\",\n  \"password\": \"replace-with-strong-password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Forms (Admin)",
+      "item": [
+        {
+          "name": "Create form",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/forms",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "forms"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Customer Registration\",\n  \"description\": \"Register customer details\",\n  \"showName\": true,\n  \"showDescription\": true,\n  \"status\": \"Draft\",\n  \"fields\": [\n    {\n      \"id\": \"field-1\",\n      \"type\": \"text\",\n      \"label\": \"Full Name\",\n      \"fieldKey\": \"fullName\",\n      \"placeholder\": \"Enter your name\",\n      \"defaultValue\": \"\",\n      \"required\": true,\n      \"validation\": {}\n    },\n    {\n      \"id\": \"field-2\",\n      \"type\": \"email\",\n      \"label\": \"Email\",\n      \"fieldKey\": \"email\",\n      \"placeholder\": \"Enter email\",\n      \"defaultValue\": \"\",\n      \"required\": true,\n      \"validation\": {}\n    },\n    {\n      \"id\": \"field-3\",\n      \"type\": \"select\",\n      \"label\": \"Department\",\n      \"fieldKey\": \"department\",\n      \"required\": false,\n      \"options\": [\n        {\n          \"label\": \"Engineering\",\n          \"value\": \"engineering\"\n        },\n        {\n          \"label\": \"Sales\",\n          \"value\": \"sales\"\n        }\n      ],\n      \"validation\": {}\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "List forms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/forms?page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "forms"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Read form by Mongo ID or formId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/forms/{{formMongoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "forms",
+                "{{formMongoId}}"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update form",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/forms/{{formMongoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "forms",
+                "{{formMongoId}}"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Customer Registration\",\n  \"description\": \"Updated description\",\n  \"status\": \"Published\",\n  \"fields\": [\n    {\n      \"id\": \"field-2\",\n      \"type\": \"email\",\n      \"label\": \"Email\",\n      \"fieldKey\": \"email\",\n      \"required\": true,\n      \"validation\": {}\n    },\n    {\n      \"id\": \"field-1\",\n      \"type\": \"text\",\n      \"label\": \"Full Name\",\n      \"fieldKey\": \"fullName\",\n      \"required\": true,\n      \"validation\": {}\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Soft delete form",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/forms/{{formMongoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "forms",
+                "{{formMongoId}}"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public Forms",
+      "item": [
+        {
+          "name": "Get published public form",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/public/forms/{{formId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "public",
+                "forms",
+                "{{formId}}"
+              ]
+            },
+            "description": "Use the generated FC-... formId, not MongoDB _id.",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public Submissions",
+      "item": [
+        {
+          "name": "Submit public form",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/public/submissions/forms/{{formId}}/submissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "public",
+                "submissions",
+                "forms",
+                "{{formId}}",
+                "submissions"
+              ]
+            },
+            "description": "Body is a flat object keyed by fieldKey. Do not wrap values in a values property.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Alex Johnson\",\n  \"email\": \"alex@example.com\",\n  \"department\": \"engineering\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Submissions (Admin)",
+      "item": [
+        {
+          "name": "List submissions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/submissions?page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "submissions"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create submission directly (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/submissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "submissions"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"formId\": \"{{formId}}\",\n  \"formName\": \"Customer Registration\",\n  \"submittedBy\": \"Alex Johnson\",\n  \"email\": \"alex@example.com\",\n  \"mobile\": \"9876543210\",\n  \"status\": \"New\",\n  \"answers\": [\n    {\n      \"label\": \"Full Name\",\n      \"value\": \"Alex Johnson\"\n    },\n    {\n      \"label\": \"Email\",\n      \"value\": \"alex@example.com\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Read submission by Mongo ID or submissionId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/submissions/{{submissionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "submissions",
+                "{{submissionId}}"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete submission permanently",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/submissions/{{submissionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "submissions",
+                "{{submissionId}}"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Dashboard summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard"
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -24,15 +24,15 @@ const CommonSettings = ({ field, onUpdate }) => {
     <div className="flex flex-col gap-5">
       {/* Field Type */}
       <div>
-        <label className="block text-sm font-medium text-[#344054] mb-2">Field Type</label>
+        <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">Field Type</label>
 
         <SelectMenu value={field.type} options={FIELD_TYPE_OPTIONS} className="w-full h-11" onChange={(value) => handleChange("type", value)} />
       </div>
 
       {/* Label */}
       <div>
-        <label className="block text-sm font-medium text-[#344054] mb-2">
-          Label <span className="text-red-500">*</span>
+        <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">
+          Label <span className="text-[var(--theme-danger-light)]">*</span>
         </label>
 
         <TextInput value={field.label || ""} placeholder="Enter field label" className="h-11 rounded-lg" onChange={(value) => handleChange("label", value)} />
@@ -40,8 +40,8 @@ const CommonSettings = ({ field, onUpdate }) => {
 
       {/* Field Key */}
       <div>
-        <label className="block text-sm font-medium text-[#344054] mb-2">
-          Field Key <span className="text-red-500">*</span>
+        <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">
+          Field Key <span className="text-[var(--theme-danger-light)]">*</span>
         </label>
 
         <TextInput value={field.fieldKey || ""} placeholder="Enter field key" className="h-11 rounded-lg" onChange={(value) => handleChange("fieldKey", value)} />
@@ -49,14 +49,14 @@ const CommonSettings = ({ field, onUpdate }) => {
 
       {/* Placeholder */}
       <div>
-        <label className="block text-sm font-medium text-[#344054] mb-2">Placeholder</label>
+        <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">Placeholder</label>
 
         <TextInput value={field.placeholder || ""} placeholder="Enter placeholder" className="h-11 rounded-lg" onChange={(value) => handleChange("placeholder", value)} />
       </div>
 
       {/* Default Value */}
       <div>
-        <label className="block text-sm font-medium text-[#344054] mb-2">Default Value</label>
+        <label className="block text-sm font-medium text-[var(--theme-text-neutral-strong)] mb-2">Default Value</label>
 
         <TextInput
           value={field.defaultValue || ""}
@@ -67,18 +67,18 @@ const CommonSettings = ({ field, onUpdate }) => {
       </div>
 
       {/* Required */}
-      <div className="flex items-center justify-between border-t border-[#E5EAF2] pt-4">
+      <div className="flex items-center justify-between border-t border-[var(--theme-border-default)] pt-4">
         <div>
-          <p className="text-sm font-medium text-[#344054]">Required field</p>
-          <p className="text-xs text-[#8190AA] mt-1">Users must complete this field</p>
+          <p className="text-sm font-medium text-[var(--theme-text-neutral-strong)]">Required field</p>
+          <p className="text-xs text-[var(--theme-text-subtle)] mt-1">Users must complete this field</p>
         </div>
 
         <ConfigProvider
           theme={{
             components: {
               Switch: {
-                colorPrimary: "#161F42",
-                colorPrimaryHover: "#161F42",
+                colorPrimary: "var(--theme-brand-primary)",
+                colorPrimaryHover: "var(--theme-brand-primary)",
               },
             },
           }}>
